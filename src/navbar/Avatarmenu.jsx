@@ -10,7 +10,7 @@ const Avatarmenu = (props) => {
     }
 
     const menuItemStyle = {
-        height : "3rem",
+        height : "2.5rem",
         width : "8rem",
     }
 
@@ -22,7 +22,7 @@ const Avatarmenu = (props) => {
             <MenuItem sx={menuItemStyle} divider> Whishlist </MenuItem>
             <MenuItem sx={menuItemStyle} divider> My Cart </MenuItem>
             <MenuItem sx={menuItemStyle} divider>Become Seller</MenuItem>
-            <MenuItem sx={menuItemStyle} divider> Logout </MenuItem>
+            <MenuItem sx={menuItemStyle} > Logout </MenuItem>
         </Menu>
     );
 }

@@ -26,7 +26,8 @@ const Navbar = () => {
     const navbarDivStyle = {
         width : "100%",
         display : "flex",
-        justifyContent : "space-between"
+        justifyContent : "space-between",
+        alignItems:'center'
     }
 
 
@@ -56,7 +57,7 @@ const Navbar = () => {
             <AppBar sx={appBarStyle} position="relative">
                 <Toolbar>
                     <Box component="div" sx={navbarDivStyle}> 
-                        <Typography color="black" variant="h3" >
+                        <Typography color="black" variant="h4" >
                             ShopHeaven
                         </Typography>
                         {/* <Grid sx={navbarGrid}  container justifyContent="space-evenly"> */}

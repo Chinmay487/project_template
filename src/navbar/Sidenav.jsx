@@ -5,8 +5,8 @@ const Sidenav = () => {
 
     const drawerStyle = {
         width: 300,
-          flexShrink: 0,
-          '& .MuiDrawer-paper': {
+        flexShrink: 0,
+        '& .MuiDrawer-paper': {
             width: 200,
             boxSizing: 'border-box',
         },
