@@ -1,5 +1,5 @@
 export const appBarStyle = {
-    backgroundColor : "#faffff" 
+    backgroundColor : "#f8f8f8" 
 }
 
 export const navbarDivStyle = {
@@ -49,7 +49,7 @@ export const searchForm = {
     display : "flex",
     width : {
         lg : "80%",
-        md : "90%",
+        md : "70%",
         
     },
     // backgroundColor : "red"

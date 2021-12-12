@@ -5,7 +5,7 @@ import Sidenav from './Sidenav';
 import NavMenu from './NavMenu'
 import {appBarStyle,navbarDivStyle,searchFormGroup,searchForm,searchFormInput,avatarStyle,navbarStyle2,navbarDiveStyle2,typographyStyle2} from './styles';
 import MenuRoundedIcon from '@mui/icons-material/MenuRounded';
-
+import {NavLink} from 'react-router-dom'
 
 const Navbar = () => {
 
@@ -141,7 +141,7 @@ const Navbar = () => {
                             :
                             (
                                 <Typography color="black" variant="h4" >
-                                    ShopHeaven
+                                   <NavLink to="/" className="link">ShopHeaven</NavLink>
                                 </Typography>
                             )
                         }
