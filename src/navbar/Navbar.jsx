@@ -1,10 +1,10 @@
 import React,{useState} from 'react';
-import {AppBar,Toolbar, Typography,Box,TextField,IconButton,Avatar} from '@mui/material'
+import {AppBar,Toolbar, Typography,Box,TextField,IconButton,Avatar, useTheme , useMediaQuery} from '@mui/material'
 import SearchOutlinedIcon from '@mui/icons-material/SearchOutlined';
 import Sidenav from './Sidenav';
 import NavMenu from './NavMenu'
 import {appBarStyle,navbarDivStyle,searchFormGroup,searchForm,searchFormInput,avatarStyle,navbarStyle2,navbarDiveStyle2,typographyStyle2} from './styles';
-
+import MenuRoundedIcon from '@mui/icons-material/MenuRounded';
 
 
 const Navbar = () => {
@@ -13,12 +13,18 @@ const Navbar = () => {
     const [avatarEl,setAvatarEl] = useState(null);
 
     const [fashionEl,setFashionEl] = useState(null);
-    const [electronicsEl,setElectronicsEl] = useState(null)
-    const [mobileEl,setMobileEl] = useState(null)
-    const [grosseryEl,setGrosseryEl] = useState(null)
-    const [stationaryEl,setStationaryEl] = useState(null)
-    const [selfCareEl,setSelfCareEl] = useState(null)
-    const [othersEl,setOthersEl] = useState(null)
+    const [electronicsEl,setElectronicsEl] = useState(null);
+    const [mobileEl,setMobileEl] = useState(null);
+    const [grosseryEl,setGrosseryEl] = useState(null);
+    const [stationaryEl,setStationaryEl] = useState(null);
+    const [selfCareEl,setSelfCareEl] = useState(null);
+    const [othersEl,setOthersEl] = useState(null);
+
+    const [drawerStatus , setDrawerStatus]=useState(false);
+
+    const theme = useTheme();
+    const matches = useMediaQuery(theme.breakpoints.down('md'));
+
 
     const avatarClick = (event) => {
         setAvatarEl(event.target)
@@ -116,9 +122,17 @@ const Navbar = () => {
             <AppBar sx={appBarStyle} position="relative">
                 <Toolbar>
                     <Box component="div" sx={navbarDivStyle}> 
-                        <Typography color="black" variant="h4" >
-                            ShopHeaven
-                        </Typography>
+                        {
+                            matches ? (<IconButton onClick={()=>{
+                                setDrawerStatus(!drawerStatus);
+                            }} ><MenuRoundedIcon color='primary' sx={{fontSize:'2.5rem'}} /></IconButton>)
+                            :
+                            (
+                                <Typography color="black" variant="h4" >
+                                    ShopHeaven
+                                </Typography>
+                            )
+                        }
                         {/* <Grid sx={navbarGrid}  container justifyContent="space-evenly"> */}
                         <Box sx={searchFormGroup}>
                             <Box sx={searchForm}>
@@ -135,7 +149,8 @@ const Navbar = () => {
                     </Box>
                 <NavMenu anchorEl={avatarEl} handleClose={handleAvatarClose} openMenu={openAvatarMenu} NavMenuItemList={avatarMenuItems} />
                 </Toolbar>
-                    <Box component="div" sx={navbarStyle2}>
+                    {
+                        !matches ? (<Box component="div" sx={navbarStyle2}>
                         <Box component="div" sx={navbarDiveStyle2}>
                             {
                                 navList2.map((item) => {
@@ -146,11 +161,12 @@ const Navbar = () => {
                                 })
                             }
                         </Box>
-                    </Box> 
+                    </Box> ):<></>
+                    }
             
 
             </AppBar>
-            <Sidenav/>
+            <Sidenav drawerStatus={drawerStatus} setDrawerStatus={setDrawerStatus} />
         </>
     );
 }

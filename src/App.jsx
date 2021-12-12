@@ -9,7 +9,7 @@ const App = () => {
             <CssBaseline/>
             <Navbar/>
             <Typography variant="h1">
-                Hello There
+                Welcome To ShopHeaven
             </Typography>
         </>
     )
