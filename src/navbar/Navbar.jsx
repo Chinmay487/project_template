@@ -2,55 +2,114 @@ import React,{useState} from 'react';
 import {AppBar,Toolbar, Typography,Box,TextField,IconButton,Avatar} from '@mui/material'
 import SearchOutlinedIcon from '@mui/icons-material/SearchOutlined';
 import Sidenav from './Sidenav';
-import Avatarmenu from './Avatarmenu'
+import NavMenu from './NavMenu'
+import {appBarStyle,navbarDivStyle,searchFormGroup,searchForm,searchFormInput,avatarStyle,navbarStyle2,navbarDiveStyle2,typographyStyle2} from './styles';
+
+
 
 const Navbar = () => {
 
-    const [anchorEl,setAnchorEl] = useState(null)
+    let id = 2000;
+    const [avatarEl,setAvatarEl] = useState(null);
+
+    const [fashionEl,setFashionEl] = useState(null);
+    const [electronicsEl,setElectronicsEl] = useState(null)
+    const [mobileEl,setMobileEl] = useState(null)
+    const [grosseryEl,setGrosseryEl] = useState(null)
+    const [stationaryEl,setStationaryEl] = useState(null)
+    const [selfCareEl,setSelfCareEl] = useState(null)
+    const [othersEl,setOthersEl] = useState(null)
 
     const avatarClick = (event) => {
-        setAnchorEl(event.target)
+        setAvatarEl(event.target)
     }
 
-    const handleClose = () => {
-        setAnchorEl(null)
+    const handleAvatarClose = () => {
+        setAvatarEl(null)
     }
 
-    const openMenu = Boolean(anchorEl)
+    const openAvatarMenu = Boolean(avatarEl)
 
 
-    const appBarStyle = {
-        backgroundColor : "#faffff" 
-    }
+    const avatarMenuItems = [
+        'Username','Profile','Address','Whishlist','My Cart','Become Seller','Logout'
+    ]
 
-    const navbarDivStyle = {
-        width : "100%",
-        display : "flex",
-        justifyContent : "space-between",
-        alignItems:'center'
-    }
+    const navList2 = [
+        {
+            title : 'Fashion',
+            list : [
+                'kids','Men','Women'
+            ],
+            openEl : fashionEl,
+            onMenuClick : (event) => {setFashionEl(event.target)},
+            onMenuClose : () => {setFashionEl(null)},
+            onOpenMenu : Boolean(fashionEl)
+        },
+        {
+            title : 'Electronics',
+            list : [
+                'TV','Computer','Laptop','Accessories','Camera','toys',
+            ],
+            openEl : electronicsEl,
+            onMenuClick : (event) => {setElectronicsEl(event.target)},
+            onMenuClose : () => {setElectronicsEl(null)},
+            onOpenMenu : Boolean(electronicsEl)
+        },
+        {
+            title : 'Mobile',
+            list : [
+                'Accessories','iOS','Android'
+            ],
+            openEl : mobileEl,
+            onMenuClick : (event) => {setMobileEl(event.target)},
+            onMenuClose : () => {setMobileEl(null)},
+            onOpenMenu : Boolean(mobileEl)
+        },
+        {
+            title : 'Grossery',
+            list : [
+                'Jam','Sauce','Spices','Papad','Pickle'
+            ],
+            openEl : grosseryEl,
+            onMenuClick : (event) => {setGrosseryEl(event.target)},
+            onMenuClose : () => {setGrosseryEl(null)},
+            onOpenMenu : Boolean(grosseryEl)
+        },
+        {
+            title : 'Stationary',
+            list : [
+                'Books','Note Books','Office stuff'
+            ],
+            openEl : stationaryEl,
+            onMenuClick : (event) => {setStationaryEl(event.target)},
+            onMenuClose : () => {setStationaryEl(null)},
+            onOpenMenu : Boolean(stationaryEl)
+        },
+        {
+            title : 'Self Care',
+            list : [
+                'kids','Adults','Women'
+            ],
+            openEl : selfCareEl,
+            onMenuClick : (event) => {setSelfCareEl(event.target)},
+            onMenuClose : () => {setSelfCareEl(null)},
+            onOpenMenu : Boolean(selfCareEl)
+        },
+        {
+            title : 'Others',
+            list : [
+                'Jewelary'
+            ],
+            openEl : othersEl,
+            onMenuClick : (event) => {setOthersEl(event.target)},
+            onMenuClose : () => {setOthersEl(null)},
+            onOpenMenu : Boolean(othersEl)
+        }
+    ]
 
 
-    const searchFormGroup = {
-        display : "flex",
-        justifyContent : "space-evenly",
-        alignItems : "base-line",
-        width : "40%",
-        padding : "0 1%",
-    }
 
-    const searchForm = {
-        display : "flex",
-        width : "60%",
-    }
-
-    const searchFormInput = {
-        width : "90%"
-    }
-
-    const avatarStyle = {
-        backGroundColor : "whitesmoke"
-    }
 
     return (
         <>
@@ -65,7 +124,7 @@ const Navbar = () => {
                             <Box sx={searchForm}>
                                 <TextField sx={searchFormInput}  label="search ..." variant="standard" />
                                 <IconButton>
-                                    <SearchOutlinedIcon/>
+                                    <SearchOutlinedIcon sx={{fontSize : "2rem"}}/>
                                 </IconButton>
                             </Box>
                             <IconButton>
@@ -74,8 +133,22 @@ const Navbar = () => {
                         </Box>
                         
                     </Box>
+                <NavMenu anchorEl={avatarEl} handleClose={handleAvatarClose} openMenu={openAvatarMenu} NavMenuItemList={avatarMenuItems} />
                 </Toolbar>
-                <Avatarmenu anchorEl={anchorEl} handleClose={handleClose} openMenu={openMenu}  />
+                    <Box component="div" sx={navbarStyle2}>
+                        <Box component="div" sx={navbarDiveStyle2}>
+                            {
+                                navList2.map((item) => {
+                                    return <>
+                                        <Typography key={id++} sx={typographyStyle2} onClick={item.onMenuClick}  >{item.title}</Typography>
+                                        <NavMenu anchorEl={item.openEl} handleClose={item.onMenuClose} openMenu={item.onOpenMenu} NavMenuItemList={item.list} />
+                                    </>
+                                })
+                            }
+                        </Box>
+                    </Box> 
+            
+
             </AppBar>
             <Sidenav/>
         </>
