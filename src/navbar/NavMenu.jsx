@@ -5,8 +5,7 @@ import {menuItemStyle,menuStyle} from './styles'
 
 const NavMenu = (props) => {
 
-    let id = 1000;
-
+    let id = props.uid
     return (
         <Menu sx={menuStyle} anchorEl={props.anchorEl} open={props.openMenu} onClose={props.handleClose}>
             {

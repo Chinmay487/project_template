@@ -1,5 +1,5 @@
 import React from 'react';
-import {CssBaseline,Typography} from '@mui/material'
+import {CssBaseline} from '@mui/material'
 import Navbar from './navbar/Navbar'
 
 
@@ -8,9 +8,6 @@ const App = () => {
         <>
             <CssBaseline/>
             <Navbar/>
-            <Typography variant="h1">
-                Welcome To ShopHeaven
-            </Typography>
         </>
     )
 }

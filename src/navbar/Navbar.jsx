@@ -9,7 +9,10 @@ import MenuRoundedIcon from '@mui/icons-material/MenuRounded';
 
 const Navbar = () => {
 
-    let id = 2000;
+    let id1 = 2000;
+    let id2 = 3000;
+    let id3 = 4000;
+
     const [avatarEl,setAvatarEl] = useState(null);
 
     const [fashionEl,setFashionEl] = useState(null);
@@ -23,7 +26,11 @@ const Navbar = () => {
     const [drawerStatus , setDrawerStatus]=useState(false);
 
     const theme = useTheme();
-    const matches = useMediaQuery(theme.breakpoints.down('md'));
+    const medium = useMediaQuery(theme.breakpoints.down('md'));
+    const small = useMediaQuery(theme.breakpoints.down('sm'));
+    // const large = useMediaQuery(theme.breakpoints.down('xl'))
+
+    // console.log(theme.breakpoints);
 
 
     const avatarClick = (event) => {
@@ -115,7 +122,12 @@ const Navbar = () => {
     ]
 
 
-
+    const searchFormComponent = <Box sx={searchForm}>
+                <TextField sx={searchFormInput}  label="search ..." variant="standard" />
+                <IconButton>
+                    <SearchOutlinedIcon sx={{fontSize : "2rem"}}/>
+                </IconButton>
+            </Box>
 
     return (
         <>
@@ -123,7 +135,7 @@ const Navbar = () => {
                 <Toolbar>
                     <Box component="div" sx={navbarDivStyle}> 
                         {
-                            matches ? (<IconButton onClick={()=>{
+                            small ? (<IconButton onClick={()=>{
                                 setDrawerStatus(!drawerStatus);
                             }} ><MenuRoundedIcon color='primary' sx={{fontSize:'2.5rem'}} /></IconButton>)
                             :
@@ -133,40 +145,36 @@ const Navbar = () => {
                                 </Typography>
                             )
                         }
-                        {/* <Grid sx={navbarGrid}  container justifyContent="space-evenly"> */}
-                        <Box sx={searchFormGroup}>
-                            <Box sx={searchForm}>
-                                <TextField sx={searchFormInput}  label="search ..." variant="standard" />
-                                <IconButton>
-                                    <SearchOutlinedIcon sx={{fontSize : "2rem"}}/>
-                                </IconButton>
-                            </Box>
-                            <IconButton>
-                                <Avatar onClick={avatarClick} sx={avatarStyle}>#</Avatar>
+
+                        {medium ? searchFormComponent : null}
+
+                        <Box  sx={searchFormGroup}>
+                            {!medium ? searchFormComponent : null}
+                            <IconButton onClick={avatarClick} >
+                                <Avatar sx={avatarStyle}>#</Avatar>
                             </IconButton>
                         </Box>
                         
                     </Box>
-                <NavMenu anchorEl={avatarEl} handleClose={handleAvatarClose} openMenu={openAvatarMenu} NavMenuItemList={avatarMenuItems} />
+                <NavMenu uid={3000} anchorEl={avatarEl} handleClose={handleAvatarClose} openMenu={openAvatarMenu} NavMenuItemList={avatarMenuItems} />
                 </Toolbar>
                     {
-                        !matches ? (<Box component="div" sx={navbarStyle2}>
+                        !small ? (<Box component="div" sx={navbarStyle2}>
                         <Box component="div" sx={navbarDiveStyle2}>
                             {
                                 navList2.map((item) => {
                                     return <>
-                                        <Typography key={id++} sx={typographyStyle2} onClick={item.onMenuClick}  >{item.title}</Typography>
-                                        <NavMenu anchorEl={item.openEl} handleClose={item.onMenuClose} openMenu={item.onOpenMenu} NavMenuItemList={item.list} />
+                                        <Typography key={id1++} sx={typographyStyle2} onClick={item.onMenuClick} >{item.title}</Typography>
+                                        <NavMenu key={id2++} uid={id3} anchorEl={item.openEl} handleClose={item.onMenuClose} openMenu={item.onOpenMenu} NavMenuItemList={item.list} />
                                     </>
                                 })
                             }
                         </Box>
-                    </Box> ):<></>
+                    </Box> ):null
                     }
             
-
             </AppBar>
-            <Sidenav drawerStatus={drawerStatus} setDrawerStatus={setDrawerStatus} />
+            <Sidenav uid={10000} items={navList2} drawerStatus={drawerStatus} setDrawerStatus={setDrawerStatus} />
         </>
     );
 }

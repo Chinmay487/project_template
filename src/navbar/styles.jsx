@@ -17,7 +17,10 @@ export const navbarStyle2 = {
 }
 
 export const navbarDiveStyle2 = {
-    width : "50%",
+    width : {
+        md : "100%",
+        xl: "50%"
+    },
     height : "100%",
     display : "flex",
     margin : "0 0 0 2rem",
@@ -29,19 +32,35 @@ export const navbarDiveStyle2 = {
 
 export const searchFormGroup = {
     display : "flex",
-    justifyContent : "space-evenly",
+    justifyContent : {
+        lg : "space-evenly",
+        md : "space-between"
+    },
     alignItems : "center",
-    width : "40%",
+    width : {
+        lg : "40%",
+        md : "50%"
+    },
     padding : "0 1%",
+    // backgroundColor : "green"
 }
 
 export const searchForm = {
     display : "flex",
-    width : "80%",
+    width : {
+        lg : "80%",
+        md : "90%",
+        
+    },
+    // backgroundColor : "red"
 }
 
 export const searchFormInput = {
-    width : "90%"
+    width : {
+        // lg : "90%",
+        md : "100%",
+        sm : "100%"
+    }
 }
 
 export const avatarStyle = {
