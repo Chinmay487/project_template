@@ -18,8 +18,9 @@ export const navbarStyle2 = {
 
 export const navbarDiveStyle2 = {
     width : {
-        md : "100%",
-        xl: "50%"
+        md : "50%",
+        xl: "50%",
+        sm:"100%"
     },
     height : "100%",
     display : "flex",

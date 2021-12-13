@@ -28,7 +28,7 @@ const Sidenav = (props) => {
             <List sx={{marginTop : "3rem"}} >
                 <ListItem divider button onClick={onClickEvent}> 
                     <MenuOpenOutlinedIcon/>
-                 </ListItem>
+                </ListItem>
                 <ListItem divider button onClick={onClickEvent} sx={{textAlign : "center"}}>
                     <ListItemIcon>
                         Homepage

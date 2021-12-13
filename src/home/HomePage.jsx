@@ -1,8 +1,15 @@
 import React from 'react';
+import {Typography} from '@mui/material';
+
+
 
 const HomePage = () => {
     return (
-        <h1>Home Page</h1>
+        <>
+            <Typography >
+                Homepage
+            </Typography>
+        </>
     )
 }
 
