@@ -11,13 +11,15 @@ import Panel from './seller/Panel';
 import UpdateProduct from './seller/UpdateProduct';
 import Address from './user/Address';
 import ProfilePage from './user/ProfilePage';
+import NewSeller from './seller/NewSeller'
 
 
 const AppRoutes = () => {
     return (
         <Routes>
+            <Route exact={true} path="/becomeseller" element={<NewSeller/>} />
             <Route exact={true} path="/address" element={<Address/>} />
-            <Route exact={true} path="/profile" elemennt={<ProfilePage/>} />
+            <Route exact={true} path="/profile" element={<ProfilePage/>} />
             <Route exact={true} path="/panel" element={<Panel/>} />
             <Route exact={true} path="/update/:key" element={<UpdateProduct/>}/>
             <Route exact={true} path="/add_product" element={<AddProduct/>} />

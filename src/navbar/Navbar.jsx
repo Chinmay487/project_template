@@ -46,7 +46,7 @@ const Navbar = () => {
 
 
     const avatarMenuItems = [
-        'Username','Profile','Address','Whishlist','My Cart','Become Seller','Logout'
+        'Username','Profile','Address','Wishlist','My Cart','Become Seller','Logout'
     ]
 
     const navList2 = [
@@ -121,7 +121,7 @@ const Navbar = () => {
                                         <NavMenu 
                                             key={id2++} 
                                             uid={id3} 
-                                            haveCategory = {false}
+                                            haveCategory = {true}
                                             parent={item.title}
                                             anchorEl={item.openEl} 
                                             handleClose={item.menuCloseFunction} 

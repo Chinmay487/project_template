@@ -3,10 +3,14 @@ import {useParams} from 'react-router-dom'
 
 
 const CategoryView = (props) => {
-    const {category} = useParams()
+    const {category,subCategory} = useParams()
 
     return (
-        <h1>{category}</h1>
+        <>
+            <h1>{category}</h1>
+            <h1>{subCategory}</h1>
+        </>
+
     )
 
 
