@@ -1,12 +1,14 @@
 import React,{useState} from 'react';
 import {Drawer,List,ListItem,ListItemIcon,Box} from '@mui/material';
 import MenuOpenOutlinedIcon from '@mui/icons-material/MenuOpenOutlined';
-import {Link} from 'react-router-dom';
+import {useNavigate} from 'react-router-dom';
 
 
 const Sidenav = (props) => {
 
     let uid = props.uid
+
+    const navigate = useNavigate();
 
     const drawerStyle = {
         width: 300,
@@ -17,21 +19,26 @@ const Sidenav = (props) => {
         },
     }
 
-    const onClickEvent = ()=>{
-
+    const onClickEvent = (url)=>{
+        navigate(url)
         props.setDrawerStatus(!props.drawerStatus);
     }
 
 
     return (
         <Drawer open={props.drawerStatus} onClose={onClickEvent} variant="temporary" anchor="left" elevation={5} sx={drawerStyle} >
-            
                 
             <List sx={{marginTop : "3rem"}} >
-                <ListItem divider button onClick={onClickEvent}> 
+                <ListItem divider button onClick={()=>{
+                    props.setDrawerStatus(!props.drawerStatus)
+                }}> 
                     <MenuOpenOutlinedIcon/>
                 </ListItem>
-                <ListItem divider button onClick={onClickEvent} sx={{textAlign : "center"}}>
+                <ListItem divider button onClick={()=>{
+                    navigate('/')
+                    props.setDrawerStatus(!props.drawerStatus)
+
+                }} sx={{textAlign : "center"}}>
                     <ListItemIcon>
                         Homepage
                     </ListItemIcon>
@@ -42,9 +49,13 @@ const Sidenav = (props) => {
                                     {item.title}
                                     <List>
                                         {item.list.map((listItem)=>{
+                                            const url = `/categories/${item.title.toLowerCase().replace(/ /g, "")}/${listItem.toLowerCase().replace(/ /g, "")}`
                                             return (
-                                                <ListItem button onClick={onClickEvent}>
-                                                    <Link className="link" to="">{listItem}</Link>
+
+                                                <ListItem button onClick={()=>{
+                                                    onClickEvent(url)
+                                                }}>
+                                                    {listItem}
                                                 </ListItem>
                                             )
                                         })}
@@ -58,6 +69,6 @@ const Sidenav = (props) => {
     )
 }
 
-
+// /categories/${props.parent.toLowerCase().replace(/ /g, "")}/${item.toLowerCase().replace(/ /g, "")}
 export default Sidenav;
 
