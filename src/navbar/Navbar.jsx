@@ -5,7 +5,8 @@ import Sidenav from './Sidenav';
 import NavMenu from './NavMenu'
 import {appBarStyle,navbarDivStyle,searchFormGroup,searchForm,searchFormInput,avatarStyle,navbarStyle2,navbarDiveStyle2,typographyStyle2} from './styles';
 import MenuRoundedIcon from '@mui/icons-material/MenuRounded';
-import {NavLink} from 'react-router-dom'
+import {NavLink} from 'react-router-dom';
+import ListClass from './ListClass'
 
 const Navbar = () => {
 
@@ -49,76 +50,13 @@ const Navbar = () => {
     ]
 
     const navList2 = [
-        {
-            title : 'Fashion',
-            list : [
-                'kids','Men','Women'
-            ],
-            openEl : fashionEl,
-            onMenuClick : (event) => {setFashionEl(event.target)},
-            onMenuClose : () => {setFashionEl(null)},
-            onOpenMenu : Boolean(fashionEl)
-        },
-        {
-            title : 'Electronics',
-            list : [
-                'TV','Computer','Laptop','Accessories','Camera','toys',
-            ],
-            openEl : electronicsEl,
-            onMenuClick : (event) => {setElectronicsEl(event.target)},
-            onMenuClose : () => {setElectronicsEl(null)},
-            onOpenMenu : Boolean(electronicsEl)
-        },
-        {
-            title : 'Mobile',
-            list : [
-                'Accessories','iOS','Android'
-            ],
-            openEl : mobileEl,
-            onMenuClick : (event) => {setMobileEl(event.target)},
-            onMenuClose : () => {setMobileEl(null)},
-            onOpenMenu : Boolean(mobileEl)
-        },
-        {
-            title : 'Grossery',
-            list : [
-                'Jam','Sauce','Spices','Papad','Pickle'
-            ],
-            openEl : grosseryEl,
-            onMenuClick : (event) => {setGrosseryEl(event.target)},
-            onMenuClose : () => {setGrosseryEl(null)},
-            onOpenMenu : Boolean(grosseryEl)
-        },
-        {
-            title : 'Stationary',
-            list : [
-                'Books','Note Books','Office stuff'
-            ],
-            openEl : stationaryEl,
-            onMenuClick : (event) => {setStationaryEl(event.target)},
-            onMenuClose : () => {setStationaryEl(null)},
-            onOpenMenu : Boolean(stationaryEl)
-        },
-        {
-            title : 'Self Care',
-            list : [
-                'kids','Adults','Women'
-            ],
-            openEl : selfCareEl,
-            onMenuClick : (event) => {setSelfCareEl(event.target)},
-            onMenuClose : () => {setSelfCareEl(null)},
-            onOpenMenu : Boolean(selfCareEl)
-        },
-        {
-            title : 'Others',
-            list : [
-                'Jewelary'
-            ],
-            openEl : othersEl,
-            onMenuClick : (event) => {setOthersEl(event.target)},
-            onMenuClose : () => {setOthersEl(null)},
-            onOpenMenu : Boolean(othersEl)
-        }
+        new ListClass('Fashion',['All','kids','Men','Women'],fashionEl,setFashionEl),
+        new ListClass('Electronics',['All','TV','Computer','Laptop','Accessories','Camera','toys',],electronicsEl,setElectronicsEl),
+        new ListClass('Mobile',['All','Accessories','iOS','Android'],mobileEl,setMobileEl),
+        new ListClass('Grossery',['All','Jam','Sauce','Spices','Papad','Pickle'],grosseryEl,setGrosseryEl),
+        new ListClass('Stationary',['All','Books','Note Books','Office stuff'],stationaryEl,setStationaryEl),
+        new ListClass('Self Care',['All','kids','Adults','Women'],selfCareEl,setSelfCareEl),
+        new ListClass('Others',['All','Jewelary'],othersEl,setOthersEl)
     ]
 
 
@@ -156,7 +94,14 @@ const Navbar = () => {
                         </Box>
                         
                     </Box>
-                <NavMenu uid={3000} anchorEl={avatarEl} handleClose={handleAvatarClose} openMenu={openAvatarMenu} NavMenuItemList={avatarMenuItems} />
+                <NavMenu 
+                    uid={3000} 
+                    anchorEl={avatarEl} 
+                    handleClose={handleAvatarClose} 
+                    openMenu={openAvatarMenu} 
+                    NavMenuItemList={avatarMenuItems} 
+                />
+
                 </Toolbar>
                     {
                         !small ? (<Box component="div" sx={navbarStyle2}>
@@ -164,8 +109,21 @@ const Navbar = () => {
                             {
                                 navList2.map((item) => {
                                     return <>
-                                        <Typography key={id1++} sx={typographyStyle2} onClick={item.onMenuClick} >{item.title}</Typography>
-                                        <NavMenu key={id2++} uid={id3} anchorEl={item.openEl} handleClose={item.onMenuClose} openMenu={item.onOpenMenu} NavMenuItemList={item.list} />
+                                        <Typography 
+                                            key={id1++} 
+                                            sx={typographyStyle2} 
+                                            onClick={item.menuOpenFunction} 
+                                        >
+                                                {item.title}
+                                        </Typography>
+                                        <NavMenu 
+                                            key={id2++} 
+                                            uid={id3} 
+                                            anchorEl={item.openEl} 
+                                            handleClose={item.menuCloseFunction} 
+                                            openMenu={item.onOpenMenu} 
+                                            NavMenuItemList={item.list} 
+                                        />
                                     </>
                                 })
                             }
@@ -174,7 +132,12 @@ const Navbar = () => {
                     }
             
             </AppBar>
-            <Sidenav uid={10000} items={navList2} drawerStatus={drawerStatus} setDrawerStatus={setDrawerStatus} />
+            <Sidenav 
+                uid={10000} 
+                items={navList2} 
+                drawerStatus={drawerStatus} 
+                setDrawerStatus={setDrawerStatus} 
+            />
         </>
     );
 }

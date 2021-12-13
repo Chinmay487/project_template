@@ -22,7 +22,7 @@ const Sidenav = (props) => {
 
 
     return (
-        <Drawer open={props.drawerStatus} onClose={onClickEvent} variant="temporary" anchor="left"   elevation={5} sx={drawerStyle} >
+        <Drawer open={props.drawerStatus} onClose={onClickEvent} variant="temporary" anchor="left" elevation={5} sx={drawerStyle} >
             
                 
             <List sx={{marginTop : "3rem"}} >
