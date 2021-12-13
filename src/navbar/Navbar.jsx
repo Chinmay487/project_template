@@ -96,6 +96,8 @@ const Navbar = () => {
                     </Box>
                 <NavMenu 
                     uid={3000} 
+                    haveCategory = {false}
+                    parent=""
                     anchorEl={avatarEl} 
                     handleClose={handleAvatarClose} 
                     openMenu={openAvatarMenu} 
@@ -119,6 +121,8 @@ const Navbar = () => {
                                         <NavMenu 
                                             key={id2++} 
                                             uid={id3} 
+                                            haveCategory = {false}
+                                            parent={item.title}
                                             anchorEl={item.openEl} 
                                             handleClose={item.menuCloseFunction} 
                                             openMenu={item.onOpenMenu} 

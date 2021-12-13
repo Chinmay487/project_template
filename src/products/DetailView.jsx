@@ -4,4 +4,4 @@ const DetailView = () => {
     return <h1>Detail View Page</h1>
 }
 
-export default Detailview;
+export default DetailView;
