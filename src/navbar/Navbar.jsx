@@ -16,13 +16,13 @@ const Navbar = () => {
 
     const [avatarEl,setAvatarEl] = useState(null);
 
-    const [fashionEl,setFashionEl] = useState(null);
-    const [electronicsEl,setElectronicsEl] = useState(null);
-    const [mobileEl,setMobileEl] = useState(null);
-    const [grosseryEl,setGrosseryEl] = useState(null);
-    const [stationaryEl,setStationaryEl] = useState(null);
-    const [selfCareEl,setSelfCareEl] = useState(null);
-    const [othersEl,setOthersEl] = useState(null);
+    const [fashionEl,setFashionEl] = useState({el:null, status:false});
+    const [electronicsEl,setElectronicsEl] = useState({el:null, status:false});
+    const [mobileEl,setMobileEl] = useState({el:null, status:false});
+    const [grosseryEl,setGrosseryEl] = useState({el:null, status:false});
+    const [stationaryEl,setStationaryEl] = useState({el:null, status:false});
+    const [selfCareEl,setSelfCareEl] = useState({el:null, status:false});
+    const [othersEl,setOthersEl] = useState({el:null, status:false});
 
     const [drawerStatus , setDrawerStatus]=useState(false);
 
@@ -79,7 +79,7 @@ const Navbar = () => {
                             :
                             (
                                 <Typography color="black" variant="h4" >
-                                   <NavLink to="/" className="link">ShopHeaven</NavLink>
+                                    <NavLink to="/" className="link">ShopHeaven</NavLink>
                                 </Typography>
                             )
                         }

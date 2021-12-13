@@ -1,5 +1,5 @@
 import React,{useState} from 'react';
-import {Drawer,List,ListItem,ListItemIcon,Box} from '@mui/material';
+import {Drawer,List,ListItem,ListItemIcon} from '@mui/material';
 import MenuOpenOutlinedIcon from '@mui/icons-material/MenuOpenOutlined';
 import {useNavigate} from 'react-router-dom';
 
@@ -44,22 +44,29 @@ const Sidenav = (props) => {
                     </ListItemIcon>
                 </ListItem>
                 {props.items.map((item)=>{
-                    return (<ListItem key={uid++} divider button  sx={{textAlign : "center"}}>
+                    return (<ListItem  onClick={item.handleList} key={uid++} divider button  sx={{textAlign : "center"}}>
                                 <ListItemIcon>
-                                    {item.title}
-                                    <List>
-                                        {item.list.map((listItem)=>{
-                                            const url = `/categories/${item.title.toLowerCase().replace(/ /g, "")}/${listItem.toLowerCase().replace(/ /g, "")}`
-                                            return (
+                                {
+                                    !item.menuStatus ? item.title : <List>
 
-                                                <ListItem button onClick={()=>{
-                                                    onClickEvent(url)
-                                                }}>
-                                                    {listItem}
-                                                </ListItem>
-                                            )
-                                        })}
-                                    </List>
+                                        <ListItem  button onClick={item.handleList}> 
+                                            {item.title}
+
+                                        </ListItem>
+
+                                    {item.list.map((listItem)=>{
+                                        const url = `/categories/${item.title.toLowerCase().replace(/ /g, "")}/${listItem.toLowerCase().replace(/ /g, "")}`
+                                        return (
+
+                                            <ListItem button onClick={()=>{
+                                                onClickEvent(url)
+                                            }}>
+                                                {listItem}
+                                            </ListItem>
+                                        )
+                                    })}
+                                </List>
+                                }                                    
                                 </ListItemIcon>
 
                             </ListItem>)
