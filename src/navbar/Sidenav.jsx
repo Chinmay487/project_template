@@ -1,6 +1,7 @@
-import React from 'react';
-import {Drawer,List,ListItem,ListItemIcon} from '@mui/material';
+import React,{useState} from 'react';
+import {Drawer,List,ListItem,ListItemIcon,Box} from '@mui/material';
 import MenuOpenOutlinedIcon from '@mui/icons-material/MenuOpenOutlined';
+import {Link} from 'react-router-dom';
 
 
 const Sidenav = (props) => {
@@ -17,6 +18,7 @@ const Sidenav = (props) => {
     }
 
     const onClickEvent = ()=>{
+
         props.setDrawerStatus(!props.drawerStatus);
     }
 
@@ -35,10 +37,20 @@ const Sidenav = (props) => {
                     </ListItemIcon>
                 </ListItem>
                 {props.items.map((item)=>{
-                    return (<ListItem key={uid++} divider button onClick={onClickEvent} sx={{textAlign : "center"}}>
+                    return (<ListItem key={uid++} divider button  sx={{textAlign : "center"}}>
                                 <ListItemIcon>
                                     {item.title}
+                                    <List>
+                                        {item.list.map((listItem)=>{
+                                            return (
+                                                <ListItem button onClick={onClickEvent}>
+                                                    <Link className="link" to="">{listItem}</Link>
+                                                </ListItem>
+                                            )
+                                        })}
+                                    </List>
                                 </ListItemIcon>
+
                             </ListItem>)
                 })}
             </List>
