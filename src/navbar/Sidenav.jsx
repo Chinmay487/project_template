@@ -1,8 +1,9 @@
-import React,{useState} from 'react';
-import {Drawer,List,ListItem,ListItemIcon} from '@mui/material';
+import React from 'react';
+import {Drawer,List,ListItem,ListItemIcon,Collapse} from '@mui/material';
 import MenuOpenOutlinedIcon from '@mui/icons-material/MenuOpenOutlined';
 import {useNavigate} from 'react-router-dom';
-
+import ExpandLess from '@mui/icons-material/ExpandLess';
+import ExpandMore from '@mui/icons-material/ExpandMore';
 
 const Sidenav = (props) => {
 
@@ -24,6 +25,15 @@ const Sidenav = (props) => {
         props.setDrawerStatus(!props.drawerStatus);
     }
 
+    const closeUnused = (index) => {
+        for(let i=0;i<props.items.length;i++){
+            if(i !== index && props.items[i].status===true){
+                props.items[i].handleList()
+            }                       
+        }
+    }
+
+
 
     return (
         <Drawer open={props.drawerStatus} onClose={onClickEvent} variant="temporary" anchor="left" elevation={5} sx={drawerStyle} >
@@ -43,33 +53,35 @@ const Sidenav = (props) => {
                         Homepage
                     </ListItemIcon>
                 </ListItem>
-                {props.items.map((item)=>{
-                    return (<ListItem  onClick={item.handleList} key={uid++} divider button  sx={{textAlign : "center"}}>
-                                <ListItemIcon>
-                                {
-                                    !item.menuStatus ? item.title : <List>
+                {props.items.map((item,index)=>{
+                    // console.log(props.items.length);
+                    return (
+                        <>
+                            <ListItem  onClick={()=>{
+                                item.handleList()
+                                closeUnused(index)
+                            }} key={uid++} divider button  sx={{textAlign : "center"}}>
+                                         <ListItemIcon >{item.title} {!item.status ? <ExpandMore/> : <ExpandLess/>} </ListItemIcon>         
+                            </ListItem> 
+                            <Collapse in={item.status} imeout="auto">
+                                     <List>
+                                        {item.list.map((listItem)=>{
+                                            const url = `/categories/${item.title.toLowerCase().replace(/ /g, "")}/${listItem.toLowerCase().replace(/ /g, "")}`
+                                            return (
 
-                                        <ListItem  button onClick={item.handleList}> 
-                                            {item.title}
+                                                <ListItem button onClick={()=>{
+                                                    item.handleList()
+                                                    onClickEvent(url)
+                                                }}>
+                                                    {listItem}
+                                                </ListItem>
+                                            )
+                                        })}
+                                    </List>
+                                </Collapse>
+                        </>
+                    )
 
-                                        </ListItem>
-
-                                    {item.list.map((listItem)=>{
-                                        const url = `/categories/${item.title.toLowerCase().replace(/ /g, "")}/${listItem.toLowerCase().replace(/ /g, "")}`
-                                        return (
-
-                                            <ListItem button onClick={()=>{
-                                                onClickEvent(url)
-                                            }}>
-                                                {listItem}
-                                            </ListItem>
-                                        )
-                                    })}
-                                </List>
-                                }                                    
-                                </ListItemIcon>
-
-                            </ListItem>)
                 })}
             </List>
         </Drawer>

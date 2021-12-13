@@ -1,12 +1,13 @@
 class ListClass{
+
     
     constructor(title,list,openEl,menuFunction){
         this.title = title;
         this.list = list;
         this.openEl = openEl.el;
+        this.status = openEl.status;
         this.menuFunction = menuFunction;
         this.onOpenMenu = Boolean(openEl.el);
-        this.menuStatus = openEl.status;
     }
 
     menuOpenFunction = (event) => {
@@ -27,13 +28,16 @@ class ListClass{
         });
     }
 
+    getCurrentStatus = () => {
+        console.log("Current Status is : ",this.status)
+        return this.status;
+    }
 
     handleList = () => {
         this.menuFunction((oldValue)=>{
-            const {status} = oldValue ;
             return {
-                ...oldValue , 
-                status : !status
+                ...oldValue,
+                status : !oldValue.status
             }
         })
     }
