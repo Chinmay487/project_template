@@ -13,18 +13,16 @@ export const navbarStyle2 = {
     width : "100%",
     height : "2rem",
     backgroundColor : "#f2f2f2",
-    // backgroundColor : "green"
 }
 
 export const navbarDiveStyle2 = {
     width : {
-        md : "50%",
+        md : "70%",
         xl: "50%",
         sm:"100%"
     },
     height : "100%",
     display : "flex",
-    margin : "0 0 0 2rem",
     justifyContent : "space-evenly",
     alignItems : "center",
     color : "black"
@@ -43,7 +41,6 @@ export const searchFormGroup = {
         md : "50%"
     },
     padding : "0 1%",
-    // backgroundColor : "green"
 }
 
 export const searchForm = {
@@ -53,7 +50,6 @@ export const searchForm = {
         md : "70%",
         
     },
-    // backgroundColor : "red"
 }
 
 export const searchFormInput = {
@@ -81,6 +77,15 @@ export const menuStyle = {
 export const menuItemStyle = {
     height : "2.5rem",
     width : "8rem",
+}
+
+export const drawerStyle = {
+    width: 300,
+    flexShrink: 0,
+    '& .MuiDrawer-paper': {
+        width: 200,
+        boxSizing: 'border-box',
+    },
 }
 
 

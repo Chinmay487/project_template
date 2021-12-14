@@ -3,7 +3,7 @@ import {AppBar,Toolbar, Typography,Box,TextField,IconButton,Avatar, useTheme , u
 import SearchOutlinedIcon from '@mui/icons-material/SearchOutlined';
 import Sidenav from './Sidenav';
 import NavMenu from './NavMenu'
-import {appBarStyle,navbarDivStyle,searchFormGroup,searchForm,searchFormInput,avatarStyle,navbarStyle2,navbarDiveStyle2,typographyStyle2} from './styles';
+import {appBarStyle,navbarDivStyle,searchFormGroup,searchForm,searchFormInput,avatarStyle,navbarStyle2,navbarDiveStyle2,typographyStyle2} from '../styles';
 import MenuRoundedIcon from '@mui/icons-material/MenuRounded';
 import {NavLink} from 'react-router-dom';
 import ListClass from './ListClass'

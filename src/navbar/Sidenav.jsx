@@ -4,6 +4,7 @@ import MenuOpenOutlinedIcon from '@mui/icons-material/MenuOpenOutlined';
 import {useNavigate} from 'react-router-dom';
 import ExpandLess from '@mui/icons-material/ExpandLess';
 import ExpandMore from '@mui/icons-material/ExpandMore';
+import {drawerStyle} from '../styles'
 
 const Sidenav = (props) => {
 
@@ -11,14 +12,7 @@ const Sidenav = (props) => {
 
     const navigate = useNavigate();
 
-    const drawerStyle = {
-        width: 300,
-        flexShrink: 0,
-        '& .MuiDrawer-paper': {
-            width: 200,
-            boxSizing: 'border-box',
-        },
-    }
+    
 
     const onClickEvent = (url)=>{
         navigate(url)
@@ -34,15 +28,14 @@ const Sidenav = (props) => {
     }
 
 
-
     return (
-        <Drawer open={props.drawerStatus} onClose={onClickEvent} variant="temporary" anchor="left" elevation={5} sx={drawerStyle} >
+        <Drawer open={props.drawerStatus} onClose={onClickEvent} variant="temporary" anchor="left" sx={drawerStyle} >
                 
             <List sx={{marginTop : "3rem"}} >
                 <ListItem divider button onClick={()=>{
                     props.setDrawerStatus(!props.drawerStatus)
                 }}> 
-                    <MenuOpenOutlinedIcon/>
+                    <ListItemIcon><MenuOpenOutlinedIcon/></ListItemIcon>
                 </ListItem>
                 <ListItem divider button onClick={()=>{
                     navigate('/')
@@ -73,7 +66,7 @@ const Sidenav = (props) => {
                                                     item.handleList()
                                                     onClickEvent(url)
                                                 }}>
-                                                    {listItem}
+                                                    <ListItemIcon>{listItem}</ListItemIcon>
                                                 </ListItem>
                                             )
                                         })}

@@ -1,6 +1,6 @@
 import React from 'react';
 import {Menu,MenuItem} from '@mui/material';
-import {menuItemStyle,menuStyle} from './styles'
+import {menuItemStyle,menuStyle} from '../styles'
 import {useNavigate} from 'react-router-dom';
 
 
