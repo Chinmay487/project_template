@@ -1,56 +1,37 @@
 import React from 'react';
-import {Box, Typography} from '@mui/material'
+import {Box, Typography,Card,CardContent,CardActions,CardMedia,Button} from '@mui/material'
 import lizard from '../images/lizard.jpg'
 import jcb from '../images/jcb.jpg'
 import {Link} from 'react-router-dom'
 
 
-
-
-// {width: {xs:"100%",sm : "50%",md: "40%",xl : "20%"}}
-
 const ProductCard = () => {
-
-    const cardStyle1 = {
-        // width: {
-        //     xs:"100%",
-        //     sm : "50%",
-        //     md: "40%",
-        //     xl : "20%"
-        // },
-        height : "20rem",
-        margin : "auto 1%",
-        backgroundColor : "#e6e4e3",
-        borderRadius : "10px",
-        // padding : "1%"
-    }
-
-    const cardDivStyle1 = {
-        width : "100%",
-        height : "10rem",
-
-        // backgroundImage : `url(${lizard})`,
-        // backgroundPosition : "center",
-        // backgroundSize : "cover"
-    }
-
-    const cardDivStyle2 = {
-        textAlign : "center"
-    }
-
     return (
-        <Box sx={cardStyle1} component="div" elevation={2}>
-            <Box component="img" src={jcb}  sx={cardDivStyle1} />
-            <Box component="div" sx={cardDivStyle2}>
-                <Typography variant="body1">
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Sed velit quisquam cum ab officia laboriosam?
+        // sx={{ maxWidth: 345 }}
+        <Card elevation={7} sx={{ maxWidth: 300 }}>
+            <Link className="link" to="/wishlist">
+            <CardMedia
+                component="img"
+                height="200"
+                image={jcb}
+                alt="jcb"
+            />
+            <CardContent>
+                <Typography gutterBottom variant="h5" component="div">
+                Lizard
                 </Typography>
-                <Typography variant="h5">
-                    Price : 20000
-                </Typography> 
-            </Box>
-        </Box>
-    )
+                <Typography variant="body2" color="text.secondary">
+                Lizards are a widespread group of squamate reptiles, with over 6,000
+                species, ranging across all continents except Antarctica
+                </Typography>
+            </CardContent>
+            <CardActions>
+                <Button size="small">Share</Button>
+                <Button size="small">Learn More</Button>
+            </CardActions>
+            </Link>
+        </Card>
+    );
 }
 
 
