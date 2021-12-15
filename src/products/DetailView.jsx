@@ -5,3 +5,6 @@ const DetailView = () => {
 }
 
 export default DetailView;
+
+// 25 *60 per minut
+//  25 * 3600
