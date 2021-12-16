@@ -11,7 +11,7 @@ const ProductCard = () => {
     const productBox1 = { 
         padding: "5px",
         height: {
-            md : "15rem",
+            md : "12rem",
             sm : "10rem"
         },
         width:{
@@ -46,28 +46,26 @@ const ProductCard = () => {
         } 
     }
 
-    const cardContent = {
-        width : "100%" ,
-        display:"flex",
-        justifyContent:"flex-start",
-        // backgroundColor:"cyan"
-    }
+    // const cardContent = {
+    //     width : "100%" ,
+    //     display:"flex",
+    //     justifyContent:"flex-start",
+    //     // backgroundColor:"cyan"
+    // }
 
     return (
         <Link to="/wishlist" className="link">
             <Box  sx={ productBox1 } >
                 <Box component="img" src={jcb} sx={cardImageStyle} />
                 <Box component="div" sx={{display:"flex",flexDirection:"column"}}>
-                    <Typography variant="h6" >
+                    <Typography variant="subtitle1" >
                         JCB
                     </Typography>
-                    <Typography variant="p">
+                    <Typography variant="subtitle2">
                         JCB ki khudai
                     </Typography>
-                    <Typography variant="h5">Inr 3000</Typography>
-                    <Box sx={cardContent}>
-                        <Typography> EMI From 999</Typography>
-                    </Box>
+                    <Typography variant="subtitle2">Inr 3000</Typography>
+                    
                 </Box>
             </Box>
         </Link>
