@@ -1,5 +1,4 @@
 import React from 'react';
-<<<<<<< HEAD
 import {Box , Typography,Rating, Button} from '@mui/material';
 import mob from '../images/mob.webp';
 import AddShoppingCartOutlinedIcon from '@mui/icons-material/AddShoppingCartOutlined';
@@ -45,16 +44,6 @@ const DetailView = () => {
                     <Box></Box>
                 </Box>
             </Box>
-=======
-import {useParams} from 'react-router-dom';
-
-const DetailView = () => {
-    const {key} = useParams()
-    return (
-        <>
-            <h1>{key}</h1>
-            <h1>Detail View Page</h1>
->>>>>>> a6700370af570d4779c0ff4dc594e0bbd7571410
         </>
     )
 }
