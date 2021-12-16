@@ -46,7 +46,6 @@ const ProductCard = () => {
         } 
     }
 
-<<<<<<< HEAD
     // const cardContent = {
     //     width : "100%" ,
     //     display:"flex",
@@ -54,15 +53,6 @@ const ProductCard = () => {
     //     // backgroundColor:"cyan"
     // }
 
-=======
-    const cardContent = {
-        width : "100%" ,
-        display:"flex",
-        justifyContent:"flex-start",
-        // backgroundColor:"cyan"
-    }
-    // detail/:key
->>>>>>> a6700370af570d4779c0ff4dc594e0bbd7571410
     return (
         <Link to="/detail/3" className="link">
             <Box  sx={ productBox1 } >

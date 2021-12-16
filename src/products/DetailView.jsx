@@ -36,9 +36,9 @@ const DetailView = () => {
                 
                 <Box>
                     <Box>
-                        <Button variant='contained'>Buy Now <ShoppingBagOutlinedIcon/> </Button>
-                        <Button variant='contained'> Add to Cart <AddShoppingCartOutlinedIcon/> </Button>
-                        <Button variant='contained' > Add to Wish List <RedeemOutlinedIcon/> </Button>
+                        <Button variant='contained'> <ShoppingBagOutlinedIcon/> Buy now</Button>
+                        <Button variant='contained'> <AddShoppingCartOutlinedIcon/> Add to Cart  </Button>
+                        <Button variant='contained' >  <RedeemOutlinedIcon/> Add to Wish List </Button>
                     </Box>
                     <Box></Box>
                     <Box></Box>
