@@ -1,7 +1,14 @@
 import React from 'react';
+import {useParams} from 'react-router-dom';
 
 const DetailView = () => {
-    return <h1>Detail View Page</h1>
+    const {key} = useParams()
+    return (
+        <>
+            <h1>{key}</h1>
+            <h1>Detail View Page</h1>
+        </>
+    )
 }
 
 export default DetailView;

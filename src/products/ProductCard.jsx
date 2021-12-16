@@ -28,7 +28,7 @@ const ProductCard = () => {
         alignItems : "center",
         flexDirection: {
             md : "column",
-            sm : "column",
+            sm : "row",
             xs : "row"
         }
     }
@@ -52,9 +52,9 @@ const ProductCard = () => {
         justifyContent:"flex-start",
         // backgroundColor:"cyan"
     }
-
+    // detail/:key
     return (
-        <Link to="/wishlist" className="link">
+        <Link to="/detail/3" className="link">
             <Box  sx={ productBox1 } >
                 <Box component="img" src={jcb} sx={cardImageStyle} />
                 <Box component="div" sx={{display:"flex",flexDirection:"column"}}>
