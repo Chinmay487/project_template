@@ -1,6 +1,7 @@
 import React from 'react';
 import { Box, Typography, Rating, Button, Grid ,TextField , TextareaAutosize } from '@mui/material';
 import mob from '../images/mob.webp';
+import jcb from '../images/jcb.jpg'
 import AddShoppingCartOutlinedIcon from '@mui/icons-material/AddShoppingCartOutlined';
 import ShoppingBagOutlinedIcon from '@mui/icons-material/ShoppingBagOutlined';
 import RedeemOutlinedIcon from '@mui/icons-material/RedeemOutlined';
@@ -33,7 +34,7 @@ const DetailView = () => {
             <Grid item md={12}  >
                 <Grid container >
                     <Grid item md={4.5}>
-                        <Box component='img' src={mob} sx={{ maxWidth: '100%' }} />
+                        <Box component='img' src={jcb} sx={{ maxWidth: '100%' }} />
                     </Grid>
                     <Grid item md={7.5} >
                         <Box component="div" sx={{ height:'100%', display: 'flex', flexDirection: 'column', justifyContent: 'space-around' }} >
