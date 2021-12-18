@@ -58,17 +58,29 @@ const DetailView = () => {
             </Grid>
             <Grid item md={12} sx={{ backgroundColor: "pink", height: "55rem" }} >
 
-            <Grid container >
-                <Grid item md={4}>
-                    <form>
+            <Grid container spacing={3} >
+                <Grid item md={5}>
+                    <Box component='form' sx={{display:'flex',width:'100%' , height:'100%', flexDirection:'column' , justifyContent:'space-evenly'}} >
                     <TextField id="filled-basic" label="Filled" variant="filled" />
                     <Rating name="read-only" value={4} />
                     <TextareaAutosize placeholder='Share your Experience'  minRows={5} />
-                    <Button type='submit' variant='outlined' > Post Experience</Button>
-                    </form>
+                    <Button variant='outlined' > Post Experience</Button>
+                    </Box>
                 </Grid>
-                <Grid item md={8}>
-
+                <Grid item md={7}>
+                    <Box component='div'>
+                        <Typography  variant='subtitle2'>
+                            Username
+                        </Typography >
+                        <Rating name="read-only" value={4} />
+                        <Typography  variant='h4'>
+                            Title
+                        </Typography>
+                        <Typography Variant='p'>
+                            Lorem, ipsum dolor sit amet consectetur adipisicing elit. Odio iure dolorum, necessitatibus asperiores magnam praesentium debitis ea qui. Similique, eveniet?
+                        </Typography>
+                        
+                    </Box>
                 </Grid>
             </Grid>
 
