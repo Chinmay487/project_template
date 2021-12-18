@@ -14,42 +14,43 @@ const DetailView = () => {
             xs: '90%'
         },
         display: 'block',
-        mx: {
-            md: '10px',
-            sm: 'auto'
-        }
+        mx : "auto"
     }
 
-    // return(
-    //     <>
-    //         <Box>
-    //             <Box component='img' src={mob} sx={detailImageStyle} />
-    //             <Box component="div" >
-    //                 <Typography variant='h4'>Iphone 13 mini (128gb) Blue</Typography>
-    //                 <Rating name="read-only" value={4} readOnly />
-    //                 <Typography>Price : &#8377;69,900.00</Typography>
-    //                 <Typography>Model Name : Iphone</Typography>
-    //                 <Typography>Brand : Apple</Typography>
-    //                 <Typography>Storage : 128gb</Typography>
-    //                 <Typography>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Nostrum molestiae in libero accusamus quisquam nobis, obcaecati, animi magni asperiores, architecto cum fugiat voluptate. Repudiandae, molestiae.</Typography>
-    //             </Box>
+    const gridBox2 = {
+        display:"flex",
+        justifyContent:{
+            lg : "space-evenly",
+            md : "space-evenly",
+            sm : "space-between",
+            xs : "space-between"
+        },
+        flexDirection:{
+            lg:"row",
+            md:"row",
+            sm:"row",
+            // xs:"column"
+        },
+        width:"100%",
+        mx:{
+            lg:"auto",
+            md:"auto"
+        },
+        border:"1px solid green",
+        backgroundColor : "yellow"
+    }
 
-    //             <Box>
-    //                 <Box>
-    //                     <Button variant='contained'> <ShoppingBagOutlinedIcon/> Buy now</Button>
-    //                     <Button variant='contained'> <AddShoppingCartOutlinedIcon/> Add to Cart  </Button>
-    //                     <Button variant='contained' >  <RedeemOutlinedIcon/> Add to Wish List </Button>
-    //                 </Box>
-    //                 <Box></Box>
-    //                 <Box></Box>
-    //             </Box>
-    //         </Box>
-    //     </>
-    // )
+    const gridItem1 = {
+        backgroundColor:"green",
+        display:"flex",
+        flexDirection:"column",
+        justifyContent:"space-evenly"
+    }
+
 
     return (
-        <Grid container >
-            <Grid item md={6} >
+        <Grid container sx={{height:"10rem"}}>
+            <Grid item md={6} sx={gridItem1} >
                 <Box component='img' src={mob} sx={detailImageStyle} />
                 <Box component="div" >
                     <Typography variant='h4'>Iphone 13 mini (128gb) Blue</Typography>
@@ -62,21 +63,24 @@ const DetailView = () => {
                 </Box>
 
             </Grid>
-            <Grid item md={6}>
-                <Box>
-                    <Button variant='contained'> <ShoppingBagOutlinedIcon /> Buy now </Button>
-                    <Button variant='contained'> <AddShoppingCartOutlinedIcon /> Add to Cart  </Button>
-                    <Button variant='contained' >  <RedeemOutlinedIcon /> Add to Wish List </Button>
+            <Grid item md={6} sx={{backgroundColor:"pink",height :"55rem"}} >
+                <Box sx={gridBox2}  >
+                    <Button variant='contained'><ShoppingBagOutlinedIcon /> Buy now </Button>
+                    <Button variant='contained'><AddShoppingCartOutlinedIcon /> Add to Cart  </Button>
+                    <Button variant='contained' ><RedeemOutlinedIcon /> Add to Wish List </Button>
                 </Box>
-                <Box>
-
+                <Box component="div">
+                    <Typography variant="h6">
+                        Customer Reviews
+                    </Typography>
+                    
                 </Box>
-                <Box></Box>
 
             </Grid>
         </Grid>
     )
 }
+
 
 export default DetailView;
 
