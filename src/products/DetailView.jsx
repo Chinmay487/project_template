@@ -1,6 +1,6 @@
 import React from 'react';
-import { Box, Typography, Rating, Button, Grid ,TextField , TextareaAutosize } from '@mui/material';
-import mob from '../images/mob.webp';
+import { Box, Typography, Rating, Button, Grid, TextField, useTheme } from '@mui/material';
+// import mob from '../images/mob.webp';
 import jcb from '../images/jcb.jpg'
 import AddShoppingCartOutlinedIcon from '@mui/icons-material/AddShoppingCartOutlined';
 import ShoppingBagOutlinedIcon from '@mui/icons-material/ShoppingBagOutlined';
@@ -8,6 +8,8 @@ import RedeemOutlinedIcon from '@mui/icons-material/RedeemOutlined';
 
 
 const DetailView = () => {
+
+    const theme = useTheme();
 
     const gridBox2 = {
         display: "flex",
@@ -20,74 +22,116 @@ const DetailView = () => {
         flexDirection: {
             lg: "row",
             md: "row",
-            sm: "row"
+            sm: "column",
+            xs: "column"
         },
         width: "100%",
         mx: {
             lg: "auto",
             md: "auto"
+        },
+        my: {
+            sm: '2%',
+            xs: '2%'
         }
     }
 
-    return (
-        <Grid container sx={{ height: "10rem" }}>
-            <Grid item md={12}  >
-                <Grid container >
-                    <Grid item md={4.5}>
-                        <Box component='img' src={jcb} sx={{ maxWidth: '100%' }} />
-                    </Grid>
-                    <Grid item md={7.5} >
-                        <Box component="div" sx={{ height:'100%', display: 'flex', flexDirection: 'column', justifyContent: 'space-around' }} >
-                            <Box>
-                                <Typography variant='h4'>Iphone 13 mini (128gb) Blue</Typography>
-                                <Rating name="read-only" value={4} readOnly />
-                                <Typography>Price : &#8377;69,900.00 </Typography>
-                                <Typography>Model Name : Iphone</Typography>
-                                <Typography>Brand : Apple</Typography>
-                                <Typography>Storage : 128gb</Typography>
-                                <Typography>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Nostrum molestiae in libero accusamus quisquam nobis, obcaecati, animi magni asperiores, architecto cum fugiat voluptate. Repudiandae, molestiae.</Typography>
-                            </Box>
-                            <Box sx={gridBox2}  >
-                                <Button variant='contained'><ShoppingBagOutlinedIcon /> Buy now </Button>
-                                <Button variant='contained'><AddShoppingCartOutlinedIcon /> Add to Cart  </Button>
-                                <Button variant='contained'><RedeemOutlinedIcon /> Add to Wish List </Button>
-                            </Box>
-                        </Box>
+    const buttonGroupStyle1 = {
+        width: {
+            lg:'30%',
+            md:'30%',
+            sm: '70%',
+            xs: '70%'
+        },
+        my: {
+            sm: '1%',
+            xs: '1%'
+        },
+        mx: {
+            sm: 'auto',
+            xs: 'auto'
+        }
+    }
 
-                    </Grid>
+    const formStyle1 = { 
+        display: 'flex',
+        width:'90%',
+        mx: 'auto',
+        height: '20rem', 
+        padding: '1%', 
+        backgroundColor: '#ECEFF1',
+        boxShadow: theme.shadows[7],
+        flexDirection: 'column',
+        justifyContent: 'space-evenly' 
+    }
+
+
+return (
+    <Grid container rowGap={4} >
+        <Grid item md={12}  >
+            <Grid container columnGap={3} >
+                <Grid item md={4.5}  >
+                    <Box component='img' src={jcb} sx={{ maxWidth: '100%' }} />
+                </Grid>
+                <Grid item md={7} >
+                    <Box component="div" sx={{ height: '100%', display: 'flex', flexDirection: 'column', justifyContent: 'space-around' , padding:'1%' }} >
+                        <Box>
+                            <Typography variant='h5'>JCB 13 mini (128gb) Yellow</Typography>
+                            <Rating name="read-only" value={4} readOnly />
+                            <Typography>Price : &#8377;69,900.00 </Typography>
+                            <Typography>Model Name : JCB</Typography>
+                            <Typography>Brand : U5eLe55</Typography>
+                            <Typography>Storage : 128gb</Typography>
+                            <Typography>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Nostrum molestiae in libero accusamus quisquam nobis, obcaecati.</Typography>
+                        </Box>
+                        <Box sx={gridBox2}    >
+                            <Button variant='contained' sx={buttonGroupStyle1} ><ShoppingBagOutlinedIcon /> &nbsp; Buy now </Button>
+                            <Button variant='contained' sx={buttonGroupStyle1} ><AddShoppingCartOutlinedIcon /> &nbsp; Add to Cart  </Button>
+                            <Button variant='contained' sx={buttonGroupStyle1} ><RedeemOutlinedIcon /> &nbsp; Add to Wish List </Button>
+                        </Box>
+                    </Box>
+
                 </Grid>
             </Grid>
-            <Grid item md={12} sx={{ backgroundColor: "pink", height: "55rem" }} >
+        </Grid>
 
-            <Grid container spacing={3} >
-                <Grid item md={5}>
-                    <Box component='form' sx={{display:'flex',width:'100%' , height:'100%', flexDirection:'column' , justifyContent:'space-evenly'}} >
-                    <TextField id="filled-basic" label="Filled" variant="filled" />
-                    <Rating name="read-only" value={4} />
-                    <TextareaAutosize placeholder='Share your Experience'  minRows={5} />
-                    <Button variant='outlined' > Post Experience</Button>
+        <Grid item md={12} sx={{ backgroundColor: "#F5F5F5" }} >
+
+            <Grid container spacing={3} sx={{ my: '2%' }} >
+                <Grid item md={5} sm={12} xs={12} >
+                    <Box component='form' sx={formStyle1} >
+                        <Typography variant="h6" > Share your Experience </Typography>
+                        <TextField id="filled-basic" label="Filled" variant="standard" />
+                        <TextField placeholder='Share your Experience' maxRows={7} minRows={3} variant='standard' multiline />
+
+                        <Box component='div' sx={{ width: '100%', display: 'flex', alignItems: "base-line" }} >
+                            <Typography variant="subtitle1"> Rate Us &nbsp;
+                            </Typography>
+                            <Rating name="read-only" value={4} />
+                        </Box>
+                        <Button variant='outlined' sx={{ width: '47%' }} > Post </Button>
+
                     </Box>
                 </Grid>
                 <Grid item md={7}>
-                    <Box component='div'>
-                        <Typography  variant='subtitle2'>
+                    <Box component='div'  sx={{padding:'2%'}}>
+                        <Typography variant='subtitle2'>
                             Username
                         </Typography >
                         <Rating name="read-only" value={4} />
-                        <Typography  variant='h4'>
+                        <Typography variant='h6'>
                             Title
                         </Typography>
                         <Typography Variant='p'>
                             Lorem, ipsum dolor sit amet consectetur adipisicing elit. Odio iure dolorum, necessitatibus asperiores magnam praesentium debitis ea qui. Similique, eveniet?
                         </Typography>
-                        
                     </Box>
                 </Grid>
             </Grid>
 
-            </Grid>
         </Grid>
-    )
+    </Grid>
+)
 }
 
 
