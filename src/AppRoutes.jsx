@@ -22,7 +22,7 @@ const AppRoutes = () => {
             <Route exact={true} path="/profile" element={<ProfilePage/>} />
             <Route exact={true} path="/panel" element={<Panel/>} />
             <Route exact={true} path="/update/:key" element={<UpdateProduct/>}/>
-            <Route exact={true} path="/add_product" element={<AddProduct/>} />
+            <Route exact={true} path="/addproduct" element={<AddProduct/>} />
             <Route exact={true} path="/wishlist" element={<Wishlist/>} />
             <Route exact={true} path="/cart" element={<ViewCart/>} />
             <Route exact={true} path="/detail/:key" element={<DetailView/>} />
