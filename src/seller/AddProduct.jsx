@@ -16,7 +16,7 @@ const AddProduct = () => {
         height: "40rem",
         my: "1rem",
         mx: "auto",
-        padding: "1%",
+        padding: "3%",
         display: "flex",
         flexDirection: "column",
         justifyContent: "space-evenly",
@@ -32,12 +32,8 @@ const AddProduct = () => {
         },
         mx: "auto",
         display: "flex",
-        justifyContent: {
-            lg : "space-evenly",
-            md : "space-evenly",
-            sm : "space-between",
-            xs : "space-between"
-        },
+        justifyContent: 'space-between',
+        alignItems:'center',
         flexDirection: {
             lg: "row",
             md: "row",
@@ -48,7 +44,7 @@ const AddProduct = () => {
 
     return (
         <>
-            <Typography variant="h3" sx={{ textAlign: "center", my: "1rem" }} gutterBottom>
+            <Typography variant='h5' sx={{ textAlign: "center", my: "1rem" }} gutterBottom>
                 Add New Product Form
             </Typography>
             <Box component='form' sx={addProductForm} encType="multipart/form-data"  >
@@ -56,13 +52,13 @@ const AddProduct = () => {
                 <TextField variant='outlined' label='Description' maxRows={7} minRows={3} multiline />
 
 
-                <Grid container>
-                    <Grid item md={5} >
+                <Grid container rowGap={3} >
+                    <Grid item md={5} sm={12} xs={12}  >
                         <Typography>Price</Typography>
                         < TextField sx={{ width: {lg:"75%",md:"75%",sm:"100%",xs:"100%"} }} variant='standard' type="number" label='Price' />
 
                     </Grid>
-                    <Grid item md={5} >
+                    <Grid item md={5} sm={12} xs={12} >
                         <Typography>Discount Price</Typography>
                         <TextField sx={{ width: {lg:"75%",md:"75%",sm:"100%",xs:"100%"} }} variant='standard' type="number" label='Discount Price' />
                     </Grid>
@@ -70,10 +66,10 @@ const AddProduct = () => {
                 </Grid>
 
                 <Box component="div" sx={formBox2}>
-                    <Typography variant="p" sx={{ fontWeight: "normal", fontSize: { lg: "1.5rem", md: "1.5rem", sm: "1rem", xs: "1rem" } }} >
-                        Total Quantity Available
+                    <Typography variant='subtitle1' >
+                        Quantity Available
                     </Typography>
-                    <Slider aria-label="Quantity" valueLabelDisplay="auto"  min={10} max={50} sx={{ mx:{sm:"1%",xs:"1%"},width: "50%" }} />
+                    <Slider aria-label="Quantity" valueLabelDisplay="auto"  min={10} max={50} sx={{ mx:{sm:"1%",xs:"1%"},width:{lg:'50%',md:'50%',sm:'100%',xs:'100%'}}} />
                 </Box>
 
                 <Box sx={formBox2}>
