@@ -29,6 +29,7 @@ const ProfilePage = () => {
         height: "27rem",
         // padding : "5%",
         px: "12%",
+        pb:'3%',
         display: "flex",
         flexDirection: "column",
         justifyContent: "space-between",
@@ -48,7 +49,7 @@ const ProfilePage = () => {
     return (
         <>
             <Typography variant="h5" sx={{ my: "2rem", textAlign: "center" }} gutterBottom>Hello User</Typography>
-            <Grid container columnGap={3} rowGap={3} sx={{ width: "80%", mx: "auto" }} >
+            <Grid container columnGap={3} rowGap={3} sx={{ width: "80%", mx: "auto" , my:'2%'}} >
                 <Grid item md={3} sm={12} xs={12} sx={profile1} >
                     <Box component="img" src={profile} sx={{ height: "15rem", width: "70%", mx: "auto" }} />
                     <Typography sx={{ mx: "4%" }} variant="h6">Name : Username</Typography>
