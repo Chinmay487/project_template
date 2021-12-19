@@ -1,20 +1,93 @@
 import React from 'react';
-import { Box ,Typography ,Button ,TextField  } from '@mui/material';
+import { Box, Typography, Button, TextField, Slider, Grid, useTheme } from '@mui/material';
 
 
 const AddProduct = () => {
+
+    const theme = useTheme()
+
+    const addProductForm = {
+        width: {
+            lg: "50%",
+            md: "50%",
+            sm: "90%",
+            xs: "90%"
+        },
+        height: "40rem",
+        my: "1rem",
+        mx: "auto",
+        padding: "1%",
+        display: "flex",
+        flexDirection: "column",
+        justifyContent: "space-evenly",
+        boxShadow: theme.shadows[7],
+    }
+
+    const formBox2 = {
+        width: {
+            lg : "80%",
+            md : "80%",
+            sm : "100%",
+            xs : "100%"
+        },
+        mx: "auto",
+        display: "flex",
+        justifyContent: {
+            lg : "space-evenly",
+            md : "space-evenly",
+            sm : "space-between",
+            xs : "space-between"
+        },
+        flexDirection: {
+            lg: "row",
+            md: "row",
+            sm: "column",
+            xs: "column"
+        }
+    }
+
     return (
-        <Box component='form'>
-                <TextField id='standard-basic' variant='standard' label='Enter the Product Name' />
-                <TextField  id='outlined-basic' variant='outlined' label='Description' />
-                <Typography>
-                < TextField id='filled-basic' variant='filled' label='Price'/>
-                <TextField id='filled-basic' variant='filled' label='Discount Price'/>
-                </Typography>
-                <Typography variant='h6'>
-                    How much quantity Available 
-                </Typography>
-        </Box>
+        <>
+            <Typography variant="h3" sx={{ textAlign: "center", my: "1rem" }} gutterBottom>
+                Add New Product Form
+            </Typography>
+            <Box component='form' sx={addProductForm} encType="multipart/form-data"  >
+                <TextField variant='standard' label='Enter the Product Name' />
+                <TextField variant='outlined' label='Description' maxRows={7} minRows={3} multiline />
+
+
+                <Grid container>
+                    <Grid item md={5} >
+                        <Typography>Price</Typography>
+                        < TextField sx={{ width: {lg:"75%",md:"75%",sm:"100%",xs:"100%"} }} variant='standard' type="number" label='Price' />
+
+                    </Grid>
+                    <Grid item md={5} >
+                        <Typography>Discount Price</Typography>
+                        <TextField sx={{ width: {lg:"75%",md:"75%",sm:"100%",xs:"100%"} }} variant='standard' type="number" label='Discount Price' />
+                    </Grid>
+
+                </Grid>
+
+                <Box component="div" sx={formBox2}>
+                    <Typography variant="p" sx={{ fontWeight: "normal", fontSize: { lg: "1.5rem", md: "1.5rem", sm: "1rem", xs: "1rem" } }} >
+                        Total Quantity Available
+                    </Typography>
+                    <Slider aria-label="Quantity" valueLabelDisplay="auto"  min={10} max={50} sx={{ mx:{sm:"1%",xs:"1%"},width: "50%" }} />
+                </Box>
+
+                <Box sx={formBox2}>
+                    <Typography>
+                        Thumbnail Image : <Box component="input" type="file" accept="image/png, image/jpeg" />
+                    </Typography>
+                    <Typography>
+                        Detail Images : <Box component="input" type="file" multiple="multiple" accept="image/png, image/jpeg" />
+                    </Typography>
+                </Box>
+
+                <Button variant="contained" sx={{ display: "block", width:{lg: "30%",md: "30%",sm:"50%",xs:"50%"}, mx: "auto" }} >Add Product</Button>
+            </Box>
+        </>
     )
 }
 
