@@ -5,7 +5,7 @@ import jcb from '../images/jcb.jpg'
 import AddShoppingCartOutlinedIcon from '@mui/icons-material/AddShoppingCartOutlined';
 import ShoppingBagOutlinedIcon from '@mui/icons-material/ShoppingBagOutlined';
 import RedeemOutlinedIcon from '@mui/icons-material/RedeemOutlined';
-
+import Review from './Review';
 
 const DetailView = () => {
 
@@ -109,23 +109,14 @@ return (
                             </Typography>
                             <Rating name="read-only" value={4} />
                         </Box>
-                        <Button variant='outlined' sx={{ width: '47%' }} > Post </Button>
+                        <Button variant='outlined' sx={{ display:'block' , width:'30%' }} > Post </Button>
 
                     </Box>
                 </Grid>
                 <Grid item md={7}>
-                    <Box component='div'  sx={{padding:'2%'}}>
-                        <Typography variant='subtitle2'>
-                            Username
-                        </Typography >
-                        <Rating name="read-only" value={4} />
-                        <Typography variant='h6'>
-                            Title
-                        </Typography>
-                        <Typography Variant='p'>
-                            Lorem, ipsum dolor sit amet consectetur adipisicing elit. Odio iure dolorum, necessitatibus asperiores magnam praesentium debitis ea qui. Similique, eveniet?
-                        </Typography>
-                    </Box>
+                    <Review/>
+                    <Review/>
+                    <Button variant="outlined" sx={{display:'block', mx:'auto'}} > View More </Button>
                 </Grid>
             </Grid>
 
