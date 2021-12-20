@@ -1,7 +1,6 @@
 import React from 'react';
 import { Typography, Grid, Box, useTheme, TextField, Button, IconButton } from '@mui/material';
 import profile from '../images/profile.jpg';
-import jcb from '../images/jcb.jpg';
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import History from './History';
 
@@ -97,7 +96,6 @@ const ProfilePage = () => {
                                     <Typography>State</Typography>
                                     <Typography>Pin code</Typography>
                                 </Box>
-
                             </Grid>
                             <Grid item md={6} sm={12} xs={12}>
                                 <Box component="form" sx={addressForm}>
@@ -122,10 +120,12 @@ const ProfilePage = () => {
             </Typography>
 
             <Grid container  sx={{width:'75%',mx:'auto',my:'3%'}} rowGap={3} >
-                <History/>
-                <History/>
-                <History/>
-                <History/>
+                
+
+                <History is_cart={false} />
+                <History is_cart={false} />
+                <History is_cart={false} />
+                <History is_cart={false} />
             </Grid>
         </>
     )
