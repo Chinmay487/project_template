@@ -1,5 +1,5 @@
 import React from 'react';
-import { Grid, Typography, Box, useTheme, IconButton, Slider } from '@mui/material';
+import { Grid, Typography, Box, useTheme, Button, Slider } from '@mui/material';
 import jcb from '../images/jcb.jpg';
 import { Link } from 'react-router-dom';
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
@@ -12,7 +12,12 @@ const History = (props) => {
     const profileGridItem = {
         display: "flex",
         flexDirection: "column",
-        justifyContent: "space-evenly"
+        justifyContent: {
+            lg: 'space-evenly',
+            md: 'space-evenly',
+            sm: 'center',
+            xs: 'center'
+        }
     }
 
     const profileGridItemText = {
@@ -26,38 +31,37 @@ const History = (props) => {
 
     return (
         <Grid item sm={12} xs={12}>
-            <Grid container sx={{ boxShadow: theme.shadows[5] }} >
+            <Grid container sx={{ boxShadow: theme.shadows[5], backgroundColor: '#F5F5F5' }} >
                 <Grid item md={3} sm={12} xs={12} >
                     <Box component="center">
                         <Box component="img" src={jcb} sx={{ maxWidth: { lg: "80%", md: "80%", sm: "80%", xs: "80%" } }} />
                     </Box>
                 </Grid>
-                <Grid item md={5} sm={12} xs={12} sx={profileGridItem} >
+                <Grid item md={7} sm={12} xs={12} sx={profileGridItem} >
                     <Link to='/detail/3' className='link'>
                         <Typography sx={profileGridItemText} variant="h6" >
                             JCB 13 mini (128gb) yellow </Typography>
                     </Link>
                     <Typography sx={profileGridItemText} variant="h6"> Price : 69,999 </Typography>
                     {
-                        props.is_cart ?  <Box sx={{width:'100%' , display:'flex', justifyContent:{lg:'space-evenly',md:'space-evenly',sm:'center',xs:'center'}, alignItems:'center'}}>
+                        props.is_cart ? <Box sx={{ width: '100%', display: 'flex', justifyContent: { lg: 'space-evenly', md: 'space-evenly', sm: 'center', xs: 'center' }, alignItems: 'center' }}>
                             <Typography> Qty : &nbsp;
                             </Typography>
-                            <Slider aria-label="Quantity" size='small' valueLabelDisplay="auto"  min={1} max={10} sx={{ mx:{sm:"1%",xs:"1%"},width:{lg:'50%',md:'50%',sm:'50%',xs:'50%'}}} />
-                        </Box> : <Typography sx={profileGridItemText} variant="h6"> Qty : 12 </Typography> 
+                            <Slider aria-label="Quantity" size='small' valueLabelDisplay="auto" min={1} max={10} sx={{ mx: { sm: "1%", xs: "1%" }, width: { lg: '50%', md: '50%', sm: '50%', xs: '50%' } }} />
+                        </Box> : <Typography sx={profileGridItemText} variant="h6"> Qty : 12 </Typography>
                     }
                 </Grid>
-                <Grid item md={4} sm={12} xs={12} sx={profileGridItem}>
+                <Grid item md={2} sm={12} xs={12} sx={profileGridItem}>
                     {
                         props.is_cart ?
-                            <IconButton  >
-                                <DeleteForeverIcon sx={{ color: "red" }} />
-                            </IconButton>
+                            <Box sx={{ width: '100%', display:'flex', justifyContent:'center' }}>
+                                <Button variant='text' color='error' sx={{ width: '30%', }}>
+                                    <DeleteForeverIcon sx={{ color: "red" }} />
+                                </Button>
+                            </Box>
                             : <Typography sx={profileGridItemText} variant="h6"> Date : 21-02-2021 </Typography>
                     }
                 </Grid>
-                {/* <Grid item>
-
-                </Grid> */}
             </Grid>
 
         </Grid>
