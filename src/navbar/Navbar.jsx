@@ -46,7 +46,7 @@ const Navbar = () => {
 
 
     const avatarMenuItems = [
-        'Username','Profile','Address','Wishlist','My Cart','Become Seller','Logout','Add Product'
+        'Username','Profile','Address','View Cart','Become Seller','Logout','Add Product'
     ]
 
     const navList2 = [

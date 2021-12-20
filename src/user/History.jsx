@@ -1,7 +1,7 @@
 import React from 'react';
 import { Grid, Typography, Box,useTheme } from '@mui/material';
 import jcb from '../images/jcb.jpg';
-
+import {Link} from 'react-router-dom';
 
 const History = () => {
 
@@ -15,16 +15,17 @@ const History = () => {
     }
 
     const profileGridItemText = {
-        mx: {
-            lg: "0%",
-            md: "0%",
-            sm: "5%",
-            xs: "5%"
+        mx:{
+            lg:'0%',
+            md:'0%',
+            sm:'5%',
+            xs:'5%'
         }
     }
 
     return (
-        <Grid item sm={12} xs={12}>
+        <Link to='/detail/3' className='link'>
+                    <Grid item sm={12} xs={12}>
             <Grid container sx={{ boxShadow: theme.shadows[5] }} >
                 <Grid item md={4} sm={12} xs={12} >
                     <Box component="center">
@@ -39,8 +40,12 @@ const History = () => {
                     <Typography sx={profileGridItemText} variant="h6">Date : 21-02-2021</Typography>
                     <Typography sx={profileGridItemText} variant="h6">Quantity : 5</Typography>
                 </Grid>
+                <Grid item> 
+                    
+                </Grid>
             </Grid>
         </Grid>
+        </Link>
     )
 }
 

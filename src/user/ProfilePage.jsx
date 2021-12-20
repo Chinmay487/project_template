@@ -1,6 +1,7 @@
 import React from 'react';
 import { Typography, Grid, Box, useTheme, TextField, Button, IconButton } from '@mui/material';
 import profile from '../images/profile.jpg';
+import jcb from '../images/jcb.jpg';
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import History from './History';
 
@@ -35,7 +36,6 @@ const ProfilePage = () => {
 
     const addressForm = {
         height: "27rem",
-        // padding : "5%",
         px: "12%",
         pb: '3%',
         display: "flex",
@@ -115,10 +115,14 @@ const ProfilePage = () => {
                     </Box>
                 </Grid>
             </Grid>
-            <Typography variant="h3" sx={{ textAlign: "center" }}>
+
+
+            <Typography variant="h4" sx={{ textAlign: "center" }}>
                 Purchase History
             </Typography>
-            <Grid container columnGap={3} rowGap={3} sx={profileGrid}>
+
+            <Grid container  sx={{width:'75%',mx:'auto',my:'3%'}} rowGap={3} >
+                <History/>
                 <History/>
                 <History/>
                 <History/>

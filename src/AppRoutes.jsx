@@ -5,7 +5,6 @@ import HomePage from './home/HomePage'
 import CategoryView from './products/CategoryView'
 import DetailView from './products/DetailView';
 import ViewCart from './products/ViewCart';
-import Wishlist from './products/Wishlist';
 import AddProduct from './seller/AddProduct';
 import Panel from './seller/Panel';
 import UpdateProduct from './seller/UpdateProduct';
@@ -23,8 +22,7 @@ const AppRoutes = () => {
             <Route exact={true} path="/panel" element={<Panel/>} />
             <Route exact={true} path="/update/:key" element={<UpdateProduct/>}/>
             <Route exact={true} path="/addproduct" element={<AddProduct/>} />
-            <Route exact={true} path="/wishlist" element={<Wishlist/>} />
-            <Route exact={true} path="/cart" element={<ViewCart/>} />
+            <Route exact={true} path="/viewcart" element={<ViewCart/>} />
             <Route exact={true} path="/detail/:key" element={<DetailView/>} />
             <Route exact={true} path="categories/:category/:subCategory" element={<CategoryView/>} />
             <Route exact={true} path="/" element={<HomePage/>} />
