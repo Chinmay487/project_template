@@ -29,9 +29,6 @@ const Navbar = () => {
     const theme = useTheme();
     const medium = useMediaQuery(theme.breakpoints.down('md'));
     const small = useMediaQuery(theme.breakpoints.down('sm'));
-    // const large = useMediaQuery(theme.breakpoints.down('xl'))
-
-    // console.log(theme.breakpoints);
 
 
     const avatarClick = (event) => {
@@ -46,7 +43,7 @@ const Navbar = () => {
 
 
     const avatarMenuItems = [
-        'Username','Profile','Address','View Cart','Become Seller','Logout','Add Product'
+        'Username','Profile','View Cart','Become Seller','Logout','Add Product'
     ]
 
     const navList2 = [

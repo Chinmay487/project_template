@@ -1,5 +1,5 @@
 import React from 'react';
-import { Typography, Box, Grid, Button, useTheme } from '@mui/material';
+import { Typography, Grid, Button, useTheme,NativeSelect } from '@mui/material';
 import History from '../user/History';
 
 const ViewCart = () => {
@@ -7,8 +7,12 @@ const ViewCart = () => {
     const theme = useTheme();
 
     return (
-        <Grid container sx={{ width: '80%', mx: 'auto', my:{lg:'2%',md:'2%',sm:'4%',xs:'4%'} }} columnGap={2} rowGap={2}>
+        <Grid container sx={{ width: '80%', mx: 'auto', my: { lg: '2%', md: '2%', sm: '4%', xs: '4%' } }} columnGap={2} rowGap={2}>
             <Grid item md={4} sm={12} xs={12} sx={{ height: '15rem', boxShadow: theme.shadows[5], backgroundColor: '#F5F5F5', display: 'flex', flexDirection: 'column', justifyContent: 'space-between', padding: '1%' }}>
+                <NativeSelect defaultValue={0}>
+                    <option value={0}>Address 1</option>
+                    <option value={1}>Address 2</option>
+                </NativeSelect>
                 <Typography variant='h5'>
                     Price : 69000
                 </Typography>
@@ -23,7 +27,6 @@ const ViewCart = () => {
             <Grid item md={7} sm={12} xs={12}>
                 <Grid container rowGap={2}>
                     <History is_cart={true} />
-
                     <History is_cart={true} />
                     <History is_cart={true} />
                     <History is_cart={true} />
