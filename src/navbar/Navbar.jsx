@@ -59,7 +59,7 @@ const Navbar = () => {
 
     const searchFormComponent = <Box sx={searchForm}>
                 <TextField sx={searchFormInput}  label="search ..." variant="standard" />
-                <IconButton>
+                <IconButton title="Search">
                     <SearchOutlinedIcon sx={{fontSize : "2rem"}}/>
                 </IconButton>
             </Box>
