@@ -1,11 +1,19 @@
 import React from 'react';
 import { Typography, Grid, Box, useTheme, TextField, Button, IconButton } from '@mui/material';
 import profile from '../images/profile.jpg';
+import jcb from '../images/jcb.jpg';
+import lizard from '../images/lizard.jpg';
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 
 
 const ProfilePage = () => {
     const theme = useTheme()
+
+    const profileGrid = {
+        width: "80%",
+        mx: "auto",
+        my: '2%'
+    }
 
     const profile1 = {
         height: "30rem",
@@ -29,7 +37,7 @@ const ProfilePage = () => {
         height: "27rem",
         // padding : "5%",
         px: "12%",
-        pb:'3%',
+        pb: '3%',
         display: "flex",
         flexDirection: "column",
         justifyContent: "space-between",
@@ -46,10 +54,26 @@ const ProfilePage = () => {
         px: "2%"
     }
 
+
+    const profileGridItem = {
+        display: "flex",
+        flexDirection: "column",
+        justifyContent: "space-evenly"
+    }
+
+    const profileGridItemText = {
+        mx: {
+            lg: "0%",
+            md: "0%",
+            sm: "5%",
+            xs: "5%"
+        }
+    }
+
     return (
         <>
             <Typography variant="h5" sx={{ my: "2rem", textAlign: "center" }} gutterBottom>Hello User</Typography>
-            <Grid container columnGap={3} rowGap={3} sx={{ width: "80%", mx: "auto" , my:'2%'}} >
+            <Grid container columnGap={3} rowGap={3} sx={profileGrid} >
                 <Grid item md={3} sm={12} xs={12} sx={profile1} >
                     <Box component="img" src={profile} sx={{ height: "15rem", width: "70%", mx: "auto" }} />
                     <Typography sx={{ mx: "4%" }} variant="h6">Name : Username</Typography>
@@ -91,7 +115,7 @@ const ProfilePage = () => {
                                     <Typography>State</Typography>
                                     <Typography>Pin code</Typography>
                                 </Box>
-                                
+
                             </Grid>
                             <Grid item md={6} sm={12} xs={12}>
                                 <Box component="form" sx={addressForm}>
@@ -106,19 +130,68 @@ const ProfilePage = () => {
                                 </Box>
                             </Grid>
                         </Grid>
-
                     </Box>
+                </Grid>
+            </Grid>
+            <Typography variant="h3" sx={{ textAlign: "center" }}>
+                Purchase History
+            </Typography>
+            <Grid container columnGap={3} rowGap={3} sx={profileGrid}>
+                <Grid item sm={12} xs={12}>
+                    <Grid container sx={{ boxShadow: theme.shadows[5] }} >
+                        <Grid item md={4} sm={12} xs={12} >
+                            <Box component="center">
+                                <Box component="img" src={jcb} sx={{ maxWidth: { lg: "80%", md: "80%", sm: "80%", xs: "80%" } }} />
+                            </Box>
+                        </Grid>
+                        <Grid item md={4} sm={12} xs={12} sx={profileGridItem} >
+                            <Typography sx={profileGridItemText} variant="h6" > JCB 13 mini (128gb) yellow </Typography>
+                            <Typography sx={profileGridItemText} variant="h6"> Price : 69,999 </Typography>
+                        </Grid>
+                        <Grid item md={4} sm={12} xs={12} sx={profileGridItem}>
+                            <Typography sx={profileGridItemText} variant="h6">Date : 21-02-2021</Typography>
+                            <Typography sx={profileGridItemText} variant="h6">Quantity : 5</Typography>
+                        </Grid>
+                    </Grid>
+                </Grid>
+                <Grid item sm={12} xs={12}>
+                    <Grid container sx={{ boxShadow: theme.shadows[5] }} >
+                        <Grid item md={4} sm={12} xs={12} >
+                            <Box component="center">
+                                <Box component="img" src={jcb} sx={{ maxWidth: { lg: "80%", md: "80%", sm: "80%", xs: "80%" } }} />
+                            </Box>
+                        </Grid>
+                        <Grid item md={4} sm={12} xs={12} sx={profileGridItem} >
+                            <Typography sx={profileGridItemText} variant="h6" > JCB 13 mini (128gb) yellow </Typography>
+                            <Typography sx={profileGridItemText} variant="h6"> Price : 69,999 </Typography>
+                        </Grid>
+                        <Grid item md={4} sm={12} xs={12} sx={profileGridItem}>
+                            <Typography sx={profileGridItemText} variant="h6">Date : 21-02-2021</Typography>
+                            <Typography sx={profileGridItemText} variant="h6">Quantity : 5</Typography>
+                        </Grid>
+                    </Grid>
+                </Grid>
+                <Grid item sm={12} xs={12}>
+                    <Grid container sx={{ boxShadow: theme.shadows[5] }} >
+                        <Grid item md={4} sm={12} xs={12} >
+                            <Box component="center">
+                                <Box component="img" src={jcb} sx={{ maxWidth: { lg: "80%", md: "80%", sm: "80%", xs: "80%" } }} />
+                            </Box>
+                        </Grid>
+                        <Grid item md={4} sm={12} xs={12} sx={profileGridItem} >
+                            <Typography sx={profileGridItemText} variant="h6" > JCB 13 mini (128gb) yellow </Typography>
+                            <Typography sx={profileGridItemText} variant="h6"> Price : 69,999 </Typography>
+                        </Grid>
+                        <Grid item md={4} sm={12} xs={12} sx={profileGridItem}>
+                            <Typography sx={profileGridItemText} variant="h6">Date : 21-02-2021</Typography>
+                            <Typography sx={profileGridItemText} variant="h6">Quantity : 5</Typography>
+                        </Grid>
+                    </Grid>
                 </Grid>
             </Grid>
         </>
     )
 }
 
-// Address line 1
-// Address line 2
-// City
-// District
-// State
-// Pincode
 
-export default ProfilePage
+export default ProfilePage;
