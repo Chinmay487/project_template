@@ -2,7 +2,7 @@ import React from 'react';
 import { Box, Typography, Button, TextField, Slider, Grid, useTheme } from '@mui/material';
 
 
-const AddProduct = () => {
+const AddProduct = (props) => {
 
     const theme = useTheme()
 
@@ -45,8 +45,11 @@ const AddProduct = () => {
     return (
         <>
             <Typography variant='h5' sx={{ textAlign: "center", my: "1rem" }} gutterBottom>
-                Add New Product Form
+                { props.isUpdate ? "Update Details" : "Add New Product Form" }
             </Typography>
+            {
+                props.isUpdate ? <Typography variant="h5" color="error" sx={{ textAlign: "center", my: "1rem" }}>NOTE : Fill only fields You want to change</Typography> : null
+            }
             <Box component='form' sx={addProductForm} encType="multipart/form-data"  >
                 <TextField variant='standard' label='Enter the Product Name' />
                 <TextField variant='outlined' label='Description' maxRows={7} minRows={3} multiline />

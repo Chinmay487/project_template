@@ -1,5 +1,6 @@
 import React from 'react';
 
+
 const Panel = () => {
     return <h1>Panel page</h1>
 }

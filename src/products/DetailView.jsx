@@ -8,7 +8,7 @@ import Review from './Review';
 
 
 
-const DetailView = () => {
+const DetailView = (props) => {
 
     const theme = useTheme();
 
@@ -103,6 +103,7 @@ const DetailView = () => {
                             <Box sx={gridBox2}    >
                                 <Button variant='contained' sx={buttonGroupStyle1} ><ShoppingBagOutlinedIcon /> &nbsp; Buy now </Button>
                                 <Button variant='contained' sx={buttonGroupStyle1} ><AddShoppingCartOutlinedIcon /> &nbsp; Add to Cart  </Button>
+                               {props.isSeller ?  <Button variant='contained' sx={buttonGroupStyle1} >Update</Button> : null}
                             </Box>
                             
                         </Box>

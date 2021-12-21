@@ -4,11 +4,14 @@ import Navbar from './navbar/Navbar'
 import AppRoutes from './AppRoutes'
 
 const App = () => {
+
+    const isSeller=true;
+
     return (
         <>
             <CssBaseline/>
-            <Navbar/>
-            <AppRoutes/>
+            <Navbar isSeller={isSeller}/>
+            <AppRoutes isSeller={isSeller}/>
         </>
     )
 }

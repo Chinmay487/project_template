@@ -12,8 +12,6 @@ const Sidenav = (props) => {
 
     const navigate = useNavigate();
 
-    
-
     const onClickEvent = (url)=>{
         navigate(url)
         props.setDrawerStatus(!props.drawerStatus);
@@ -46,8 +44,10 @@ const Sidenav = (props) => {
                         Homepage
                     </ListItemIcon>
                 </ListItem>
+                {
+                    props.isSeller ? <ListItem divider button><ListItemIcon>Panel</ListItemIcon></ListItem> : null
+                }
                 {props.items.map((item,index)=>{
-                    // console.log(props.items.length);
                     return (
                         <>
                             <ListItem  onClick={()=>{
