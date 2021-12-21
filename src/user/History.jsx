@@ -4,10 +4,10 @@ import jcb from '../images/jcb.jpg';
 import { Link } from 'react-router-dom';
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 
+
 const History = (props) => {
 
     const theme = useTheme()
-
 
     const profileGridItem = {
         display: "flex",
@@ -36,6 +36,7 @@ const History = (props) => {
             sm : "5%",
             xs : "5%"
         },
+        py:'2%',
         width: '100%', 
         display: 'flex', 
         justifyContent: "flex-start", 
@@ -59,7 +60,7 @@ const History = (props) => {
                     {
                         props.is_cart ? <Box sx={quantity}>
                         <Typography variant='h6'> Qty : &nbsp;</Typography>
-                        <Box component="select" sx={{ fontSize: "1.5rem" }} >
+                        <Box component="select" sx={{ fontSize: "1.3rem" }} >
                             <Box component="option" value={1} selectteed>1</Box>
                             <Box component="option" value={2} selectteed>2</Box>
                             <Box component="option" value={3} selectteed>3</Box>

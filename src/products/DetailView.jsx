@@ -87,7 +87,7 @@ const DetailView = (props) => {
                             </Box>
                             <Box sx={{ width: '100%', display: 'flex', justifyContent: { lg: "flex-start", md: "flex-start", sm: "center", xs: "center" }, alignItems: 'center' }}>
                                 <Typography variant='h6'> Qty : &nbsp;</Typography>
-                                <Box component="select" sx={{ fontSize: "1.5rem" }} >
+                                <Box component="select" sx={{ fontSize: "1.3rem" }} >
                                     <Box component="option" value={1} selectteed>1</Box>
                                     <Box component="option" value={2} selectteed>2</Box>
                                     <Box component="option" value={3} selectteed>3</Box>
@@ -100,14 +100,12 @@ const DetailView = (props) => {
                                     <Box component="option" value={10} selectteed>10</Box>
                                 </Box>
                             </Box>
-                            <Box sx={gridBox2}    >
-                                <Button variant='contained' sx={buttonGroupStyle1} ><ShoppingBagOutlinedIcon /> &nbsp; Buy now </Button>
+                            <Box sx={gridBox2} >
+                                <Button variant='contained' sx={buttonGroupStyle1}><ShoppingBagOutlinedIcon/> &nbsp; Buy now </Button>
                                 <Button variant='contained' sx={buttonGroupStyle1} ><AddShoppingCartOutlinedIcon /> &nbsp; Add to Cart  </Button>
-                               {props.isSeller ?  <Button variant='contained' sx={buttonGroupStyle1} >Update</Button> : null}
+                                {props.isSeller ? <Button variant='contained' sx={buttonGroupStyle1} >Update</Button> : null}
                             </Box>
-                            
                         </Box>
-
                     </Grid>
                 </Grid>
             </Grid>
