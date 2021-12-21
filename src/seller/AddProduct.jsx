@@ -84,7 +84,9 @@ const AddProduct = (props) => {
                     </Typography>
                 </Box>
 
-                <Button variant="contained" sx={{ display: "block", width:{lg: "30%",md: "30%",sm:"50%",xs:"50%"}, mx: "auto" }} >Add Product</Button>
+                <Button variant="contained" sx={{ display: "block", width:{lg: "30%",md: "30%",sm:"50%",xs:"50%"}, mx: "auto" }} >
+                    {props.isUpdate ? "update product" : "Add Product"}
+                </Button>
             </Box>
         </>
     )
