@@ -48,7 +48,7 @@ const AddProduct = (props) => {
                 { props.isUpdate ? "Update Details" : "Add New Product Form" }
             </Typography>
             {
-                props.isUpdate ? <Typography variant="h5" color="error" sx={{ textAlign: "center", my: "1rem" }}>NOTE : Fill only fields You want to change</Typography> : null
+                props.isUpdate ? <Typography variant="h5" color="error" sx={{ textAlign: "center", my: "1rem" , mx:'3%' }}>NOTE : Fill only fields You want to change</Typography> : null
             }
             <Box component='form' sx={addProductForm} encType="multipart/form-data"  >
                 <TextField variant='standard' label='Enter the Product Name' />
@@ -72,7 +72,7 @@ const AddProduct = (props) => {
                     <Typography variant='subtitle1' >
                         Quantity Available
                     </Typography>
-                    <Slider aria-label="Quantity" valueLabelDisplay="auto"  min={10} max={50} sx={{ mx:{sm:"1%",xs:"1%"},width:{lg:'50%',md:'50%',sm:'100%',xs:'100%'}}} />
+                    <Slider aria-label="Quantity" valueLabelDisplay="auto"  min={10} max={50} sx={{ mx:{sm:"1%",xs:"1%"},width:{lg:'50%',md:'50%',sm:'80%',xs:'80%'}}} />
                 </Box>
 
                 <Box sx={formBox2}>
