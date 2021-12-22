@@ -1,10 +1,24 @@
-import React from 'react';
+import React,{useState} from 'react';
 import { Box, Typography, Button, TextField, Slider, Grid, useTheme } from '@mui/material';
-
+import {useNavigate} from 'react-router-dom';
+import axios from 'axios';
 
 const AddProduct = (props) => {
 
-    const theme = useTheme()
+
+    const navigate = useNavigate();
+    const theme = useTheme();
+    const [productData,setProductData] = useState({
+        title : '',
+        description : '',
+        price : '',
+        discount_price : '',
+        quantity : ''
+    })
+
+    const [thumbnail,setThumbnail] = useState(null)
+    const [productImages,setProductImages] = useState(null)
+    // [image]
 
     const addProductForm = {
         width: {
@@ -42,6 +56,41 @@ const AddProduct = (props) => {
         }
     }
 
+    const onInputChange = (event) => {
+        const {name,value} = event.target;
+        setProductData((oldData)=>{
+            return {
+                ...oldData,
+                [name] : value
+            }
+        })
+    }
+
+
+
+    const onFormSubmit = (event) => {
+        event.preventDefault();
+        console.log(productImages)
+        const url = 'http://127.0.0.1:8000/seller/addproduct';
+        let data = new FormData();
+        data.append('price',productData.price);
+        data.append('discount_price',productData.discount_price);
+        data.append('description',productData.description);
+        data.append('title',productData.title);
+        data.append('quantity',productData.quantity);
+        data.append('thumbnail',thumbnail);
+        data.append('product_images',productImages);
+        axios.post(url,data,{'enctype':"multipart/form-data"})
+        .then(
+            (response) => {
+                navigate('/panel');
+            }
+        )
+        .catch((error)=>{
+            alert("something went Wrong\nPlease try again")
+        })
+    }
+
     return (
         <>
             <Typography variant='h5' sx={{ textAlign: "center", my: "1rem" }} gutterBottom>
@@ -50,20 +99,20 @@ const AddProduct = (props) => {
             {
                 props.isUpdate ? <Typography variant="h5" color="error" sx={{ textAlign: "center", my: "1rem" , mx:'3%' }}>NOTE : Fill only fields You want to change</Typography> : null
             }
-            <Box component='form' sx={addProductForm} encType="multipart/form-data"  >
-                <TextField variant='standard' label='Enter the Product Name' />
-                <TextField variant='outlined' label='Description' maxRows={7} minRows={3} multiline />
+            <Box component='form' onSubmit={onFormSubmit}  sx={addProductForm} encType="multipart/form-data"  >
+                <TextField name="title"  value={productData.title} onChange={onInputChange} variant='standard' label='Enter the Product Name' />
+                <TextField variant='outlined' name="description" value={productData.description} onChange={onInputChange} label='Description' maxRows={7} minRows={3} multiline />
 
 
                 <Grid container rowGap={3} >
                     <Grid item md={5} sm={12} xs={12}  >
                         <Typography>Price</Typography>
-                        < TextField sx={{ width: {lg:"75%",md:"75%",sm:"100%",xs:"100%"} }} variant='standard' type="number" label='Price' />
+                        < TextField name="price" value={productData.price} onChange={onInputChange} sx={{ width: {lg:"75%",md:"75%",sm:"100%",xs:"100%"} }} variant='standard' type="number" label='Price' />
 
                     </Grid>
                     <Grid item md={5} sm={12} xs={12} >
                         <Typography>Discount Price</Typography>
-                        <TextField sx={{ width: {lg:"75%",md:"75%",sm:"100%",xs:"100%"} }} variant='standard' type="number" label='Discount Price' />
+                        <TextField name="discount_price" value={productData.discount_price} onChange={onInputChange} sx={{ width: {lg:"75%",md:"75%",sm:"100%",xs:"100%"} }} variant='standard' type="number" label='Discount Price' />
                     </Grid>
 
                 </Grid>
@@ -72,19 +121,19 @@ const AddProduct = (props) => {
                     <Typography variant='subtitle1' >
                         Quantity Available
                     </Typography>
-                    <Slider aria-label="Quantity" valueLabelDisplay="auto"  min={10} max={50} sx={{ mx:{sm:"1%",xs:"1%"},width:{lg:'50%',md:'50%',sm:'80%',xs:'80%'}}} />
+                    <Slider aria-label="Quantity" name="quantity" value={productData.quantity} onChange={onInputChange} valueLabelDisplay="auto"  min={10} max={50} sx={{ mx:{sm:"1%",xs:"1%"},width:{lg:'50%',md:'50%',sm:'80%',xs:'80%'}}} />
                 </Box>
 
                 <Box sx={formBox2}>
                     <Typography>
-                        Thumbnail Image : <Box component="input" type="file" accept="image/png, image/jpeg" />
+                        Thumbnail Image : <Box name="thumbnail"  onChange={(event)=>{setThumbnail(event.target.files[0])}} component="input" type="file" accept="image/png, image/jpeg" />
                     </Typography>
                     <Typography>
-                        Detail Images : <Box component="input" type="file" multiple="multiple" accept="image/png, image/jpeg" />
+                        Detail Images : <Box name="productImages"  onChange={(event)=>{setProductImages(event.target.files)}} component="input" type="file" multiple="multiple" accept="image/png, image/jpeg" />
                     </Typography>
                 </Box>
 
-                <Button variant="contained" sx={{ display: "block", width:{lg: "30%",md: "30%",sm:"50%",xs:"50%"}, mx: "auto" }} >
+                <Button variant="contained" type="submit" sx={{ display: "block", width:{lg: "30%",md: "30%",sm:"50%",xs:"50%"}, mx: "auto" }} >
                     {props.isUpdate ? "update product" : "Add Product"}
                 </Button>
             </Box>
