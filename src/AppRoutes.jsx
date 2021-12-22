@@ -16,7 +16,7 @@ const AppRoutes = (props) => {
         <Routes>
             <Route exact={true} path="/becomeseller" element={<NewSeller/>} />
             <Route exact={true} path="/profile" element={<ProfilePage/>} />
-            {props.isSeller ? <Route exact={true} path="/panel" element={<Panel/>} /> : null}
+            {props.isSeller ? <Route exact={true} path="/panel" element={<Panel isSeller={props.isSeller} />} /> : null}
             {props.isSeller ? <Route exact={true} path="/update/:key" element={<AddProduct isUpdate={true}/>}/> : null}
             <Route exact={true} path="/addproduct" element={<AddProduct isUpdate={false}/>} />
             <Route exact={true} path="/viewcart" element={<ViewCart/>} />

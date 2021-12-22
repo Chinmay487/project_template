@@ -5,6 +5,7 @@ import jcb from '../images/jcb.jpg'
 import AddShoppingCartOutlinedIcon from '@mui/icons-material/AddShoppingCartOutlined';
 import ShoppingBagOutlinedIcon from '@mui/icons-material/ShoppingBagOutlined';
 import Review from './Review';
+import {useNavigate} from 'react-router-dom';
 
 
 
@@ -67,6 +68,12 @@ const DetailView = (props) => {
     }
 
 
+    const navigate = useNavigate();
+
+    const gotoUpdate = () => {
+        navigate('/update/3')
+    }
+
     return (
         <Grid container rowGap={4} >
             <Grid item md={12}  >
@@ -103,7 +110,7 @@ const DetailView = (props) => {
                             <Box sx={gridBox2} >
                                 <Button variant='contained' sx={buttonGroupStyle1}><ShoppingBagOutlinedIcon/> &nbsp; Buy now </Button>
                                 <Button variant='contained' sx={buttonGroupStyle1} ><AddShoppingCartOutlinedIcon /> &nbsp; Add to Cart  </Button>
-                                {props.isSeller ? <Button variant='contained' sx={buttonGroupStyle1} >Update</Button> : null}
+                                {props.isSeller ? <Button variant='contained' onClick={gotoUpdate} sx={buttonGroupStyle1} >Update</Button> : null}
                             </Box>
                         </Box>
                     </Grid>

@@ -4,7 +4,8 @@ import MenuOpenOutlinedIcon from '@mui/icons-material/MenuOpenOutlined';
 import { useNavigate } from 'react-router-dom';
 import ExpandLess from '@mui/icons-material/ExpandLess';
 import ExpandMore from '@mui/icons-material/ExpandMore';
-import { drawerStyle } from '../styles'
+import { drawerStyle } from '../styles';
+import {Link} from 'react-router-dom';
 
 const Sidenav = (props) => {
 
@@ -45,7 +46,7 @@ const Sidenav = (props) => {
                     </ListItemIcon>
                 </ListItem>
                 {
-                    props.isSeller ? <ListItem divider button><ListItemIcon>Panel</ListItemIcon></ListItem> : null
+                    props.isSeller ? <Link onClick={()=>{props.setDrawerStatus(!props.drawerStatus)}} className="link" to='/panel'><ListItem divider button><ListItemIcon>Panel</ListItemIcon></ListItem></Link> : null
                 }
                 {props.items.map((item, index) => {
                     return (
