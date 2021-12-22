@@ -67,6 +67,13 @@ const Navbar = (props) => {
             </IconButton>
         </Box>
 
+
+    const logoStyle = {
+        color:"#9E9E9E",
+        fontWeight : "bold",
+        textShadow:"1px 1px 10px #90A4AE"
+    }
+
     return (
         <>
             <AppBar sx={appBarStyle} position="relative">
@@ -78,15 +85,19 @@ const Navbar = (props) => {
                             }} ><MenuRoundedIcon color='primary' sx={{ fontSize: '2.5rem' }} /></IconButton>)
                                 :
                                 (
-                                    <Typography color="black" variant="h4" >
-                                        <NavLink to="/" className="link">ShopHeaven</NavLink>
+                                    <Typography  sx={logoStyle} variant="h4" >
+                                        <NavLink to="/" className="link">ShopHeaveb</NavLink>
                                     </Typography>
                                 )
                         }
 
-                        {medium ? <Typography color="black" variant="h5" >
+                        {small ? <Typography color="black" sx={logoStyle} variant="h5" >
                             <NavLink to="/" className="link">ShopHeaven</NavLink>
                         </Typography> : null} 
+
+                        {
+                            (medium && !small) ? searchFormComponent : null
+                        }
 
                         <Box sx={searchFormGroup}>
                             {medium ? null
