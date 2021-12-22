@@ -59,13 +59,13 @@ const Navbar = (props) => {
     ]
 
 
-    const searchFormComponent = 
-    <Box sx={searchForm}>
-        <TextField sx={searchFormInput} label="search ..." variant="standard" />
-        <IconButton title="Search">
-            <SearchOutlinedIcon sx={{ fontSize: "2rem" }} />
-        </IconButton>
-    </Box>
+    const searchFormComponent =
+        <Box sx={searchForm}>
+            <TextField sx={searchFormInput} label="search ..." variant="standard" />
+            <IconButton title="Search">
+                <SearchOutlinedIcon sx={{ fontSize: "2rem" }} />
+            </IconButton>
+        </Box>
 
     return (
         <>
@@ -84,10 +84,13 @@ const Navbar = (props) => {
                                 )
                         }
 
-                        {medium ? searchFormComponent : null}
+                        {medium ? <Typography color="black" variant="h5" >
+                            <NavLink to="/" className="link">ShopHeaven</NavLink>
+                        </Typography> : null} 
 
                         <Box sx={searchFormGroup}>
-                            {!medium ? searchFormComponent : null}
+                            {medium ? null
+                                : searchFormComponent}
                             <IconButton onClick={avatarClick} >
                                 <Avatar sx={avatarStyle}>#</Avatar>
                             </IconButton>
@@ -135,7 +138,10 @@ const Navbar = (props) => {
                                 })
                             }
                         </Box>
-                    </Box>) : null
+                    </Box>) : <Box sx={{ width: '100%', display: 'flex', justifyContent: 'center', alignItems: 'center', borderTop: '1px solid #CFD8DC', py: '2%' }}>
+                        {searchFormComponent
+                        }
+                    </Box>
                 }
 
             </AppBar>

@@ -45,19 +45,18 @@ export const searchFormGroup = {
 
 export const searchForm = {
     display : "flex",
+    justifyContent:'center',
     width : {
         lg : "80%",
         md : "70%",
+        sm:'100%',
+        xs:'100%'
         
-    },
+    }
 }
 
 export const searchFormInput = {
-    width : {
-        // lg : "90%",
-        md : "100%",
-        sm : "100%"
-    }
+    width : '70%'
 }
 
 export const avatarStyle = {

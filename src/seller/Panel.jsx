@@ -9,7 +9,7 @@ const Panel = (props) => {
                 Your Products
             </Typography>
             <Grid container rowGap={2} sx={{width:{lg:"80%",md:"80%",sm:"90%",xs:"90%"},mx:"auto"}} >
-                <History isCart={false} isSeller={props.isSeller} />
+                <History isCart={false} isSeller={props.isSeller}   />
             </Grid>
         </>
     )

@@ -18,6 +18,12 @@ const History = (props) => {
             md: 'space-evenly',
             sm: 'center',
             xs: 'center'
+        },
+        py:{
+            lg:'0%',
+            md:'0%',
+            sm:'3%',
+            xs:'3%'
         }
     }
 
@@ -104,7 +110,7 @@ const History = (props) => {
                                     <DeleteForeverIcon sx={{ color: "red" }} />
                                 </Button>
                                 {
-                                    props.isSeller ? <Button variant="outlined" onClick={gotoUpdate} sx={{width:{lg:"50%",md:"50%",sm:"80%",xs:"80%"},mx:"auto"}}  >Update</Button> : null
+                                    props.isSeller ? <Button variant="outlined" onClick={gotoUpdate} sx={{width:{lg:"50%",md:"50%",sm:"60%",xs:"60%"},mx:"auto"}}  >Update</Button> : null
                                 }
                             </Box>
                             : <Typography sx={profileGridItemText} variant="h6"> Date : 21-02-2021 </Typography>
