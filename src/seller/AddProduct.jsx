@@ -80,13 +80,13 @@ const AddProduct = (props) => {
         data.append('title', productData.title);
         data.append('quantity', productData.quantity);
         data.append('thumbnail', thumbnail);
-        productImages.forEach((file,index)=>{
-            let name = 'image'+index
-            data.append(name,file)
+        productImages.forEach((file, index) => {
+            let name = 'image' + index
+            data.append(name, file)
         })
         axios.post(url, data, {
             headers: {
-              'Content-Type': 'multipart/form-data'
+                'Content-Type': 'multipart/form-data'
             }
         })
             .then(
@@ -132,6 +132,7 @@ const AddProduct = (props) => {
                     onChange={onInputChange}
                     variant='standard'
                     label='Enter the Product Name'
+                    required={!props.isUpdate}
                 />
 
                 <TextField
@@ -143,6 +144,7 @@ const AddProduct = (props) => {
                     maxRows={7}
                     minRows={3}
                     multiline
+                    required={!props.isUpdate}
                 />
 
 
@@ -164,6 +166,7 @@ const AddProduct = (props) => {
                             variant='standard'
                             type="number"
                             label='Price'
+                            required={!props.isUpdate}
                         />
 
                     </Grid>
@@ -184,6 +187,7 @@ const AddProduct = (props) => {
                             variant='standard'
                             type="number"
                             label='Discount Price'
+                            required={!props.isUpdate}
                         />
                     </Grid>
 
@@ -212,7 +216,10 @@ const AddProduct = (props) => {
                                 sm: '80%',
                                 xs: '80%'
                             }
-                        }} />
+
+                        }}
+                        required={!props.isUpdate}
+                    />
                 </Box>
 
                 <Box sx={formBox2}>
@@ -224,6 +231,7 @@ const AddProduct = (props) => {
                             component="input"
                             type="file"
                             accept="image/png, image/jpeg"
+                            required={!props.isUpdate}
                         />
                     </Typography>
                     <Typography>
@@ -231,14 +239,15 @@ const AddProduct = (props) => {
                         <Box
                             name="productImages"
                             onChange={(event) => {
-                                setProductImages((oldData)=>{
-                                    return [...oldData,...event.target.files]
+                                setProductImages((oldData) => {
+                                    return [...oldData, ...event.target.files]
                                 })
                             }}
                             component="input"
                             type="file"
                             multiple
                             accept="image/png, image/jpeg"
+                            required={!props.isUpdate}
                         />
                     </Typography>
                 </Box>
