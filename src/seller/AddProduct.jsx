@@ -71,8 +71,7 @@ const AddProduct = (props) => {
     const onFormSubmit = (event) => {
 
         event.preventDefault();
-        const config = { headers: { 'content-type': 'multipart/form-data' } };
-        console.log(productImages)
+
         const url = 'http://127.0.0.1:8000/seller/addproduct';
         const data = new FormData();
         data.append('price', productData.price);
@@ -81,17 +80,15 @@ const AddProduct = (props) => {
         data.append('title', productData.title);
         data.append('quantity', productData.quantity);
         data.append('thumbnail', thumbnail);
-        // data.append('product_images',productImages);
-        // const data = {
-        //     price : productData.price,
-        //     discount_price : productData.discount_price,
-        //     description :  productData.description,
-        //     title : productData.title,
-        //     quantity : productData.quantity,
-        //     thumbnail : thumbnail,
-        //     product_images : [...productImages]
-        // }
-        axios.post(url, {...data,product_images : productImages}, config)
+        productImages.forEach((file,index)=>{
+            let name = 'image'+index
+            data.append(name,file)
+        })
+        axios.post(url, data, {
+            headers: {
+              'Content-Type': 'multipart/form-data'
+            }
+        })
             .then(
                 (response) => {
                     navigate('/panel');
