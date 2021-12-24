@@ -86,7 +86,7 @@ const Navbar = (props) => {
                                 :
                                 (
                                     <Typography  sx={logoStyle} variant="h4" >
-                                        <NavLink to="/" className="link">ShopHeaveb</NavLink>
+                                        <NavLink to="/" className="link">ShopHeaven</NavLink>
                                     </Typography>
                                 )
                         }

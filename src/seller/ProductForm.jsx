@@ -3,7 +3,7 @@ import { Box, Typography, Button, TextField, Slider, Grid, useTheme } from '@mui
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
-const AddProduct = (props) => {
+const ProductForm = (props) => {
 
 
     const navigate = useNavigate();
@@ -72,6 +72,8 @@ const AddProduct = (props) => {
 
         event.preventDefault();
 
+    
+        
         const url = 'http://127.0.0.1:8000/seller/addproduct';
         const data = new FormData();
         data.append('price', productData.price);
@@ -83,6 +85,7 @@ const AddProduct = (props) => {
         productImages.forEach((file, index) => {
             let name = 'image' + index
             data.append(name, file)
+        
         })
         axios.post(url, data, {
             headers: {
@@ -272,4 +275,4 @@ const AddProduct = (props) => {
     )
 }
 
-export default AddProduct;
+export default ProductForm;
