@@ -1,49 +1,49 @@
 import React from 'react';
-import { Box, Typography} from '@mui/material';
+import { Box, Typography } from '@mui/material';
 import jcb from '../images/jcb.jpg';
 import { Link } from 'react-router-dom';
 
 
 
 
-const ProductCard = () => {
+const ProductCard = (props) => {
 
-    const productBox1 = { 
+    const productBox1 = {
         padding: "5px",
         height: {
-            md : "12rem",
-            sm : "10rem"
+            md: "12rem",
+            sm: "10rem"
         },
-        width:{
-            xl : '10rem',
-            lg : '10rem',
-            sm : '100%'
+        width: {
+            xl: '10rem',
+            lg: '10rem',
+            sm: '100%'
         },
         border: "1px solid #e8ebe9",
-        boxShadow : "2px 2px 2px 4px #f2f2f2",
+        boxShadow: "2px 2px 2px 4px #f2f2f2",
         borderRadius: "10px",
         mx: "1rem",
-        display : "flex",
-        justifyContent : "space-around",
-        alignItems : "center",
+        display: "flex",
+        justifyContent: "space-around",
+        alignItems: "center",
         flexDirection: {
-            md : "column",
-            sm : "row",
-            xs : "row"
+            md: "column",
+            sm: "row",
+            xs: "row"
         }
     }
 
-    const cardImageStyle = { 
+    const cardImageStyle = {
         width: {
-            md : "100%",
-            sm : "50%",
-            xs : "50%"
-        }, 
+            md: "100%",
+            sm: "50%",
+            xs: "50%"
+        },
         maxHeight: {
             md: "50%",
-            sm : "100%",
-            xs : "100%"
-        } 
+            sm: "100%",
+            xs: "100%"
+        }
     }
 
     // const cardContent = {
@@ -53,22 +53,29 @@ const ProductCard = () => {
     //     // backgroundColor:"cyan"
     // }
 
+
+    console.log(props.item)
+
     return (
-        <Link to="/detail/3" className="link">
-            <Box  sx={ productBox1 } >
-                <Box component="img" src={jcb} sx={cardImageStyle} />
-                <Box component="div" sx={{display:"flex",flexDirection:"column"}}>
-                    <Typography variant="subtitle1" >
-                        JCB
-                    </Typography>
-                    <Typography variant="subtitle2">
-                        JCB ki khudai
-                    </Typography>
-                    <Typography variant="subtitle2">Inr 3000</Typography>
-                    
+        <>
+
+            <Link to="/detail/3" className="link">
+                <Box sx={productBox1} >
+                    <Box component="img" src={`data:image;base64,${props.item.thumbnail}`} sx={cardImageStyle} />
+                    <Box component="div" sx={{ display: "flex", flexDirection: "column" }}>
+                        <Typography variant="subtitle1" >
+                            {props.item.title}
+                        </Typography>
+                        {/* <Typography variant="subtitle2">
+                            JCB ki khudai
+                        </Typography> */}
+                        <Typography variant="subtitle2">Price : {props.item.price}</Typography>
+
+                    </Box>
                 </Box>
-            </Box>
-        </Link>
+            </Link>
+
+        </>
     )
 }
 

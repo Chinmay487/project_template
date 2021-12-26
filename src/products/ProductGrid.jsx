@@ -1,55 +1,62 @@
-import React ,{useEffect}from 'react';
-import {Grid,useTheme,useMediaQuery} from '@mui/material'
+import React from 'react';
+import { Grid, useTheme, useMediaQuery, Typography, CircularProgress,Box } from '@mui/material'
 import ProductCard from './ProductCard';
-import axios from 'axios';
 
 
-const ProductGrid = () => {
 
-    useEffect(()=>{
-        axios.get('http://127.0.0.1:8000/client/fetch')
-        .then((response)=>response.data)
-        .then((data)=>{
-            console.log(data)
-        })
-        .catch((error)=>{
-            alert("something went wrong")
-        })
-    },[])
+const ProductGrid = (props) => {
+
 
     const theme = useTheme()
 
     const small = useMediaQuery(theme.breakpoints.down('sm'))
 
     const gridStyle2 = {
-        alignItems:"center"
+        alignItems: "center"
     }
 
     return (
-        <Grid container justifyContent="space-evenly" sx={gridStyle2} rowGap={2}>
-                    <Grid item>
-                        <ProductCard/>
-                    </Grid>
-                    <Grid item>
-                        <ProductCard/>
-                    </Grid>
-                    <Grid item>
-                        <ProductCard/>
-                    </Grid>
-                    
-                    {
-                        !small ? <>
+        <>
+            {
+                props.prodGrid.length === 0 ? <Box 
+                sx={{
+                    width:"100%",
+                    display:"flex",
+                    justifyContent:"center",
+                    alignItems:"center",
+                    my:"2rem"
+                    }}>
+                    <Typography variant="h6" >Fetching... &nbsp; </Typography> 
+                    <CircularProgress />
+                </Box>
+                    :
+                    <Grid container justifyContent="space-evenly" sx={gridStyle2} rowGap={2}>
                         <Grid item>
-                        <ProductCard/>
+                            <ProductCard item={props.prodGrid[0]} />
+                        </Grid>
+                        <Grid item >
+                            <ProductCard item={props.prodGrid[1]} />
+                        </Grid>
+                        <Grid item>
+                            <ProductCard item={props.prodGrid[2]} />
+                        </Grid>
+
+                        {
+                            !small ? <>
+                                <Grid item>
+                                    <ProductCard item={props.prodGrid[3]} />
+                                </Grid>
+                                <Grid item>
+                                    <ProductCard item={props.prodGrid[4]} />
+                                </Grid>
+                                <Grid item>
+                                    <ProductCard item={props.prodGrid[5]} />
+                                </Grid></> : null
+                        }
                     </Grid>
-                    <Grid item>
-                        <ProductCard/>
-                    </Grid>
-                    <Grid item>
-                        <ProductCard/>
-                    </Grid></> : null
-                    }
-                </Grid>
+            }
+
+        </>
     );
 }
 

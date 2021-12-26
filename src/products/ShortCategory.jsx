@@ -1,7 +1,8 @@
-import React from 'react';
+import React,{useState,useEffect,useCallback} from 'react';
 import {Typography,Box,Button} from '@mui/material';
 import ProductGrid from './ProductGrid';
-import {useNavigate} from 'react-router-dom'
+import {useNavigate} from 'react-router-dom';
+import axios from 'axios';
 
 const ShortCategory = () => {
 
@@ -29,11 +30,37 @@ const ShortCategory = () => {
         my:"1rem"
     }
 
+
+    const [prodGrid, setProdGrid] = useState([])
+
+    const fetchProducts = useCallback(() => {
+
+        axios.get('http://127.0.0.1:8000/client/fetch')
+            .then((response) => {
+                return response.data
+            })
+            .then((data) => {
+                console.log("hahahahaha")
+                setProdGrid([...data])
+            })
+            .catch((error) => {
+                alert("something went wrong")
+            })
+
+    }, [])
+
+    useEffect(() => {
+        fetchProducts()
+    }, [fetchProducts])
+
+
     return (
         <Box sx={productGridBox1} component="div">
                 <Typography variant="h3" sx={{textAlign:"center"}} >Fashion</Typography>
-                <ProductGrid/>
-                <Button sx={buttonSyle1} onClick={()=>{navigate('/wishlist')}} variant="outlined">View More</Button>
+                <ProductGrid prodGrid={prodGrid} />
+                {
+                    prodGrid.length>0 ? <Button sx={buttonSyle1} onClick={()=>{navigate('/wishlist')}} variant="outlined">View More</Button> : null
+                }
             </Box>
     )
 }
