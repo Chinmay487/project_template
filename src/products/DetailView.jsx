@@ -1,5 +1,5 @@
 import React,{useCallback, useEffect,useState} from 'react';
-import { Box, Typography, Rating, Button, Grid, TextField, useTheme } from '@mui/material';
+import { Box, Typography, Rating, Button, Grid, TextField, useTheme,CircularProgress } from '@mui/material';
 // import mob from '../images/mob.webp';
 import AddShoppingCartOutlinedIcon from '@mui/icons-material/AddShoppingCartOutlined';
 import ShoppingBagOutlinedIcon from '@mui/icons-material/ShoppingBagOutlined';
@@ -11,7 +11,7 @@ import axios from 'axios';
 const DetailView = (props) => {
 
     const [index , setIndex] = useState(0)
-
+    const [fetchStatus,setFetchStatus] = useState(true)
     const theme = useTheme();
     const {key} = useParams();
 
@@ -31,7 +31,7 @@ const DetailView = (props) => {
                 return (oldIndex + 1) % l
             })    
         }
-    },4000)
+    },6000)
 
     const fetchData = useCallback(()=>{
         axios.get(`http://127.0.0.1:8000/client/detail/${key}`)
@@ -45,6 +45,7 @@ const DetailView = (props) => {
                 quantity : data.quantity,
                 productImages : data.images
             })
+            setFetchStatus(false)
         })
         .catch((error)=>{
             alert('something went wrong')
@@ -81,7 +82,9 @@ const DetailView = (props) => {
         my: {
             sm: '2%',
             xs: '2%'
-        }
+        },
+        backgroundColor:"red"
+
     }
 
     const buttonGroupStyle1 = {
@@ -123,15 +126,21 @@ const DetailView = (props) => {
     
 
     return (
-        <Grid container rowGap={4} >
+       <>
+        {
+            fetchStatus ? <> <Box sx={{width:"100%",display:"flex",justifyContent:"center",alignItems:"center",my:"20rem"}}>
+                    <Typography variant="h4">Fetching... &nbsp; </Typography>
+                    <CircularProgress/>
+                </Box> </> : <>
+                 <Grid container rowGap={4} >
             <Grid item md={12}  >
                 <Grid container columnGap={3} >
-                    <Grid item md={4.5}  >
+                    <Grid item md={4.5} sm={12} xs={12} >
                         <Box component='img' src={`data:image;base64,${productData.productImages[index]}`} sx={{ maxWidth: '100%' , height:'27rem' }} />
                     </Grid>
-                    <Grid item md={7} >
-                        <Box component="div" sx={{ height: '100%', display: 'flex', flexDirection: 'column', justifyContent: 'space-around', padding: '1%' }} >
-                            <Box>
+                    <Grid item md={7} sm={12} xs={12} >
+                        <Box component="div" sx={{ height: '100%',width:"100%", display: 'flex', flexDirection: 'column', justifyContent: 'space-around', padding: '1%' }} >
+                            <Box sx={{mx:{sm:"5%",xs:"5%"}}}>
                                 <Typography variant='h5'>{productData.title}</Typography>
                                 <Rating name="read-only" value={4} readOnly />
                                 <Typography>Price : &#8377;{productData.price} </Typography>
@@ -191,6 +200,9 @@ const DetailView = (props) => {
 
             </Grid>
         </Grid>
+            </>
+        }
+       </>
     )
 }
 
