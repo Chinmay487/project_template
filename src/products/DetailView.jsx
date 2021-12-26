@@ -1,18 +1,62 @@
-import React,{useEffect,useState} from 'react';
+import React,{useCallback, useEffect,useState} from 'react';
 import { Box, Typography, Rating, Button, Grid, TextField, useTheme } from '@mui/material';
 // import mob from '../images/mob.webp';
-import jcb from '../images/jcb.jpg'
 import AddShoppingCartOutlinedIcon from '@mui/icons-material/AddShoppingCartOutlined';
 import ShoppingBagOutlinedIcon from '@mui/icons-material/ShoppingBagOutlined';
 import Review from './Review';
 import {useNavigate,useParams} from 'react-router-dom';
-
+import axios from 'axios';
 
 
 const DetailView = (props) => {
 
+    const [index , setIndex] = useState(0)
+
     const theme = useTheme();
     const {key} = useParams();
+
+    const [productData , setProductData] = useState({
+        title:'',
+        description:'',
+        price : '',
+        discountPrice : '',
+        quantity:'',
+        productImages:[]
+    });
+
+    setInterval(()=>{
+        const l = productData.productImages.length
+        if ( l > 0){
+            setIndex((oldIndex)=>{
+                return (oldIndex + 1) % l
+            })    
+        }
+    },4000)
+
+    const fetchData = useCallback(()=>{
+        axios.get(`http://127.0.0.1:8000/client/detail/${key}`)
+        .then((response)=>response.data)
+        .then((data)=>{
+            setProductData({
+                title : data.title,
+                description : data.description,
+                price : data.price,
+                discountPrice : data.discount_price,
+                quantity : data.quantity,
+                productImages : data.images
+            })
+        })
+        .catch((error)=>{
+            alert('something went wrong')
+        })
+    },[])
+
+    useEffect(()=>{
+        console.log("hello")
+        fetchData()
+    },[fetchData])
+
+    console.log(productData)
 
 
     const gridBox2 = {
@@ -83,18 +127,17 @@ const DetailView = (props) => {
             <Grid item md={12}  >
                 <Grid container columnGap={3} >
                     <Grid item md={4.5}  >
-                        <Box component='img' src={jcb} sx={{ maxWidth: '100%' }} />
+                        <Box component='img' src={`data:image;base64,${productData.productImages[index]}`} sx={{ maxWidth: '100%' , height:'27rem' }} />
                     </Grid>
                     <Grid item md={7} >
                         <Box component="div" sx={{ height: '100%', display: 'flex', flexDirection: 'column', justifyContent: 'space-around', padding: '1%' }} >
                             <Box>
-                                <Typography variant='h5'>JCB 13 mini (128gb) Yellow</Typography>
+                                <Typography variant='h5'>{productData.title}</Typography>
                                 <Rating name="read-only" value={4} readOnly />
-                                <Typography>Price : &#8377;69,900.00 </Typography>
-                                <Typography>Model Name : JCB</Typography>
-                                <Typography>Brand : U5eLe55</Typography>
-                                <Typography>Storage : 128gb</Typography>
-                                <Typography>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Nostrum molestiae in libero accusamus quisquam nobis, obcaecati.</Typography>
+                                <Typography>Price : &#8377;{productData.price} </Typography>
+                                <Typography>Discount price : &#8377; {productData.discountPrice}</Typography>
+                                <Typography>Quantity : {productData.quantity}</Typography>
+                                <Typography>{productData.description}</Typography>
                             </Box>
                             <Box sx={{ width: '100%', display: 'flex', justifyContent: { lg: "flex-start", md: "flex-start", sm: "center", xs: "center" }, alignItems: 'center' }}>
                                 <Typography variant='h6'> Qty : &nbsp;</Typography>
