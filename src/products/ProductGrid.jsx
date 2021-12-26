@@ -1,25 +1,25 @@
-import React from 'react';
+import React ,{useEffect}from 'react';
 import {Grid,useTheme,useMediaQuery} from '@mui/material'
 import ProductCard from './ProductCard';
-
+import axios from 'axios';
 
 
 const ProductGrid = () => {
 
+    useEffect(()=>{
+        axios.get('http://127.0.0.1:8000/client/fetch')
+        .then((response)=>response.data)
+        .then((data)=>{
+            console.log(data)
+        })
+        .catch((error)=>{
+            alert("something went wrong")
+        })
+    },[])
 
     const theme = useTheme()
-    console.log(theme.breakpoints)
-    // const extraSmall = useMediaQuery(theme.breakpoints.down('xs'))
-    const small = useMediaQuery(theme.breakpoints.down('sm'))
-    // const medium = useMediaQuery(theme.breakpoints.down('md'))
-    // const large = useMediaQuery(theme.breakpoints.down('lg'))
-    // const extraLarge = useMediaQuery(theme.breakpoints.down('xl'))
 
-    // console.log('extra small',extraSmall);
-    // console.log('small',small);
-    // console.log('medium',medium);
-    // console.log('large',large);
-    // console.log('extra large',extraLarge);
+    const small = useMediaQuery(theme.breakpoints.down('sm'))
 
     const gridStyle2 = {
         alignItems:"center"
