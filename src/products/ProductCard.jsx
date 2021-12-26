@@ -59,7 +59,7 @@ const ProductCard = (props) => {
     return (
         <>
 
-            <Link to="/detail/3" className="link">
+            <Link to={`/detail/${props.item.id}`}className="link">
                 <Box sx={productBox1} >
                     <Box component="img" src={`data:image;base64,${props.item.thumbnail}`} sx={cardImageStyle} />
                     <Box component="div" sx={{ display: "flex", flexDirection: "column" }}>

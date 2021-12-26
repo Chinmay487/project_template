@@ -1,17 +1,19 @@
-import React from 'react';
+import React,{useEffect,useState} from 'react';
 import { Box, Typography, Rating, Button, Grid, TextField, useTheme } from '@mui/material';
 // import mob from '../images/mob.webp';
 import jcb from '../images/jcb.jpg'
 import AddShoppingCartOutlinedIcon from '@mui/icons-material/AddShoppingCartOutlined';
 import ShoppingBagOutlinedIcon from '@mui/icons-material/ShoppingBagOutlined';
 import Review from './Review';
-import {useNavigate} from 'react-router-dom';
+import {useNavigate,useParams} from 'react-router-dom';
 
 
 
 const DetailView = (props) => {
 
     const theme = useTheme();
+    const {key} = useParams();
+
 
     const gridBox2 = {
         display: "flex",
@@ -73,6 +75,8 @@ const DetailView = (props) => {
     const gotoUpdate = () => {
         navigate('/update/3')
     }
+
+    
 
     return (
         <Grid container rowGap={4} >
