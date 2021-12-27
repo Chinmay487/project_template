@@ -70,7 +70,7 @@ const Form = (props) =>{
 
     const onFormSubmit = (event) => {
         event.preventDefault();
-        const url = 'http://127.0.0.1:8000/seller/addproduct';
+        const url = 'http://192.168.0.104:8000/seller/addproduct';
         const data = new FormData();
         data.append('price', productData.price);
         data.append('discount_price', productData.discount_price);

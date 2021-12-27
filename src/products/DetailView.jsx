@@ -27,7 +27,7 @@ const DetailView = (props) => {
    
 
     const fetchData = useCallback(()=>{
-        axios.get(`http://127.0.0.1:8000/client/detail/${key}`)
+        axios.get(`http://192.168.0.104:8000/client/detail/${key}`)
         .then((response)=>response.data)
         .then((data)=>{
             setProductData({
@@ -85,7 +85,7 @@ const DetailView = (props) => {
             sm: '2%',
             xs: '2%'
         },
-        backgroundColor:"red"
+        // backgroundColor:"red"
 
     }
 
