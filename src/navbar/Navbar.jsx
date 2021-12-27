@@ -6,7 +6,7 @@ import NavMenu from './NavMenu'
 import { appBarStyle, navbarDivStyle, searchFormGroup, searchForm, searchFormInput, avatarStyle, navbarStyle2, navbarDiveStyle2, typographyStyle2 } from '../styles';
 import MenuRoundedIcon from '@mui/icons-material/MenuRounded';
 import { NavLink } from 'react-router-dom';
-import ListClass from './ListClass'
+import {ListClass} from './utilClasses'
 
 
 const Navbar = (props) => {
@@ -49,13 +49,48 @@ const Navbar = (props) => {
     ]
 
     const navList2 = [
-        new ListClass('Fashion', ['All', 'kids', 'Men', 'Women'], fashionEl, setFashionEl),
-        new ListClass('Electronics', ['All', 'TV', 'Computer', 'Laptop', 'Accessories', 'Camera', 'toys',], electronicsEl, setElectronicsEl),
-        new ListClass('Mobile', ['All', 'Accessories', 'iOS', 'Android'], mobileEl, setMobileEl),
-        new ListClass('Grossery', ['All', 'Jam', 'Sauce', 'Spices', 'Papad', 'Pickle'], grosseryEl, setGrosseryEl),
-        new ListClass('Stationary', ['All', 'Books', 'Note Books', 'Office stuff'], stationaryEl, setStationaryEl),
-        new ListClass('Self Care', ['All', 'kids', 'Adults', 'Women'], selfCareEl, setSelfCareEl),
-        new ListClass('Others', ['All', 'Jewelary'], othersEl, setOthersEl)
+        new ListClass(
+            'Fashion',
+            ['All', 'kids', 'Men', 'Women'],
+            fashionEl,
+            setFashionEl
+        ),
+        new ListClass(
+            'Electronics',
+            ['All', 'TV', 'Computer', 'Laptop', 'Accessories', 'Camera', 'toys'],
+            electronicsEl,
+            setElectronicsEl
+        ),
+        new ListClass(
+            'Mobile',
+            ['All', 'Accessories', 'iOS', 'Android'],
+            mobileEl,
+            setMobileEl
+        ),
+        new ListClass(
+            'Grossery',
+            ['All', 'Jam', 'Sauce', 'Spices', 'Papad', 'Pickle'],
+            grosseryEl,
+            setGrosseryEl
+        ),
+        new ListClass(
+            'Stationary',
+            ['All', 'Books', 'Note Books', 'Office stuff'],
+            stationaryEl,
+            setStationaryEl
+        ),
+        new ListClass(
+            'Self Care',
+            ['All', 'kids', 'Adults', 'Women'],
+            selfCareEl,
+            setSelfCareEl
+        ),
+        new ListClass(
+            'Others',
+            ['All', 'Jewelary'],
+            othersEl,
+            setOthersEl
+        )
     ]
 
 
@@ -69,9 +104,9 @@ const Navbar = (props) => {
 
 
     const logoStyle = {
-        color:"#9E9E9E",
-        fontWeight : "bold",
-        textShadow:"1px 1px 10px #90A4AE"
+        color: "#9E9E9E",
+        fontWeight: "bold",
+        textShadow: "1px 1px 10px #90A4AE"
     }
 
     return (
@@ -85,7 +120,7 @@ const Navbar = (props) => {
                             }} ><MenuRoundedIcon color='primary' sx={{ fontSize: '2.5rem' }} /></IconButton>)
                                 :
                                 (
-                                    <Typography  sx={logoStyle} variant="h4" >
+                                    <Typography sx={logoStyle} variant="h4" >
                                         <NavLink to="/" className="link">ShopHeaven</NavLink>
                                     </Typography>
                                 )
@@ -93,7 +128,7 @@ const Navbar = (props) => {
 
                         {small ? <Typography color="black" sx={logoStyle} variant="h5" >
                             <NavLink to="/" className="link">ShopHeaven</NavLink>
-                        </Typography> : null} 
+                        </Typography> : null}
 
                         {
                             (medium && !small) ? searchFormComponent : null

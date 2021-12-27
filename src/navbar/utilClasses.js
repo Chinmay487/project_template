@@ -1,6 +1,5 @@
 class ListClass{
 
-    
     constructor(title,list,openEl,menuFunction){
         this.title = title;
         this.list = list;
@@ -44,4 +43,5 @@ class ListClass{
 
 }
 
-export default ListClass;
+
+export {ListClass};
