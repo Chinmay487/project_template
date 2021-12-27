@@ -1,6 +1,6 @@
 import React from 'react';
 import { Box, Typography } from '@mui/material';
-import jcb from '../images/jcb.jpg';
+// import jcb from '../images/jcb.jpg';
 import { Link } from 'react-router-dom';
 
 
@@ -61,7 +61,7 @@ const ProductCard = (props) => {
 
             <Link to={`/detail/${props.item.id}`}className="link">
                 <Box sx={productBox1} >
-                    <Box component="img" src={`data:image;base64,${props.item.thumbnail}`} sx={cardImageStyle} />
+                    <Box component="img" src={props.item.thumbnail} sx={cardImageStyle} />
                     <Box component="div" sx={{ display: "flex", flexDirection: "column" }}>
                         <Typography variant="subtitle1" >
                             {props.item.title}

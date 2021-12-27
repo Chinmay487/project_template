@@ -24,14 +24,7 @@ const DetailView = (props) => {
         productImages:[]
     });
 
-    setInterval(()=>{
-        const l = productData.productImages.length
-        if ( l > 0){
-            setIndex((oldIndex)=>{
-                return (oldIndex + 1) % l
-            })    
-        }
-    },6000)
+   
 
     const fetchData = useCallback(()=>{
         axios.get(`http://127.0.0.1:8000/client/detail/${key}`)
@@ -50,14 +43,23 @@ const DetailView = (props) => {
         .catch((error)=>{
             alert('something went wrong')
         })
-    },[])
+    },[key])
 
     useEffect(()=>{
         console.log("hello")
         fetchData()
     },[fetchData])
 
-    console.log(productData)
+    setInterval(()=>{
+        const l = productData.productImages.length
+        if ( l > 0){
+            setIndex((oldIndex)=>{
+                return (oldIndex + 1) % l
+            })    
+        }
+    },6000)
+
+    // console.log(productData)
 
 
     const gridBox2 = {
@@ -136,7 +138,7 @@ const DetailView = (props) => {
             <Grid item md={12}  >
                 <Grid container columnGap={3} >
                     <Grid item md={4.5} sm={12} xs={12} >
-                        <Box component='img' src={`data:image;base64,${productData.productImages[index]}`} sx={{ maxWidth: '100%' , height:'27rem' }} />
+                        <Box component='img' src={productData.productImages[index]} sx={{ maxWidth: '100%' , height:'27rem' }} />
                     </Grid>
                     <Grid item md={7} sm={12} xs={12} >
                         <Box component="div" sx={{ height: '100%',width:"100%", display: 'flex', flexDirection: 'column', justifyContent: 'space-around', padding: '1%' }} >
