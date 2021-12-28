@@ -35,7 +35,7 @@ const ShortCategory = () => {
 
     const fetchProducts = useCallback(() => {
 
-        axios.get('http://192.168.0.104:8000/client/fetch')
+        axios.get('http://192.168.43.65:8000/client/fetch')
             .then((response) => {
                 return response.data
             })
