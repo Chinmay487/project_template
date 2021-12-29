@@ -90,13 +90,15 @@ const Form = (props) =>{
 
 
     const updateForm = (data) => {
-        console.log('aman')
+        props.updateSpinnerState();
         const url = `${NETWORK_URL}/seller/update`;
         data.append('id',key)
         console.log(data)
         axios.post(url,data)
         .then((response)=>{
+            props.updateSpinnerState();
             alert(response.data)
+            navigate('/panel')
         })
         .catch((error)=>{
             alert("something went wrong")
@@ -247,7 +249,12 @@ const Form = (props) =>{
                 </Box>
 
                 <Box sx={formBox2}>
-                    <Typography>
+                    {
+                        props.isUpdate? null:
+
+                        
+                    <>
+                     <Typography>
                         Thumbnail Image :
                         <Box
                             name="thumbnail"
@@ -273,7 +280,8 @@ const Form = (props) =>{
                             accept="image/png, image/jpeg"
                             required={!props.isUpdate}
                         />
-                    </Typography>
+                    </Typography> </>
+                    }
                 </Box>
 
                 <Button
