@@ -6,7 +6,7 @@ const Review = () => {
     return (
         <Box component='div' sx={{ padding: '2%' }}>
             <Typography variant='subtitle2'>
-                Username
+                username
             </Typography >
             <Rating name="read-only" value={4} />
             <Typography variant='h6'>
