@@ -90,6 +90,7 @@ const Form = (props) =>{
 
 
     const updateForm = (data) => {
+        console.log('aman')
         const url = `${NETWORK_URL}/seller/update`;
         data.append('id',key)
         console.log(data)
