@@ -1,8 +1,9 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import { Grid, Typography, CircularProgress } from '@mui/material'
+import { Grid, Typography, CircularProgress, Box } from '@mui/material'
 import History from '../user/History';
 import axios from 'axios';
-import { Box } from '@mui/system';
+// import { Box } from '@mui/system';
+import { NETWORK_URL } from '../links'
 
 
 
@@ -13,21 +14,17 @@ const Panel = (props) => {
     const [len, setLen] = useState(false)
 
     const fetchData = useCallback(() => {
-        axios.get('http://192.168.43.65:8000/seller/panel')
+        axios.get(`${NETWORK_URL}/seller/panel`)
             .then((response) => response.data)
             .then((data) => {
-                if (data.length > 0){
+                if (data.length > 0) {
                     setDataList([...data])
-                    
                 }
-                else{
-                    setLen(data.length > 0);
-                    
-                }
-                
+                setLen(data.length > 0);
             })
             .catch((error) => {
-                alert('something went wrong')
+                alert('something went wrong');
+
             })
     }, [])
 
@@ -44,9 +41,9 @@ const Panel = (props) => {
             </Typography>
 
             {
-                (!dataList.length > 0 ) ? <Box sx={{ width: '100%', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+                (!dataList.length > 0) ? <Box sx={{ width: '100%', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
                     <Typography variant='h5'>
-                        Fetching your products
+                        Fetching your products &nbsp;
                     </Typography>
                     <CircularProgress />
                 </Box> :
@@ -59,7 +56,6 @@ const Panel = (props) => {
                                     <Typography variant='h5'>
                                         No products added
                                     </Typography>
-
                                 </Box>
                                 :
                                 <Grid container rowGap={3} sx={{ width: { lg: "70%", md: "70%", sm: "90%", xs: "90%" }, mx: "auto" }} >

@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import {useNavigate} from 'react-router-dom';
 import axios from 'axios';
+import {NETWORK_URL} from '../links'
 
 
 const History = (props) => {
@@ -77,15 +78,17 @@ const History = (props) => {
         setDeleteButtonState(true)
         const data = new FormData()
         data.append('id',props.item.key)
-        axios.post('http://192.168.43.65:8000/seller/deleteproduct',data)
+        axios.post(`${NETWORK_URL}/seller/deleteproduct`,data)
         .then((response)=>{
             setDeleteButtonState(false)
             alert(response.data)
             window.location.reload();
         })
         .catch((error)=>{
-            alert('Something went wrong')
+            alert('Something went wrong');
+            window.location.reload();
         })
+        
     }
 
     return (
@@ -97,7 +100,7 @@ const History = (props) => {
                     </Box>
                 </Grid>
                 <Grid item md={7} sm={12} xs={12} sx={profileGridItem} >
-                    <Link to='/detail/3' className='link'>
+                    <Link to={`/detail/${props.item.key}`} className='link'>
                         <Typography sx={profileGridItemText} variant="h6" >
                             {props.item.title}</Typography>
                     </Link>

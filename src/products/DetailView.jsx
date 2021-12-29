@@ -6,6 +6,7 @@ import ShoppingBagOutlinedIcon from '@mui/icons-material/ShoppingBagOutlined';
 import Review from './Review';
 import {useNavigate,useParams} from 'react-router-dom';
 import axios from 'axios';
+import {NETWORK_URL} from '../links'
 
 
 const DetailView = (props) => {
@@ -27,7 +28,7 @@ const DetailView = (props) => {
    
 
     const fetchData = useCallback(()=>{
-        axios.get(`http://192.168.43.65:8000/client/detail/${key}`)
+        axios.get(`${NETWORK_URL}/client/detail/${key}`)
         .then((response)=>response.data)
         .then((data)=>{
             setProductData({
@@ -122,7 +123,7 @@ const DetailView = (props) => {
     const navigate = useNavigate();
 
     const gotoUpdate = () => {
-        navigate('/update/3')
+        navigate(`/update/${key}`)
     }
 
     

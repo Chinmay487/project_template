@@ -3,6 +3,7 @@ import {Typography,Box,Button} from '@mui/material';
 import ProductGrid from './ProductGrid';
 import {useNavigate} from 'react-router-dom';
 import axios from 'axios';
+import {NETWORK_URL} from '../links'
 
 const ShortCategory = () => {
 
@@ -35,7 +36,7 @@ const ShortCategory = () => {
 
     const fetchProducts = useCallback(() => {
 
-        axios.get('http://192.168.43.65:8000/client/fetch')
+        axios.get(`${NETWORK_URL}/client/fetch`)
             .then((response) => {
                 return response.data
             })

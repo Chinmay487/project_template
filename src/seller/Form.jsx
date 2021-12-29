@@ -2,6 +2,7 @@ import React,{useState} from 'react';
 import { Box, Typography, Button, TextField, Slider, Grid, useTheme } from '@mui/material'
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import {NETWORK_URL} from '../links'
 
 
 const Form = (props) =>{
@@ -70,7 +71,7 @@ const Form = (props) =>{
 
     const onFormSubmit = (event) => {
         event.preventDefault();
-        const url = 'http://192.168.43.65:8000/seller/addproduct';
+        const url = `${NETWORK_URL}/seller/addproduct`;
         const data = new FormData();
         data.append('price', productData.price);
         data.append('discount_price', productData.discount_price);
