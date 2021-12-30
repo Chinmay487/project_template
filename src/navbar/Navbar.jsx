@@ -1,12 +1,13 @@
 import React, { useState } from 'react';
-import { AppBar, Toolbar, Typography, Box, TextField, IconButton, Avatar, useTheme, useMediaQuery } from '@mui/material'
+import { AppBar, Toolbar, Typography, Box, TextField, IconButton, Avatar, useTheme, useMediaQuery,Button } from '@mui/material'
 import SearchOutlinedIcon from '@mui/icons-material/SearchOutlined';
 import Sidenav from './Sidenav';
 import NavMenu from './NavMenu'
 import { appBarStyle, navbarDivStyle, searchFormGroup, searchForm, searchFormInput, avatarStyle, navbarStyle2, navbarDiveStyle2, typographyStyle2 } from '../styles';
 import MenuRoundedIcon from '@mui/icons-material/MenuRounded';
 import { NavLink } from 'react-router-dom';
-import {ListClass} from './utilClasses'
+import {ListClass} from './utilClasses';
+import AuthForm from '../authentication/AuthForm';
 
 
 const Navbar = (props) => {
@@ -109,6 +110,16 @@ const Navbar = (props) => {
         textShadow: "1px 1px 10px #90A4AE"
     }
 
+    const [dialogOpen,setDialogOpen] = useState(false)
+
+    const handleDilogClose = () => {
+        setDialogOpen(false);
+    }
+
+    const handleOpenDilog = () => {
+        setDialogOpen(true);
+    }
+
     return (
         <>
             <AppBar sx={appBarStyle} position="relative">
@@ -183,6 +194,7 @@ const Navbar = (props) => {
                                     </>
                                 })
                             }
+                            <Button variant="text" onClick={handleOpenDilog} > Login </Button>
                         </Box>
                     </Box>) : <Box sx={{ width: '100%', display: 'flex', justifyContent: 'center', alignItems: 'center', borderTop: '1px solid #CFD8DC', py: '2%' }}>
                         {searchFormComponent
@@ -191,12 +203,14 @@ const Navbar = (props) => {
                 }
 
             </AppBar>
+            <AuthForm handleDialogClose={handleDilogClose} dialogOpen={dialogOpen} />
             <Sidenav
                 isSeller={props.isSeller}
                 uid={10000}
                 items={navList2}
                 drawerStatus={drawerStatus}
                 setDrawerStatus={setDrawerStatus}
+                handleOpenDilog = {handleOpenDilog}
             />
         </>
     );

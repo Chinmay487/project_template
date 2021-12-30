@@ -1,11 +1,11 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Drawer, List, ListItem, ListItemIcon, Collapse } from '@mui/material';
 import MenuOpenOutlinedIcon from '@mui/icons-material/MenuOpenOutlined';
 import { useNavigate } from 'react-router-dom';
 import ExpandLess from '@mui/icons-material/ExpandLess';
 import ExpandMore from '@mui/icons-material/ExpandMore';
 import { drawerStyle } from '../styles';
-import {Link} from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 const Sidenav = (props) => {
 
@@ -27,6 +27,7 @@ const Sidenav = (props) => {
     }
 
 
+
     return (
         <Drawer open={props.drawerStatus} onClose={onClickEvent} variant="temporary" anchor="left" sx={drawerStyle} >
 
@@ -46,7 +47,7 @@ const Sidenav = (props) => {
                     </ListItemIcon>
                 </ListItem>
                 {
-                    props.isSeller ? <Link onClick={()=>{props.setDrawerStatus(!props.drawerStatus)}} className="link" to='/panel'><ListItem divider button><ListItemIcon>Panel</ListItemIcon></ListItem></Link> : null
+                    props.isSeller ? <Link onClick={() => { props.setDrawerStatus(!props.drawerStatus) }} className="link" to='/panel'><ListItem divider button><ListItemIcon>Panel</ListItemIcon></ListItem></Link> : null
                 }
                 {props.items.map((item, index) => {
                     return (
@@ -77,6 +78,9 @@ const Sidenav = (props) => {
                     )
 
                 })}
+                <ListItem button onClick={props.handleOpenDilog}>
+                    Login
+                </ListItem>
             </List>
         </Drawer>
     )
