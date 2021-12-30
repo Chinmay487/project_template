@@ -9,7 +9,7 @@ import ProductForm from './seller/ProductForm';
 import Panel from './seller/Panel';
 import ProfilePage from './user/ProfilePage';
 import NewSeller from './seller/NewSeller'
-
+import ReviewPage from './products/ReviewPage';
 
 const AppRoutes = (props) => {
     return (
@@ -23,6 +23,7 @@ const AppRoutes = (props) => {
             <Route exact={true} path="/detail/:key" element={<DetailView isSeller={props.isSeller}/>} />
             <Route exact={true} path="categories/:category/:subCategory" element={<CategoryView/>} />
             <Route exact={true} path="/" element={<HomePage/>} />
+            <Route exact={true} path="" elementr
             <Route path='*' element={<ErrorPage/>} />
         </Routes>
     )

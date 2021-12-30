@@ -80,9 +80,11 @@ const DetailView = (props) => {
     }
 
     const onReviewSubmit = (event) =>{
+
         event.preventDefault()
         setReviewFormStatus(true)
         const data = new FormData()
+        data.append('id',key)
         data.append('title',reviewData.title)
         data.append('description',reviewData.description)
         data.append('rating',reviewData.rating)
