@@ -220,16 +220,16 @@ const DetailView = (props) => {
                                 <Grid item md={5} sm={12} xs={12} >
                                     <Box component='form' onSubmit={onReviewSubmit} sx={formStyle1} >
                                         <Typography variant="h6"> Share your Experience </Typography>
-                                        <TextField id="filled-basic" label="Filled" variant="standard" name='title' value={reviewData.title} onChange={onInputChange} />
-                                        <TextField placeholder='Share your Experience' maxRows={7} minRows={3} variant='standard' multiline name='description' value={reviewData.description} onChange={onInputChange} />
+                                        <TextField id="filled-basic" label="Filled" variant="standard" name='title' value={reviewData.title} onChange={onInputChange} required={true}/>
+                                        <TextField placeholder='Share your Experience' maxRows={7} minRows={3} variant='standard' multiline name='description' value={reviewData.description} onChange={onInputChange} required={true}/>
 
                                         <Box component='div' sx={{ width: '100%', display: 'flex', alignItems: "base-line" }} >
                                             <Typography variant="subtitle1"> Rate Us &nbsp; 
                                             </Typography>
-                                            <Rating name="read-only" value={reviewData.rating} name='rating' onChange={onInputChange}/>
+                                            <Rating name="read-only" value={reviewData.rating} name='rating' onChange={onInputChange} />
                                         </Box>
                                         {
-                                            reviewFormStatus ?  <CircularProgress/> :
+                                            reviewFormStatus ?  <Box sx={{display:'flex',justifyContent:'center',alignItems:'center'}}> <CircularProgress/> </Box>:
                                             <Button variant='outlined' type='submit' sx={{ display: 'block', width: '30%' }} > Post </Button>
                                         }
                                     </Box>

@@ -58,7 +58,7 @@ const ReviewPage = () => {
                                         justifyContent: "center",
                                         my: "2rem"
                                     }}>
-                                    <Typography variant="h2">
+                                    <Typography variant="h3" >
                                         No reviews yet
                                     </Typography>
                                 </Box> :
@@ -70,7 +70,7 @@ const ReviewPage = () => {
                                             justifyContent: "center",
                                             my: "2rem"
                                         }}>
-                                        <Typography variant="h2">
+                                        <Typography variant="h4">
                                             Product reviews
                                         </Typography>
                                     </Box>
