@@ -237,7 +237,7 @@ const DetailView = (props) => {
                                 <Grid item md={7}>
                                     <Review />
                                     <Review />
-                                    <Button variant="outlined" sx={{ display: 'block', mx: 'auto' }} > View More </Button>
+                                    <Button variant="outlined" sx={{ display: 'block', mx: 'auto' }} onClick={()=>{navigate(`/review/${key}`)}} > View More </Button>
                                 </Grid>
                             </Grid>
                         </Grid>

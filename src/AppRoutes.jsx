@@ -23,7 +23,7 @@ const AppRoutes = (props) => {
             <Route exact={true} path="/detail/:key" element={<DetailView isSeller={props.isSeller}/>} />
             <Route exact={true} path="categories/:category/:subCategory" element={<CategoryView/>} />
             <Route exact={true} path="/" element={<HomePage/>} />
-            <Route exact={true} path="" elementr
+            <Route exact={true} path="/review/:key" element={<ReviewPage/>}/>
             <Route path='*' element={<ErrorPage/>} />
         </Routes>
     )
