@@ -26,7 +26,7 @@ const AuthForm = (props) => {
                 </DialogActions>
                 <Box sx={{ width: "100%",padding:{sm:"1%",xs:"1%"}, display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center", my: "1rem" }} >
                     <Typography sx={{my:"1rem"}}>OR</Typography>
-                    <Typography variant="h6" sx={{mb:"1rem"}} >Join us with mobile number and OTP</Typography>
+                    <Typography variant="h6" sx={{mb:"1rem" ,textAlign:'center', mx:{sm:'1%',xs:'3%'}}} >Join us with mobile number and OTP</Typography>
                 {/* </Box>
                 <Box sx={{width:"100%",display:"flex",justifyContent:"center",flexDirection:"column",alignItems:"center",my:"1rem"}}> */}
                     <Box sx={{display:"flex",width:"100%",justifyContent:"center",alignItems:"center"}} >
@@ -44,8 +44,8 @@ const AuthForm = (props) => {
                         <Box component="option">+91</Box>
                         <Box component="option">+91</Box>
                     </Box> */}
-                    <Typography sx={{fontSize:"1.5rem",mx:"0.5rem"}} >+91</Typography>
-                    <TextField  variant="outlined" label="Contact Number" required={true} />
+                    
+                    <TextField  variant="outlined" label="Contact Number" placeholder='+91 1234567890' required={true} />
                     </Box>
                     <TextField sx={{my:"0.5rem"}} variant="outlined" label="OTP" required={true} />
                     <Button sx={{my:"1rem"}}   variant="contained">Send OTP</Button>
