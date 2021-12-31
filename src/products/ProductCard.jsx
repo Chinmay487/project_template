@@ -54,7 +54,7 @@ const ProductCard = (props) => {
     // }
 
 
-    console.log(props.item)
+    // console.log(props.item)
 
     return (
         <>

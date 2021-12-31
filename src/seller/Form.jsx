@@ -124,14 +124,9 @@ const Form = (props) =>{
         const endpoint = props.isUpdate ? 'seller/update' : 'seller/addproduct'
         if (props.isUpdate){
             data.append('id',key)
-            // updateForm(data)
         }
-        //  else {
-            // addForm(data)
-        // } 
         props.updateSpinnerState();
         const url = `${NETWORK_URL}/${endpoint}`;
-        console.log(data)
         axios.post(url,data,{
             headers: {
                 'Content-Type': 'multipart/form-data'

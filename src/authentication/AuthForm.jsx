@@ -1,11 +1,49 @@
-import React, { useState } from 'react';
-import { Dialog, DialogActions, DialogTitle, Typography, Button, Box, IconButton, TextField } from '@mui/material';
+import React, { useState,useCallback,useEffect } from 'react';
+import { Dialog, DialogActions, DialogTitle, Typography, Button, Box, IconButton, TextField,CircularProgress } from '@mui/material';
 import GoogleIcon from '@mui/icons-material/Google';
 import CloseIcon from '@mui/icons-material/Close';
-import {authUser} from './authConfig'
+import {authUser} from './authConfig';
+import axios from 'axios';
+import {NETWORK_URL} from '../links';
+import firebase from "firebase/compat/app";
+import "firebase/compat/auth";
+
 
 
 const AuthForm = (props) => {
+
+    const [progressStatus,setProgressStatus] = useState(false)
+
+
+    const [firebaseKeys,setFirebaseKeys] = useState({
+        apiKey: "",
+        authDomain: "",
+        projectId: "",
+        storageBucket: "",
+        messagingSenderId: "",
+        appId: ""
+    })
+
+
+    const fetchKeys = useCallback(()=>{
+        setProgressStatus(true)
+        axios.get(`${NETWORK_URL}/auth/keys`)
+        .then((response)=>{
+            setProgressStatus(false)
+            // console.log(response.data)
+            setFirebaseKeys({...response.data})
+            // authUser({...response.data})
+        })
+        .catch((error)=>{
+            console.log("something went wrong")
+        })
+    },[])
+
+    
+    useEffect(()=>{
+        fetchKeys()
+        
+    },[fetchKeys])
 
     const [correctNumber, setCorrectNumber] = useState(false)
 
@@ -27,7 +65,7 @@ const AuthForm = (props) => {
 
     const onOtpFormSubmit = (event) => {
         event.preventDefault()
-        const mobileNumberPattern = /^(?:(?:\+|0{0,2})91(\s*[\-]\s*)?|[0]?)?[789]\d{9}$/im;
+        const mobileNumberPattern = /^(?:(?:\+|0{0,2})91(\s*[-]\s*)?|[0]?)?[789]\d{9}$/im;
         if (mobileNumberPattern.test(mobileNumberForm.mobileNumber)) {
             setCorrectNumber(false)
         } else {
@@ -44,12 +82,16 @@ const AuthForm = (props) => {
     }
 
     const googleSignIn = () => {
-        authUser()
+        const app = firebase.initializeApp(firebaseKeys)
+        authUser(app)
+        props.handleDialogClose()
     }
     return (
         <>
             <Dialog fullWidth open={props.dialogOpen} onClose={props.handleDialogClose} >
-                <Box
+                {
+                    progressStatus ? <CircularProgress/> : <>
+                        <Box
                     sx={{
                         width: "100%",
                         display: "flex",
@@ -136,6 +178,8 @@ const AuthForm = (props) => {
                     />
                     <Button type="submit" sx={{ my: "1rem" }} variant="contained">Send OTP</Button>
                 </Box>
+                    </>
+                }
             </Dialog>
         </>
     )
