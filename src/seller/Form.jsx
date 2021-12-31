@@ -69,41 +69,44 @@ const Form = (props) =>{
     }
 
 
-    const addForm = (data) => {
-        const url = `${NETWORK_URL}/seller/addproduct`;
-        props.updateSpinnerState()
-        axios.post(url, data, {
-            headers: {
-                'Content-Type': 'multipart/form-data'
-            }
-        })
-            .then(
-                (response) => {
-                    props.updateSpinnerState()
-                    navigate('/panel');
-                }
-            )
-            .catch((error) => {
-                alert("something went Wrong\nPlease try again")
-            })
-    }
+    // const addForm = (data) => {
+    //     const url = `${NETWORK_URL}/seller/addproduct`;
+    //     props.updateSpinnerState()
+    //     axios.post(url, data, {
+    //         headers: {
+    //             'Content-Type': 'multipart/form-data'
+    //         }
+    //     })
+    //         .then(
+    //             (response) => {
+    //                 props.updateSpinnerState()
+    //                 navigate('/panel');
+    //             }
+    //         )
+    //         .catch((error) => {
+    //             alert("something went Wrong\nPlease try again")
+    //         })
+    // }
 
 
-    const updateForm = (data) => {
-        props.updateSpinnerState();
-        const url = `${NETWORK_URL}/seller/update`;
-        data.append('id',key)
-        console.log(data)
-        axios.post(url,data)
-        .then((response)=>{
-            props.updateSpinnerState();
-            alert(response.data)
-            navigate('/panel')
-        })
-        .catch((error)=>{
-            alert("something went wrong")
-        })
-    }
+    // const updateForm = (data) => {
+    //     props.updateSpinnerState();
+    //     const url = `${NETWORK_URL}/seller/update`;
+    //     console.log(data)
+    //     axios.post(url,data,{
+    //         headers: {
+    //             'Content-Type': 'multipart/form-data'
+    //         }
+    //     })
+    //     .then((response)=>{
+    //         props.updateSpinnerState();
+    //         alert(response.data)
+    //         navigate('/panel')
+    //     })
+    //     .catch((error)=>{
+    //         alert("something went wrong")
+    //     })
+    // }
 
     const onFormSubmit = (event) => {
         event.preventDefault();
@@ -118,11 +121,30 @@ const Form = (props) =>{
             let name = 'image' + index
             data.append(name, file)
         })
+        const endpoint = props.isUpdate ? 'seller/update' : 'seller/addproduct'
         if (props.isUpdate){
-            updateForm(data)
-        } else {
-            addForm(data)
-        }   
+            data.append('id',key)
+            // updateForm(data)
+        }
+        //  else {
+            // addForm(data)
+        // } 
+        props.updateSpinnerState();
+        const url = `${NETWORK_URL}/${endpoint}`;
+        console.log(data)
+        axios.post(url,data,{
+            headers: {
+                'Content-Type': 'multipart/form-data'
+            }
+        })
+        .then((response)=>{
+            props.updateSpinnerState();
+            alert(response.data)
+            navigate('/panel')
+        })
+        .catch((error)=>{
+            alert("something went wrong")
+        })
     }
 
     return(
@@ -249,11 +271,11 @@ const Form = (props) =>{
                 </Box>
 
                 <Box sx={formBox2}>
-                    {
-                        props.isUpdate? null:
+                    {/* {
+                        props.isUpdate? null: */}
 
                         
-                    <>
+                    {/* <> */}
                      <Typography>
                         Thumbnail Image :
                         <Box
@@ -280,8 +302,9 @@ const Form = (props) =>{
                             accept="image/png, image/jpeg"
                             required={!props.isUpdate}
                         />
-                    </Typography> </>
-                    }
+                    </Typography> 
+                    {/* </> */}
+                    {/* } */}
                 </Box>
 
                 <Button
