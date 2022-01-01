@@ -6,7 +6,7 @@ import axios from 'axios';
 import { NETWORK_URL } from '../links';
 import firebase from "firebase/compat/app";
 import "firebase/compat/auth";
-import { getAuth, RecaptchaVerifier } from "firebase/auth";
+import { getAuth, RecaptchaVerifier, signInWithPhoneNumber } from "firebase/auth";
 
 
 const AuthForm = (props) => {
@@ -23,15 +23,31 @@ const AuthForm = (props) => {
         appId: ""
     })
 
+    const [correctNumber, setCorrectNumber] = useState(false)
+
+    const [mobileNumberForm, setMobileNumberForm] = useState({
+        otp: 0,
+        mobileNumber: '',
+        countryCode: '+91'
+    })
+
+    const googleButtonStyle = {
+        color: "#F5F5F5",
+        backgroundColor: "#FF5252",
+        "&:hover": {
+            backgroundColor: "#FF5252"
+        }
+    }
+
 
     const fetchKeys = useCallback(() => {
         setProgressStatus(true)
         axios.get(`${NETWORK_URL}/auth/keys`)
             .then((response) => {
                 setProgressStatus(false)
-                // console.log(response.data)
+
                 setFirebaseKeys({ ...response.data })
-                // authUser({...response.data})
+
             })
             .catch((error) => {
                 console.log("something went wrong")
@@ -44,13 +60,7 @@ const AuthForm = (props) => {
 
     }, [fetchKeys])
 
-    const [correctNumber, setCorrectNumber] = useState(false)
 
-    const [mobileNumberForm, setMobileNumberForm] = useState({
-        otp: '000000',
-        mobileNumber: '',
-        countryCode: '+91'
-    })
 
     const onOtpFormChange = (event) => {
         const { name, value } = event.target
@@ -62,15 +72,10 @@ const AuthForm = (props) => {
         })
     }
 
-    const googleButtonStyle = {
-        color: "#F5F5F5",
-        backgroundColor: "#FF5252",
-        "&:hover": {
-            backgroundColor: "#FF5252"
-        }
-    }
 
-    const authUser = (app) => {
+
+    const authUser = () => {
+        const app = firebase.initializeApp(firebaseKeys)
         const googleProvider = new firebase.auth.GoogleAuthProvider();
         app.auth().signInWithPopup(googleProvider)
             .then((response) => {
@@ -82,36 +87,71 @@ const AuthForm = (props) => {
     }
 
     const googleSignIn = () => {
-        const app = firebase.initializeApp(firebaseKeys)
-        authUser(app)
+        authUser()
         props.handleDialogClose()
     }
 
 
-    const auth = getAuth();
-    const configCaptcha = () =>{
+    const configCaptcha = () => {
+        const auth = getAuth();
+        const app = firebase.initializeApp(firebaseKeys)
         window.recaptchaVerifier = new RecaptchaVerifier('sign-in-button', {
             'size': 'invisible',
             'callback': (response) => {
-              // reCAPTCHA solved, allow signInWithPhoneNumber.
-            onOtpSubmit();
-            }
+                // reCAPTCHA solved, allow signInWithPhoneNumber.
+                onOtpSubmit();
+            },
+            defaultCountry: "IN"
         }, auth);
     }
-    
-    const onOtpSubmit = (event) =>{
-        event.preventDefault();
-        const mobileNumber = mobileNumberForm.mobileNumber;
 
+
+    const onOtpSubmit = (event) => {
+        const app = firebase.initializeApp(firebaseKeys)
+        const mobileNumber = "+91" + mobileNumberForm.mobileNumber;
+        const auth = getAuth();
         const mobileNumberPattern = /^(?:(?:\+|0{0,2})91(\s*[-]\s*)?|[0]?)?[789]\d{9}$/im;
         if (mobileNumberPattern.test(mobileNumber)) {
             setCorrectNumber(false)
             console.log(mobileNumber)
+            setOtpSent(true)
+            configCaptcha()
+            const appVerifier = window.recaptchaVerifier;
+            // sendOtp(mobileNumber)
+            signInWithPhoneNumber(auth, mobileNumber, appVerifier)
+                .then((confirmationResult) => {
+                    // SMS sent. Prompt user to type the code from the message, then sign the
+                    // user in with confirmationResult.confirm(code).
+                    window.confirmationResult = confirmationResult;
+                    console.log("OTP has been sent")
+                    // ...
+                }).catch((error) => {
+                    // Error; SMS not sent
+                    console.log("something went wrong")
+                    // ...
+                });
 
         } else {
             setCorrectNumber(true)
+            setOtpSent(false)
         }
 
+    }
+
+
+    const onOtpFormSubmit = (event) => {
+        event.preventDefault()
+        const app = firebase.initializeApp(firebaseKeys)
+        const code = mobileNumberForm.otp;
+        window.confirmationResult.confirm(code).then((result) => {
+            // User signed in successfully.
+            const user = result.user;
+            console.log(user)
+            // ...
+        }).catch((error) => {
+            // User couldn't sign in (bad verification code?)
+            // ...
+        });
     }
 
 
@@ -140,12 +180,19 @@ const AuthForm = (props) => {
                         </Box>
 
                         <DialogActions sx={{ height: "100%", display: "flex", flexDirection: "column" }} >
-                            <Button onClick={googleSignIn} variant='contained' sx={googleButtonStyle}> <GoogleIcon /> &nbsp;Login with Google  </Button>
+                            <Button
+                                onClick={googleSignIn}
+                                variant='contained'
+                                sx={googleButtonStyle}>
+                                <GoogleIcon />
+                                &nbsp;Login with Google
+                            </Button>
                         </DialogActions>
 
                         <Box id="sign-in-button" />
                         <Box
                             component="form"
+                            onSubmit={onOtpFormSubmit}
                             sx={{
                                 width: "100%",
                                 padding: {
@@ -170,7 +217,15 @@ const AuthForm = (props) => {
                             >
                                 Join us with mobile number and OTP
                             </Typography>
-                            {correctNumber ? <Typography variant="p" color="error" gutterBottom>PLEASE ENTER VALID PHONE NUMBER</Typography> : null}
+                            {correctNumber ?
+                                <Typography
+                                    variant="p"
+                                    color="error"
+                                    gutterBottom>
+                                    PLEASE ENTER VALID PHONE NUMBER
+                                </Typography>
+                                :
+                                null}
                             <Box
                                 sx={{
                                     display: "flex",
@@ -202,21 +257,21 @@ const AuthForm = (props) => {
                                 otpSent ? <TextField
                                     sx={{ my: "0.5rem" }}
                                     variant="outlined"
-                                    label="otp"
+                                    label="OTP"
                                     name="otp"
                                     required={true}
                                     value={mobileNumberForm.otp}
                                     onChange={onOtpFormChange}
                                 /> : null
                             }
-                            <Box sx={{ width: "100%", display:"flex",justifyContent:"center",alignItems:"center" }}>
-                                <Button onClick={()=>{onOtpSubmit()}} sx={{ my: "1rem",mx:"1rem" }} variant="contained">
+                            <Box sx={{ width: "100%", display: "flex", justifyContent: "center", alignItems: "center" }}>
+                                <Button onClick={onOtpSubmit} sx={{ my: "1rem", mx: "1rem" }} variant="contained">
                                     {
                                         otpSent ? "Resend OTP" : "Send OTP"
                                     }
                                 </Button>
                                 {
-                                    otpSent ?  <Button type="submit" sx={{ my: "1rem",mx:"1rem" }} variant="contained" >
+                                    otpSent ? <Button type="submit" sx={{ my: "1rem", mx: "1rem" }} variant="contained" >
                                         Submit OTP
                                     </Button> : null
                                 }
