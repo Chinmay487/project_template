@@ -2,12 +2,11 @@ import React, { useState, useCallback, useEffect } from 'react';
 import { Dialog, DialogActions, DialogTitle, Typography, Button, Box, IconButton, TextField, CircularProgress } from '@mui/material';
 import GoogleIcon from '@mui/icons-material/Google';
 import CloseIcon from '@mui/icons-material/Close';
-import { authUser,getOtp } from './authConfig';
 import axios from 'axios';
 import { NETWORK_URL } from '../links';
 import firebase from "firebase/compat/app";
 import "firebase/compat/auth";
-
+import { getAuth, RecaptchaVerifier } from "firebase/auth";
 
 
 const AuthForm = (props) => {
@@ -63,29 +62,6 @@ const AuthForm = (props) => {
         })
     }
 
-    const onOtpFormSubmit = (event) => {
-        event.preventDefault()
-        // const mobileNumberPattern = /^(?:(?:\+|0{0,2})91(\s*[-]\s*)?|[0]?)?[789]\d{9}$/im;
-        // if (mobileNumberPattern.test(mobileNumberForm.mobileNumber)) {
-        //     setCorrectNumber(false)
-        // } else {
-        //     setCorrectNumber(true)
-        // }
-    }
-
-    const onOtpSubmit = () => {
-        // event.preventDefault()
-        const mobileNumberPattern = /^(?:(?:\+|0{0,2})91(\s*[-]\s*)?|[0]?)?[789]\d{9}$/im;
-        if (mobileNumberPattern.test(mobileNumberForm.mobileNumber)) {
-            setCorrectNumber(false)
-            setOtpSent(true)
-            getOtp(mobileNumberForm.mobileNumber)
-        } else {
-            setCorrectNumber(true)
-        }
-    }
-
-
     const googleButtonStyle = {
         color: "#F5F5F5",
         backgroundColor: "#FF5252",
@@ -94,11 +70,51 @@ const AuthForm = (props) => {
         }
     }
 
+    const authUser = (app) => {
+        const googleProvider = new firebase.auth.GoogleAuthProvider();
+        app.auth().signInWithPopup(googleProvider)
+            .then((response) => {
+                console.log(response)
+            })
+            .catch((error) => {
+                alert("something went wrong")
+            })
+    }
+
     const googleSignIn = () => {
         const app = firebase.initializeApp(firebaseKeys)
         authUser(app)
         props.handleDialogClose()
     }
+
+
+    const auth = getAuth();
+    const configCaptcha = () =>{
+        window.recaptchaVerifier = new RecaptchaVerifier('sign-in-button', {
+            'size': 'invisible',
+            'callback': (response) => {
+              // reCAPTCHA solved, allow signInWithPhoneNumber.
+            onOtpSubmit();
+            }
+        }, auth);
+    }
+    
+    const onOtpSubmit = (event) =>{
+        event.preventDefault();
+        const mobileNumber = mobileNumberForm.mobileNumber;
+
+        const mobileNumberPattern = /^(?:(?:\+|0{0,2})91(\s*[-]\s*)?|[0]?)?[789]\d{9}$/im;
+        if (mobileNumberPattern.test(mobileNumber)) {
+            setCorrectNumber(false)
+            console.log(mobileNumber)
+
+        } else {
+            setCorrectNumber(true)
+        }
+
+    }
+
+
     return (
         <>
             <Dialog fullWidth open={props.dialogOpen} onClose={props.handleDialogClose} >
@@ -122,12 +138,14 @@ const AuthForm = (props) => {
                         <Box sx={{ width: "100%", display: "flex", justifyContent: "center", alignItems: "center", my: "1rem" }} >
                             <Typography variant="h6">Welcome to ShopHeaven</Typography>
                         </Box>
+
                         <DialogActions sx={{ height: "100%", display: "flex", flexDirection: "column" }} >
                             <Button onClick={googleSignIn} variant='contained' sx={googleButtonStyle}> <GoogleIcon /> &nbsp;Login with Google  </Button>
                         </DialogActions>
+
+                        <Box id="sign-in-button" />
                         <Box
                             component="form"
-                            onSubmit={onOtpFormSubmit}
                             sx={{
                                 width: "100%",
                                 padding: {
