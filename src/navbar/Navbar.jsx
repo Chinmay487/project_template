@@ -1,21 +1,16 @@
 import React, { useState } from 'react';
-import { AppBar, Toolbar, Typography, Box, TextField, IconButton, Avatar, useTheme, useMediaQuery,Button } from '@mui/material'
+import { AppBar, Toolbar, Typography, Box, TextField, IconButton, Avatar, useTheme, useMediaQuery, Button } from '@mui/material'
 import SearchOutlinedIcon from '@mui/icons-material/SearchOutlined';
 import Sidenav from './Sidenav';
 import NavMenu from './NavMenu'
 import { appBarStyle, navbarDivStyle, searchFormGroup, searchForm, searchFormInput, avatarStyle, navbarStyle2, navbarDiveStyle2, typographyStyle2 } from '../styles';
 import MenuRoundedIcon from '@mui/icons-material/MenuRounded';
 import { NavLink } from 'react-router-dom';
-import {ListClass} from './utilClasses';
+import { ListClass, NavMenuItem } from './utilClasses';
 import AuthForm from '../authentication/AuthForm';
 
 
 const Navbar = (props) => {
-
-    let id1 = 2000;
-    let id2 = 3000;
-    let id3 = 4000;
-
 
     const [avatarEl, setAvatarEl] = useState(null);
 
@@ -46,51 +41,101 @@ const Navbar = (props) => {
 
 
     const avatarMenuItems = [
-        'Username', 'Profile', 'View Cart', 'Become Seller', 'Logout', 'Add Product'
+        new NavMenuItem('Username', '','aa'),
+        new NavMenuItem('Profile', '/profile','bb'),
+        new NavMenuItem('View Cart', '/viewcart','cc'),
+        new NavMenuItem('Become Seller', '/new_seller','dd'),
+        new NavMenuItem('Logout', '/logout','ee'),
+        new NavMenuItem('Add Product', '/addproduct','ff')
     ]
 
     const navList2 = [
         new ListClass(
             'Fashion',
-            ['All', 'kids', 'Men', 'Women'],
+            [
+                new NavMenuItem('All', '/categories/fashion/all','a'),
+                new NavMenuItem('kids', '/categories/fashion/kids','b'),
+                new NavMenuItem('Men', '/categories/fashion/men','c'),
+                new NavMenuItem('Women', '/categories/fashion/women','d')
+            ],
             fashionEl,
-            setFashionEl
+            setFashionEl,
+            'A'
         ),
         new ListClass(
             'Electronics',
-            ['All', 'TV', 'Computer', 'Laptop', 'Accessories', 'Camera', 'toys'],
+            [
+                new NavMenuItem('All','/categories/electronics/all','a'),
+                new NavMenuItem('TV','/categories/electronics/tv','b'),
+                new NavMenuItem('Computer','/categories/electronics/computer','c'),
+                new NavMenuItem('Laptop','/categories/electronics/laptop','d'),
+                new NavMenuItem('Accessories','/categories/electronics/accessories','e'),
+                new NavMenuItem('Camera','/categories/electronics/camera','f'),
+                new NavMenuItem('toys','/categories/electronics/toys','g')
+            ],
             electronicsEl,
-            setElectronicsEl
+            setElectronicsEl,
+            'B'
         ),
         new ListClass(
             'Mobile',
-            ['All', 'Accessories', 'iOS', 'Android'],
+            [
+                new NavMenuItem('All', '/categories/mobile/all','a'),
+                new NavMenuItem('Accessories', '/categories/mobile/accessories','b'),
+                new NavMenuItem('iOS', '/categories/mobile/ios','c'),
+                new NavMenuItem('Android', '/categories/mobile/android','d')
+            ],
             mobileEl,
-            setMobileEl
+            setMobileEl,
+            'C'
         ),
         new ListClass(
             'Grossery',
-            ['All', 'Jam', 'Sauce', 'Spices', 'Papad', 'Pickle'],
+            [
+                new NavMenuItem('All','/categories/grossery/all','a'),
+                new NavMenuItem('Jam','/categories/grossery/jam','b'),
+                new NavMenuItem('Sauce','/categories/grossery/sauce','c'),
+                new NavMenuItem('Spices','/categories/grossery/spices','d'),
+                new NavMenuItem('Papad','/categories/grossery/papad','e'),
+                new NavMenuItem('Pickle','/categories/grossery/pickle','f')
+            ],
             grosseryEl,
-            setGrosseryEl
+            setGrosseryEl,
+            'D'
         ),
         new ListClass(
             'Stationary',
-            ['All', 'Books', 'Note Books', 'Office stuff'],
+            [
+                new NavMenuItem('All','/categories/stationary/all','a'),
+                new NavMenuItem('Books','/categories/stationary/books','b'),
+                new NavMenuItem('Note Books','/categories/stationary/notebooks','c'),
+                new NavMenuItem('Office stuff','/categories/stationary/office','d')
+            ],
             stationaryEl,
-            setStationaryEl
+            setStationaryEl,
+            'E'
         ),
         new ListClass(
             'Self Care',
-            ['All', 'kids', 'Adults', 'Women'],
+            [
+                new NavMenuItem('All','/categories/selfcare/all','a'),
+                new NavMenuItem('kids','/categories/selfcare/kids','b'),
+                new NavMenuItem('Adults','/categories/selfcare/adults','c'),
+                new NavMenuItem('Women','/categories/selfcare/women','d')
+            ],
             selfCareEl,
-            setSelfCareEl
+            setSelfCareEl,
+            'F'
         ),
         new ListClass(
             'Others',
-            ['All', 'Jewelary'],
+            [
+                new NavMenuItem('All', '/categories/others/all','a'),
+                new NavMenuItem('Jewelary', '/categories/others/jewelary','b')
+            ],
             othersEl,
-            setOthersEl
+            setOthersEl,
+            'G'
         )
     ]
 
@@ -110,7 +155,7 @@ const Navbar = (props) => {
         textShadow: "1px 1px 10px #90A4AE"
     }
 
-    const [dialogOpen,setDialogOpen] = useState(false)
+    const [dialogOpen, setDialogOpen] = useState(false)
 
     const handleDilogClose = () => {
         setDialogOpen(false);
@@ -155,9 +200,7 @@ const Navbar = (props) => {
 
                     </Box>
                     <NavMenu
-                        uid={3000}
                         haveCategory={false}
-                        parent=""
                         anchorEl={avatarEl}
                         handleClose={handleAvatarClose}
                         openMenu={openAvatarMenu}
@@ -169,21 +212,29 @@ const Navbar = (props) => {
                     !small ? (<Box component="div" sx={navbarStyle2}>
                         <Box component="div" sx={navbarDiveStyle2}>
                             {
-                                props.isSeller ? <NavLink to="/panel" className="link"><Typography sx={typographyStyle2}>Panel</Typography></NavLink> : null
+                                props.isSeller ?
+                                    <NavLink
+                                        to="/panel"
+                                        className="link">
+                                        <Typography sx={typographyStyle2}>
+                                            Panel
+                                        </Typography>
+                                    </NavLink>
+                                    : null
                             }
                             {
-                                navList2.map((item) => {
+                                navList2.map((item,index) => {
                                     return <>
                                         <Typography
-                                            key={id1++}
+                                            key={`${item.key}${index}`}
                                             sx={typographyStyle2}
                                             onClick={item.menuOpenFunction}
                                         >
                                             {item.title}
                                         </Typography>
                                         <NavMenu
-                                            key={id2++}
-                                            uid={id3}
+                                            key={`${index}${item.key}${item.key}`}
+                                            uid={item.key}
                                             haveCategory={true}
                                             parent={item.title}
                                             anchorEl={item.openEl}
@@ -196,7 +247,14 @@ const Navbar = (props) => {
                             }
                             <Button variant="text" onClick={handleOpenDilog} > Login </Button>
                         </Box>
-                    </Box>) : <Box sx={{ width: '100%', display: 'flex', justifyContent: 'center', alignItems: 'center', borderTop: '1px solid #CFD8DC', py: '2%' }}>
+                    </Box>) : <Box sx={{
+                        width: '100%',
+                        display: 'flex',
+                        justifyContent: 'center',
+                        alignItems: 'center',
+                        borderTop: '1px solid #CFD8DC',
+                        py: '2%'
+                    }}>
                         {searchFormComponent
                         }
                     </Box>
@@ -206,11 +264,11 @@ const Navbar = (props) => {
             <AuthForm handleDialogClose={handleDilogClose} dialogOpen={dialogOpen} />
             <Sidenav
                 isSeller={props.isSeller}
-                uid={10000}
+                // uid={10000}
                 items={navList2}
                 drawerStatus={drawerStatus}
                 setDrawerStatus={setDrawerStatus}
-                handleOpenDilog = {handleOpenDilog}
+                handleOpenDilog={handleOpenDilog}
             />
         </>
     );

@@ -11,6 +11,14 @@ import { getAuth, RecaptchaVerifier, signInWithPhoneNumber } from "firebase/auth
 
 const AuthForm = (props) => {
 
+    const googleButtonStyle = {
+        color: "#F5F5F5",
+        backgroundColor: "#FF5252",
+        "&:hover": {
+            backgroundColor: "#FF5252"
+        }
+    }
+
     const [progressStatus, setProgressStatus] = useState(false)
     const [otpSent, setOtpSent] = useState(false)
 
@@ -30,14 +38,6 @@ const AuthForm = (props) => {
         mobileNumber: '',
         countryCode: '+91'
     })
-
-    const googleButtonStyle = {
-        color: "#F5F5F5",
-        backgroundColor: "#FF5252",
-        "&:hover": {
-            backgroundColor: "#FF5252"
-        }
-    }
 
 
     const fetchKeys = useCallback(() => {
@@ -73,7 +73,6 @@ const AuthForm = (props) => {
     }
 
 
-
     const authUser = () => {
         const app = firebase.initializeApp(firebaseKeys)
         const googleProvider = new firebase.auth.GoogleAuthProvider();
@@ -94,7 +93,7 @@ const AuthForm = (props) => {
 
     const configCaptcha = () => {
         const auth = getAuth();
-        const app = firebase.initializeApp(firebaseKeys)
+        firebase.initializeApp(firebaseKeys)
         window.recaptchaVerifier = new RecaptchaVerifier('sign-in-button', {
             'size': 'invisible',
             'callback': (response) => {
@@ -107,7 +106,7 @@ const AuthForm = (props) => {
 
 
     const onOtpSubmit = (event) => {
-        const app = firebase.initializeApp(firebaseKeys)
+        firebase.initializeApp(firebaseKeys)
         const mobileNumber = "+91" + mobileNumberForm.mobileNumber;
         const auth = getAuth();
         const mobileNumberPattern = /^(?:(?:\+|0{0,2})91(\s*[-]\s*)?|[0]?)?[789]\d{9}$/im;
@@ -141,7 +140,7 @@ const AuthForm = (props) => {
 
     const onOtpFormSubmit = (event) => {
         event.preventDefault()
-        const app = firebase.initializeApp(firebaseKeys)
+        firebase.initializeApp(firebaseKeys)
         const code = mobileNumberForm.otp;
         window.confirmationResult.confirm(code).then((result) => {
             // User signed in successfully.

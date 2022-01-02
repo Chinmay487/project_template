@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Drawer, List, ListItem, ListItemIcon, Collapse } from '@mui/material';
 import MenuOpenOutlinedIcon from '@mui/icons-material/MenuOpenOutlined';
 import { useNavigate } from 'react-router-dom';
@@ -9,7 +9,7 @@ import { Link } from 'react-router-dom';
 
 const Sidenav = (props) => {
 
-    let uid = props.uid
+    // let uid = props.uid
 
     const navigate = useNavigate();
 
@@ -27,27 +27,38 @@ const Sidenav = (props) => {
     }
 
 
-
     return (
         <Drawer open={props.drawerStatus} onClose={onClickEvent} variant="temporary" anchor="left" sx={drawerStyle} >
 
             <List sx={{ marginTop: "3rem" }} >
-                <ListItem divider button onClick={() => {
+                <ListItem key="111" divider button onClick={() => {
                     props.setDrawerStatus(!props.drawerStatus)
                 }}>
-                    <ListItemIcon><MenuOpenOutlinedIcon /></ListItemIcon>
+                    <ListItemIcon key="112" ><MenuOpenOutlinedIcon /></ListItemIcon>
                 </ListItem>
-                <ListItem divider button onClick={() => {
+                <ListItem key="113" divider button onClick={() => {
                     navigate('/')
                     props.setDrawerStatus(!props.drawerStatus)
 
                 }} sx={{ textAlign: "center" }}>
-                    <ListItemIcon>
+                    <ListItemIcon key="114">
                         Homepage
                     </ListItemIcon>
                 </ListItem>
                 {
-                    props.isSeller ? <Link onClick={() => { props.setDrawerStatus(!props.drawerStatus) }} className="link" to='/panel'><ListItem divider button><ListItemIcon>Panel</ListItemIcon></ListItem></Link> : null
+                    props.isSeller ?
+                        <Link
+                            key="key000"
+                            onClick={() => { props.setDrawerStatus(!props.drawerStatus) }}
+                            className="link"
+                            to='/panel'>
+                            <ListItem key="000" divider button>
+                                <ListItemIcon key="001">
+                                    Panel
+                                </ListItemIcon>
+                            </ListItem>
+                        </Link>
+                        : null
                 }
                 {props.items.map((item, index) => {
                     return (
@@ -55,20 +66,19 @@ const Sidenav = (props) => {
                             <ListItem onClick={() => {
                                 item.handleList()
                                 closeUnused(index)
-                            }} key={uid++} divider button sx={{ textAlign: "center" }}>
-                                <ListItemIcon >{item.title} {!item.status ? <ExpandMore /> : <ExpandLess />} </ListItemIcon>
+                            }} key={`${props.uid}${props.uid}${props.subKey}`} divider button sx={{ textAlign: "center" }}>
+                                <ListItemIcon key={`${item.key}${index}0`}>{item.title} {!item.status ? <ExpandMore /> : <ExpandLess />} </ListItemIcon>
                             </ListItem>
                             <Collapse in={item.status} imeout="auto">
                                 <List>
-                                    {item.list.map((listItem) => {
-                                        const url = `/categories/${item.title.toLowerCase().replace(/ /g, "")}/${listItem.toLowerCase().replace(/ /g, "")}`
+                                    {item.list.map((listItem, index) => {
                                         return (
 
-                                            <ListItem button onClick={() => {
+                                            <ListItem key={`${item.key}${listItem.subKey}${index}`} button onClick={() => {
                                                 item.handleList()
-                                                onClickEvent(url)
+                                                onClickEvent(listItem.path)
                                             }}>
-                                                <ListItemIcon>{listItem}</ListItemIcon>
+                                                <ListItemIcon key={`${item.key}${listItem.subKey}${index}1`} >{listItem.name}</ListItemIcon>
                                             </ListItem>
                                         )
                                     })}

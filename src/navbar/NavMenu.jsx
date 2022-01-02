@@ -6,26 +6,21 @@ import {useNavigate} from 'react-router-dom';
 
 const NavMenu = (props) => {
 
-    let id = props.uid;
     const navigate = useNavigate();
 
-    const onClickHandler = (item) => {
-
-        const url1 = `/categories/${props.parent.toLowerCase().replace(/ /g, "")}/${item.toLowerCase().replace(/ /g, "")}`
-        const url2 = `/${item.toLowerCase().replace(/ /g, "")}`
-        const url = props.haveCategory ? url1 : url2 ;
+    const onClickHandler = (path) => {
 
         props.handleClose();
-        navigate(url);
+        navigate(path);
     }
 
     return (
         <Menu sx={menuStyle} anchorEl={props.anchorEl} open={props.openMenu} onClose={props.handleClose}>
             {
-                props.NavMenuItemList.map((item)=>{
-                    return <MenuItem onClick={()=>{
-                        onClickHandler(item)
-                    }} key={id++} sx={menuItemStyle} divider>{item}</MenuItem>
+                props.NavMenuItemList.map((item,index)=>{
+                    return <MenuItem key={`${props.uid}${item.subKey}${index}`} onClick={()=>{
+                        onClickHandler(item.path)
+                    }} sx={menuItemStyle} divider>{item.name}</MenuItem>
                 })
             }
         </Menu>
