@@ -12,7 +12,7 @@ const Review = () => {
             <Typography variant='h6'>
                 Title
             </Typography>
-            <Typography Variant='p'>
+            <Typography variant='p'>
                 Lorem, ipsum dolor sit amet consectetur adipisicing elit. Odio iure dolorum, necessitatibus asperiores magnam praesentium debitis ea qui. Similique, eveniet?
             </Typography>
         </Box>

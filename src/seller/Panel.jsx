@@ -35,34 +35,63 @@ const Panel = (props) => {
 
 
     return (
-        <Box sx={{mt:"10rem"}}>
+        <Box sx={{ mt: "10rem" }}>
             <Typography variant="h4" align="center" sx={{ my: "2%" }}>
                 Your Products
             </Typography>
 
             {
-                (!dataList.length > 0) ? <Box sx={{ width: '100%', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-                    <Typography variant='h5'>
-                        Fetching your products &nbsp;
-                    </Typography>
-                    <CircularProgress />
-                </Box> :
+                (!dataList.length > 0) ?
+                    <Box
+                        sx={{
+                            width: '100%',
+                            display: 'flex',
+                            justifyContent: 'center',
+                            alignItems: 'center'
+                        }}>
+                        <Typography variant='h5'>
+                            Fetching your products &nbsp;
+                        </Typography>
+                        <CircularProgress />
+                    </Box> :
 
                     <>
                         {
 
                             !len ?
-                                <Box sx={{ width: '100%', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+                                <Box
+                                    sx={{
+                                        width: '100%',
+                                        display: 'flex',
+                                        justifyContent: 'center',
+                                        alignItems: 'center'
+                                    }}>
                                     <Typography variant='h5'>
                                         No products added
                                     </Typography>
                                 </Box>
                                 :
-                                <Grid container rowGap={3} sx={{ width: { lg: "70%", md: "70%", sm: "90%", xs: "90%" }, mx: "auto" }} >
+                                <Grid
+                                    container
+                                    rowGap={3}
+                                    sx={{
+                                        width: {
+                                            lg: "70%",
+                                            md: "70%",
+                                            sm: "90%",
+                                            xs: "90%"
+                                        },
+                                        mx: "auto"
+                                    }} >
                                     {
                                         dataList.map((item) => {
                                             return (
-                                                <History isCart={false} isSeller={props.isSeller} item={item} key={item.key} />
+                                                <History
+                                                    isCart={false}
+                                                    isSeller={props.isSeller}
+                                                    item={item}
+                                                    key={item.key}
+                                                />
                                             )
                                         })
                                     }

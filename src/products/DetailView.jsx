@@ -13,13 +13,13 @@ const DetailView = (props) => {
     const [index, setIndex] = useState(0)
     const [fetchStatus, setFetchStatus] = useState(true)
 
-    const [reviewData , setReviewData] = useState({
-        title:'',
-        description :'',
-        rating : 0
+    const [reviewData, setReviewData] = useState({
+        title: '',
+        description: '',
+        rating: 0
     })
 
-    const [reviewFormStatus , setReviewFormStatus] = useState(false)
+    const [reviewFormStatus, setReviewFormStatus] = useState(false)
 
     const theme = useTheme();
     const { key } = useParams();
@@ -55,7 +55,6 @@ const DetailView = (props) => {
     }, [key])
 
     useEffect(() => {
-        console.log("hello")
         fetchData()
     }, [fetchData])
 
@@ -70,34 +69,34 @@ const DetailView = (props) => {
 
     // console.log(productData)
 
-    const onInputChange = (event)=>{
-        const {name,value} = event.target
-        setReviewData((oldvalue)=>{
+    const onInputChange = (event) => {
+        const { name, value } = event.target
+        setReviewData((oldvalue) => {
             return {
-                ...oldvalue ,[name]: value
+                ...oldvalue, [name]: value
             }
         })
     }
 
-    const onReviewSubmit = (event) =>{
+    const onReviewSubmit = (event) => {
 
         event.preventDefault()
         setReviewFormStatus(true)
         const data = new FormData()
-        data.append('id',key)
-        data.append('title',reviewData.title)
-        data.append('description',reviewData.description)
-        data.append('rating',reviewData.rating)
-        axios.post(`${NETWORK_URL}/client/review`,data)
-        .then((response)=>{
-            alert(response.data)
-            setReviewFormStatus(false)
-            window.location.reload();
-        })
-        .catch((error)=>{
-            alert('something went wrong')
-            window.location.reload();
-        })
+        data.append('id', key)
+        data.append('title', reviewData.title)
+        data.append('description', reviewData.description)
+        data.append('rating', reviewData.rating)
+        axios.post(`${NETWORK_URL}/client/review`, data)
+            .then((response) => {
+                alert(response.data)
+                setReviewFormStatus(false)
+                window.location.reload();
+            })
+            .catch((error) => {
+                alert('something went wrong')
+                window.location.reload();
+            })
 
     }
 
@@ -169,19 +168,55 @@ const DetailView = (props) => {
     return (
         <>
             {
-                fetchStatus ? <> <Box sx={{ width: "100%", display: "flex", justifyContent: "center", alignItems: "center", my: "20rem" }}>
-                    <Typography variant="h4">Fetching... &nbsp; </Typography>
-                    <CircularProgress />
-                </Box> </> : <>
-                    <Grid container sx={{mt:"10rem"}} rowGap={4} >
+                fetchStatus ? <>
+                    <Box
+                        sx={{
+                            width: "100%",
+                            display: "flex",
+                            justifyContent: "center",
+                            alignItems: "center",
+                            my: "20rem"
+                        }}>
+                        <Typography variant="h4">Fetching... &nbsp; </Typography>
+                        <CircularProgress />
+                    </Box> </> : <>
+                    <Grid
+                        container
+                        sx={{ mt: "10rem" }}
+                        rowGap={4}
+                    >
                         <Grid item md={12}  >
                             <Grid container columnGap={3} >
                                 <Grid item md={4.5} sm={12} xs={12} >
-                                    <Box component='img' src={productData.productImages[index]} sx={{ maxWidth: '100%', height: '27rem' }} />
+                                    <Box
+                                        component='img'
+                                        src={productData.productImages[index]}
+                                        sx={{
+                                            maxWidth: '100%',
+                                            height: '27rem'
+                                        }}
+                                    />
                                 </Grid>
                                 <Grid item md={7} sm={12} xs={12} >
-                                    <Box component="div" sx={{ height: '100%', width: "100%", display: 'flex', flexDirection: 'column', justifyContent: 'space-around', padding: '1%' }} >
-                                        <Box sx={{ mx: { sm: "5%", xs: "5%" } }}>
+                                    <Box
+                                        component="div"
+                                        sx={{
+                                            height: '100%',
+                                            width: "100%",
+                                            display: 'flex',
+                                            flexDirection: 'column',
+                                            justifyContent: 'space-around',
+                                            padding: '1%'
+                                        }}
+                                    >
+                                        <Box
+                                            sx={{
+                                                mx: {
+                                                    sm: "5%",
+                                                    xs: "5%"
+                                                }
+                                            }}
+                                        >
                                             <Typography variant='h5'>{productData.title}</Typography>
                                             <Rating name="read-only" value={4} readOnly />
                                             <Typography>Price : &#8377;{productData.price} </Typography>
@@ -189,7 +224,19 @@ const DetailView = (props) => {
                                             <Typography>Quantity : {productData.quantity}</Typography>
                                             <Typography>{productData.description}</Typography>
                                         </Box>
-                                        <Box sx={{ width: '100%', display: 'flex', justifyContent: { lg: "flex-start", md: "flex-start", sm: "center", xs: "center" }, alignItems: 'center' }}>
+                                        <Box
+                                            sx={{
+                                                width: '100%',
+                                                display: 'flex',
+                                                justifyContent: {
+                                                    lg: "flex-start",
+                                                    md: "flex-start",
+                                                    sm: "center",
+                                                    xs: "center"
+                                                },
+                                                alignItems: 'center'
+                                            }}
+                                        >
                                             <Typography variant='h6'> Qty : &nbsp;</Typography>
                                             <Box component="select" sx={{ fontSize: "1.3rem" }} >
                                                 <Box component="option" value={1} selectteed>1</Box>
@@ -205,9 +252,28 @@ const DetailView = (props) => {
                                             </Box>
                                         </Box>
                                         <Box sx={gridBox2} >
-                                            <Button variant='contained' sx={buttonGroupStyle1}><ShoppingBagOutlinedIcon /> &nbsp; Buy now </Button>
-                                            <Button variant='contained' sx={buttonGroupStyle1} ><AddShoppingCartOutlinedIcon /> &nbsp; Add to Cart  </Button>
-                                            {props.isSeller ? <Button variant='contained' onClick={gotoUpdate} sx={buttonGroupStyle1} >Update</Button> : null}
+                                            <Button
+                                                variant='contained'
+                                                sx={buttonGroupStyle1}
+                                            >
+                                                <ShoppingBagOutlinedIcon />
+                                                &nbsp; Buy now
+                                            </Button>
+                                            <Button
+                                                variant='contained'
+                                                sx={buttonGroupStyle1} >
+                                                <AddShoppingCartOutlinedIcon />
+                                                &nbsp; Add to Cart
+                                            </Button>
+                                            {props.isSeller ?
+                                                <Button
+                                                    variant='contained'
+                                                    onClick={gotoUpdate}
+                                                    sx={buttonGroupStyle1}
+                                                >
+                                                    Update
+                                                </Button>
+                                                : null}
                                         </Box>
                                     </Box>
                                 </Grid>
@@ -220,24 +286,81 @@ const DetailView = (props) => {
                                 <Grid item md={5} sm={12} xs={12} >
                                     <Box component='form' onSubmit={onReviewSubmit} sx={formStyle1} >
                                         <Typography variant="h6"> Share your Experience </Typography>
-                                        <TextField id="filled-basic" label="Filled" variant="standard" name='title' value={reviewData.title} onChange={onInputChange} required={true}/>
-                                        <TextField placeholder='Share your Experience' maxRows={7} minRows={3} variant='standard' multiline name='description' value={reviewData.description} onChange={onInputChange} required={true}/>
+                                        <TextField
+                                            id="filled-basic"
+                                            label="Filled"
+                                            variant="standard"
+                                            name='title'
+                                            value={reviewData.title}
+                                            onChange={onInputChange}
+                                            required={true}
+                                        />
+                                        <TextField
+                                            placeholder='Share your Experience'
+                                            maxRows={7}
+                                            minRows={3}
+                                            variant='standard'
+                                            multiline
+                                            name='description'
+                                            value={reviewData.description}
+                                            onChange={onInputChange}
+                                            required={true}
+                                        />
 
-                                        <Box component='div' sx={{ width: '100%', display: 'flex', alignItems: "base-line" }} >
-                                            <Typography variant="subtitle1"> Rate Us &nbsp; 
+                                        <Box
+                                            component='div'
+                                            sx={{
+                                                width: '100%',
+                                                display: 'flex',
+                                                alignItems: "base-line"
+                                            }}
+                                        >
+                                            <Typography variant="subtitle1"> Rate Us &nbsp;
                                             </Typography>
-                                            <Rating name="read-only" value={reviewData.rating} name='rating' onChange={onInputChange} />
+                                            <Rating
+                                                value={reviewData.rating}
+                                                name='rating'
+                                                onChange={onInputChange}
+                                            />
                                         </Box>
                                         {
-                                            reviewFormStatus ?  <Box sx={{display:'flex',justifyContent:'center',alignItems:'center'}}> <CircularProgress/> </Box>:
-                                            <Button variant='outlined' type='submit' sx={{ display: 'block', width: '30%' }} > Post </Button>
+                                            reviewFormStatus ?
+                                                <Box
+                                                    sx={{
+                                                        display: 'flex',
+                                                        justifyContent: 'center',
+                                                        alignItems: 'center'
+                                                    }}>
+                                                    <CircularProgress />
+                                                </Box> :
+                                                <Button
+                                                    variant='outlined'
+                                                    type='submit'
+                                                    sx={{
+                                                        display: 'block',
+                                                        width: '30%'
+                                                    }} >
+                                                    Post
+                                                </Button>
                                         }
                                     </Box>
                                 </Grid>
                                 <Grid item md={7}>
                                     <Review />
                                     <Review />
-                                    <Button variant="outlined" sx={{ display: 'block', mx: 'auto' }} onClick={()=>{navigate(`/review/${key}`)}} > View More </Button>
+                                    <Button
+                                        variant="outlined"
+                                        sx={{
+                                            display: 'block',
+                                            mx: 'auto'
+                                        }}
+                                        onClick={
+                                            () => {
+                                                navigate(`/review/${key}`)
+                                            }}
+                                    >
+                                        View More
+                                    </Button>
                                 </Grid>
                             </Grid>
                         </Grid>
