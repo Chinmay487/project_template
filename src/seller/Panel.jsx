@@ -35,7 +35,7 @@ const Panel = (props) => {
 
 
     return (
-        <>
+        <Box sx={{mt:"10rem"}}>
             <Typography variant="h4" align="center" sx={{ my: "2%" }}>
                 Your Products
             </Typography>
@@ -70,7 +70,7 @@ const Panel = (props) => {
                         }
                     </>
             }
-        </>
+        </Box>
     )
 }
 

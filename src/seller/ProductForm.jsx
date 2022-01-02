@@ -13,7 +13,7 @@ const ProductForm = (props) => {
 
 
     return (
-        <>
+        <Box sx={{mt:"10rem"}}>
             {
 
                 spinnerState ?
@@ -39,7 +39,7 @@ const ProductForm = (props) => {
                     />
 
             }
-        </>
+        </Box>
     )
 }
 

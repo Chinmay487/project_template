@@ -173,7 +173,7 @@ const DetailView = (props) => {
                     <Typography variant="h4">Fetching... &nbsp; </Typography>
                     <CircularProgress />
                 </Box> </> : <>
-                    <Grid container rowGap={4} >
+                    <Grid container sx={{mt:"10rem"}} rowGap={4} >
                         <Grid item md={12}  >
                             <Grid container columnGap={3} >
                                 <Grid item md={4.5} sm={12} xs={12} >

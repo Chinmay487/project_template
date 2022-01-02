@@ -59,12 +59,15 @@ const ShortCategory = () => {
 
 
     return (
-        <Box sx={productGridBox1} component="div">
-                        <Typography variant="h3" sx={{ textAlign: "center" }} >Fashion</Typography>
-                        <ProductGrid prodGrid={prodGrid} />
-                        {
-                            prodGrid.length > 0 ? <Button sx={buttonSyle1} onClick={() => { navigate('/wishlist') }} variant="outlined">View More</Button> : null
-                        }
+        <Box
+            sx={productGridBox1}
+            component="div"
+        >
+            <Typography variant="h3" sx={{ textAlign: "center" }} >Fashion</Typography>
+            <ProductGrid prodGrid={prodGrid} />
+            {
+                prodGrid.length > 0 ? <Button sx={buttonSyle1} onClick={() => { navigate('/wishlist') }} variant="outlined">View More</Button> : null
+            }
         </Box>
     )
 }

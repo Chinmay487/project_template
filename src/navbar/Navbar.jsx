@@ -167,7 +167,7 @@ const Navbar = (props) => {
 
     return (
         <>
-            <AppBar sx={appBarStyle} position="relative">
+            <AppBar sx={appBarStyle} position="fixed">
                 <Toolbar>
                     <Box component="div" sx={navbarDivStyle}>
                         {

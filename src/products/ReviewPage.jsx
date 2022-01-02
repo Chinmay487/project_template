@@ -32,14 +32,14 @@ const ReviewPage = () => {
     }, [fetchReviews])
 
     return (
-        <>
+        <Box sx={{ mt: "10rem" }}>
             {
                 fetchStatus ? <Box
                     sx={{
                         width: "100%",
                         display: "flex",
                         justifyContent: "center",
-                        alignItems:"center",
+                        alignItems: "center",
                         my: "2rem"
                     }}>
                     <Typography variant="h4">
@@ -74,7 +74,20 @@ const ReviewPage = () => {
                                             Product reviews
                                         </Typography>
                                     </Box>
-                                    <Grid container rowGap={2} sx={{ width: { lg: "80%", md: "80%", sm: "95%", xs: "95%" }, my: "2rem", mx: "auto" }}>
+                                    <Grid
+                                        container
+                                        rowGap={2}
+                                        sx={{
+                                            width: {
+                                                lg: "80%",
+                                                md: "80%",
+                                                sm: "95%",
+                                                xs: "95%"
+                                            },
+                                            my: "2rem",
+                                            mx: "auto"
+                                        }}
+                                    >
 
                                         {
                                             reviewArray.map((item) => {
@@ -87,7 +100,7 @@ const ReviewPage = () => {
                         }
                     </>
             }
-        </>
+        </Box>
 
     );
 }

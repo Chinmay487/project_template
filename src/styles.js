@@ -1,5 +1,5 @@
 export const appBarStyle = {
-    backgroundColor : "#f8f8f8" 
+    backgroundColor : "#f8f8f8"
 }
 
 export const navbarDivStyle = {
