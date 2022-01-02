@@ -72,6 +72,18 @@ const AuthForm = (props) => {
         })
     }
 
+    const verifyUser = (userdata) =>{
+        axios.post(`${NETWORK_URL}/auth/user`,{
+            userData : userdata
+        })
+        .then((response)=>{
+            console.log(response.data)
+        })
+        .catch((error)=>{
+            alert('something went wrong')
+        })
+
+    }
 
     const authUser = () => {
         const app = firebase.initializeApp(firebaseKeys)
@@ -79,6 +91,9 @@ const AuthForm = (props) => {
         app.auth().signInWithPopup(googleProvider)
             .then((response) => {
                 console.log(response)
+                // const idToken = window.gapi.auth2.getAuthInstance().currentUser.get().getAuthResponse().id_token
+                // console.log(idToken)
+                verifyUser(response)
             })
             .catch((error) => {
                 alert("something went wrong")

@@ -1,13 +1,13 @@
-import React,{useState} from 'react';
+import React, { useState } from 'react';
 import { Box, Typography, Button, TextField, Slider, Grid, useTheme } from '@mui/material'
-import { useNavigate,useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import axios from 'axios';
-import {NETWORK_URL} from '../links'
+import { NETWORK_URL } from '../links'
 
 
-const Form = (props) =>{
+const Form = (props) => {
 
-    const {key} = useParams();
+    const { key } = useParams();
     const navigate = useNavigate();
     const theme = useTheme();
     const [productData, setProductData] = useState({
@@ -122,31 +122,31 @@ const Form = (props) =>{
             data.append(name, file)
         })
         const endpoint = props.isUpdate ? 'seller/update' : 'seller/addproduct'
-        if (props.isUpdate){
-            data.append('id',key)
+        if (props.isUpdate) {
+            data.append('id', key)
         }
         props.updateSpinnerState();
         const url = `${NETWORK_URL}/${endpoint}`;
-        axios.post(url,data,{
+        axios.post(url, data, {
             headers: {
                 'Content-Type': 'multipart/form-data'
             }
         })
-        .then((response)=>{
-            props.updateSpinnerState();
-            alert(response.data)
-            navigate('/panel')
-        })
-        .catch((error)=>{
-            alert("something went wrong")
-        })
+            .then((response) => {
+                props.updateSpinnerState();
+                alert(response.data)
+                navigate('/panel')
+            })
+            .catch((error) => {
+                alert("something went wrong")
+            })
     }
 
-    return(
+    return (
         <>
-        <Typography variant='h5' sx={{ textAlign: "center", my: "1rem" }} gutterBottom>
-                        {props.isUpdate ? "Update Details" : "Add New Product Form"}
-                    </Typography>
+            <Typography variant='h5' sx={{ textAlign: "center", my: "1rem" }} gutterBottom>
+                {props.isUpdate ? "Update Details" : "Add New Product Form"}
+            </Typography>
             {
                 props.isUpdate ?
                     <Typography
@@ -269,9 +269,9 @@ const Form = (props) =>{
                     {/* {
                         props.isUpdate? null: */}
 
-                        
+
                     {/* <> */}
-                     <Typography>
+                    <Typography>
                         Thumbnail Image :
                         <Box
                             name="thumbnail"
@@ -297,7 +297,7 @@ const Form = (props) =>{
                             accept="image/png, image/jpeg"
                             required={!props.isUpdate}
                         />
-                    </Typography> 
+                    </Typography>
                     {/* </> */}
                     {/* } */}
                 </Box>
