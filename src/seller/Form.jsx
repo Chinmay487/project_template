@@ -69,44 +69,6 @@ const Form = (props) => {
     }
 
 
-    // const addForm = (data) => {
-    //     const url = `${NETWORK_URL}/seller/addproduct`;
-    //     props.updateSpinnerState()
-    //     axios.post(url, data, {
-    //         headers: {
-    //             'Content-Type': 'multipart/form-data'
-    //         }
-    //     })
-    //         .then(
-    //             (response) => {
-    //                 props.updateSpinnerState()
-    //                 navigate('/panel');
-    //             }
-    //         )
-    //         .catch((error) => {
-    //             alert("something went Wrong\nPlease try again")
-    //         })
-    // }
-
-
-    // const updateForm = (data) => {
-    //     props.updateSpinnerState();
-    //     const url = `${NETWORK_URL}/seller/update`;
-    //     console.log(data)
-    //     axios.post(url,data,{
-    //         headers: {
-    //             'Content-Type': 'multipart/form-data'
-    //         }
-    //     })
-    //     .then((response)=>{
-    //         props.updateSpinnerState();
-    //         alert(response.data)
-    //         navigate('/panel')
-    //     })
-    //     .catch((error)=>{
-    //         alert("something went wrong")
-    //     })
-    // }
 
     const onFormSubmit = (event) => {
         event.preventDefault();
@@ -144,7 +106,11 @@ const Form = (props) => {
 
     return (
         <>
-            <Typography variant='h5' sx={{ textAlign: "center", my: "1rem" }} gutterBottom>
+            <Typography variant='h5' sx={{
+                textAlign: "center",
+                my: "1rem"
+            }}
+                gutterBottom>
                 {props.isUpdate ? "Update Details" : "Add New Product Form"}
             </Typography>
             {
@@ -266,40 +232,39 @@ const Form = (props) => {
                 </Box>
 
                 <Box sx={formBox2}>
-                    {/* {
-                        props.isUpdate? null: */}
+                    {
+                        props.isUpdate ? null :
 
-
-                    {/* <> */}
-                    <Typography>
-                        Thumbnail Image :
-                        <Box
-                            name="thumbnail"
-                            onChange={(event) => { setThumbnail(event.target.files[0]) }}
-                            component="input"
-                            type="file"
-                            accept="image/png, image/jpeg"
-                            required={!props.isUpdate}
-                        />
-                    </Typography>
-                    <Typography>
-                        Detail Images :
-                        <Box
-                            name="productImages"
-                            onChange={(event) => {
-                                setProductImages((oldData) => {
-                                    return [...oldData, ...event.target.files]
-                                })
-                            }}
-                            component="input"
-                            type="file"
-                            multiple
-                            accept="image/png, image/jpeg"
-                            required={!props.isUpdate}
-                        />
-                    </Typography>
-                    {/* </> */}
-                    {/* } */}
+                            <>
+                                <Typography>
+                                    Thumbnail Image :
+                                    <Box
+                                        name="thumbnail"
+                                        onChange={(event) => { setThumbnail(event.target.files[0]) }}
+                                        component="input"
+                                        type="file"
+                                        accept="image/png, image/jpeg"
+                                        required={!props.isUpdate}
+                                    />
+                                </Typography>
+                                <Typography>
+                                    Detail Images :
+                                    <Box
+                                        name="productImages"
+                                        onChange={(event) => {
+                                            setProductImages((oldData) => {
+                                                return [...oldData, ...event.target.files]
+                                            })
+                                        }}
+                                        component="input"
+                                        type="file"
+                                        multiple
+                                        accept="image/png, image/jpeg"
+                                        required={!props.isUpdate}
+                                    />
+                                </Typography>
+                            </>
+                    }
                 </Box>
 
                 <Button

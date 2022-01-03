@@ -77,12 +77,12 @@ const AuthForm = (props) => {
             .then((idToken) => {
                 axios.post(`${NETWORK_URL}/auth/user`, {
                     idToken: idToken
-                }) 
-                .then((response) => {
-                    console.log(response.data)
                 })
+                    .then((response) => {
+                        console.log(response.data)
+                    })
             })
-            
+
             .catch(function (error) {
                 alert("something went wrong")
             });
@@ -168,11 +168,10 @@ const AuthForm = (props) => {
                 verifyUser(result)
                 props.handleDialogClose()
 
-            // ...
-        }).catch((error) => {
-            // User couldn't sign in (bad verification code?)
-            // ...
-        });
+                // ...
+            }).catch((error) => {
+                console.log("otp form error")
+            });
     }
 
 
@@ -196,7 +195,15 @@ const AuthForm = (props) => {
                                 <CloseIcon />
                             </IconButton>
                         </Box>
-                        <Box sx={{ width: "100%", display: "flex", justifyContent: "center", alignItems: "center", my: "1rem" }} >
+                        <Box
+                            sx={{
+                                width: "100%",
+                                display: "flex",
+                                justifyContent: "center",
+                                alignItems: "center",
+                                my: "1rem"
+                            }}
+                        >
                             <Typography variant="h6">Welcome to ShopHeaven</Typography>
                         </Box>
 
