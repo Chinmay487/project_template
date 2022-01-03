@@ -73,16 +73,18 @@ const AuthForm = (props) => {
     }
 
     const verifyUser = (userdata) =>{
-        axios.post(`${NETWORK_URL}/auth/user`,{
-            userData : userdata
-        })
-        .then((response)=>{
-            console.log(response.data)
-        })
-        .catch((error)=>{
-            alert('something went wrong')
-        })
 
+        firebase.auth().currentUser.getIdToken(/* forceRefresh */ true)
+        .then((idToken) => {
+            axios.post(`${NETWORK_URL}/auth/user`,{
+                idToken : idToken
+            })
+            .then((response)=>{
+                console.log(response.data)
+            })
+          }).catch(function(error) {
+            alert("something went wrong")
+          });
     }
 
     const authUser = () => {
@@ -157,10 +159,12 @@ const AuthForm = (props) => {
         event.preventDefault()
         firebase.initializeApp(firebaseKeys)
         const code = mobileNumberForm.otp;
-        window.confirmationResult.confirm(code).then((result) => {
+        window.confirmationResult.confirm(code)
+        .then((result) => {
             // User signed in successfully.
-            const user = result.user;
-            console.log(user)
+            // const user = result.user;
+            // console.log(user)
+            verifyUser(result)
             // ...
         }).catch((error) => {
             // User couldn't sign in (bad verification code?)
