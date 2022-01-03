@@ -35,8 +35,7 @@ const AuthForm = (props) => {
 
     const [mobileNumberForm, setMobileNumberForm] = useState({
         otp: 0,
-        mobileNumber: '',
-        countryCode: '+91'
+        mobileNumber: ''
     })
 
 
@@ -72,19 +71,21 @@ const AuthForm = (props) => {
         })
     }
 
-    const verifyUser = (userdata) =>{
+    const verifyUser = () => {
 
         firebase.auth().currentUser.getIdToken(/* forceRefresh */ true)
-        .then((idToken) => {
-            axios.post(`${NETWORK_URL}/auth/user`,{
-                idToken : idToken
+            .then((idToken) => {
+                axios.post(`${NETWORK_URL}/auth/user`, {
+                    idToken: idToken
+                }) 
+                .then((response) => {
+                    console.log(response.data)
+                })
             })
-            .then((response)=>{
-                console.log(response.data)
-            })
-          }).catch(function(error) {
-            alert("something went wrong")
-          });
+            
+            .catch(function (error) {
+                alert("something went wrong")
+            });
     }
 
     const authUser = () => {
@@ -160,11 +161,13 @@ const AuthForm = (props) => {
         firebase.initializeApp(firebaseKeys)
         const code = mobileNumberForm.otp;
         window.confirmationResult.confirm(code)
-        .then((result) => {
-            // User signed in successfully.
-            // const user = result.user;
-            // console.log(user)
-            verifyUser(result)
+            .then((result) => {
+                // User signed in successfully.
+                // const user = result.user;
+                // console.log(user)
+                verifyUser(result)
+                props.handleDialogClose()
+
             // ...
         }).catch((error) => {
             // User couldn't sign in (bad verification code?)
@@ -252,15 +255,6 @@ const AuthForm = (props) => {
                                     alignItems: "center"
                                 }}
                             >
-                                <TextField
-                                    variant="outlined"
-                                    sx={{ width: "10%", mx: "0.5rem" }}
-                                    label="code"
-                                    name="countryCode"
-                                    value={mobileNumberForm.countryCode}
-                                    onChange={onOtpFormChange}
-                                    required={true}
-                                />
                                 <TextField
                                     variant="outlined"
                                     label="Contact Number"
