@@ -71,12 +71,13 @@ const AuthForm = (props) => {
         })
     }
 
-    const verifyUser = () => {
+    const verifyUser = (response) => {
 
         firebase.auth().currentUser.getIdToken(/* forceRefresh */ true)
             .then((idToken) => {
                 axios.post(`${NETWORK_URL}/auth/user`, {
-                    idToken: idToken
+                    idToken: idToken,
+                    userData : response
                 })
                     .then((response) => {
                         console.log(response.data)
