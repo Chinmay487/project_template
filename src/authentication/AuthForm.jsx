@@ -89,8 +89,11 @@ const AuthForm = (props) => {
                 })
                     .then((response) => {
                         console.log(response.data)
+                        window.localStorage.setItem('uid',user.uid)
+                        window.localStorage.setItem('name',user.displayName)
+                        window.localStorage.setItem('photoURL',user.photoURL)
                         // console.log(user.uid)
-                        // window.location.reload();
+                        window.location.reload();
 
                     })
             })
