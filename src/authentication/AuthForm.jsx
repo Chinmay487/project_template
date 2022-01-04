@@ -7,7 +7,7 @@ import { NETWORK_URL } from '../links';
 import firebase from "firebase/compat/app";
 import "firebase/compat/auth";
 import { getAuth, RecaptchaVerifier, signInWithPhoneNumber } from "firebase/auth";
-
+import { getFirebaseKeys } from '../user';
 
 const AuthForm = (props) => {
 
@@ -18,6 +18,7 @@ const AuthForm = (props) => {
             backgroundColor: "#FF5252"
         }
     }
+
 
     const [progressStatus, setProgressStatus] = useState(false)
     const [otpSent, setOtpSent] = useState(false)
@@ -41,15 +42,23 @@ const AuthForm = (props) => {
 
     const fetchKeys = useCallback(() => {
         setProgressStatus(true)
-        axios.get(`${NETWORK_URL}/auth/keys`)
-            .then((response) => {
+        // axios.get(`${NETWORK_URL}/auth/keys`)
+            // .then((response) => {
+                // setProgressStatus(false)
+
+                // setFirebaseKeys({ ...response.data })
+
+            // })
+            // .catch((error) => {
+                // console.log("something went wrong")
+            // })
+            getFirebaseKeys()
+            .then((keys)=>{
                 setProgressStatus(false)
-
-                setFirebaseKeys({ ...response.data })
-
+                setFirebaseKeys({ ...keys })
             })
-            .catch((error) => {
-                console.log("something went wrong")
+            .catch((error)=>{
+                console.log("Something went wrong")
             })
     }, [])
 
@@ -58,7 +67,6 @@ const AuthForm = (props) => {
         fetchKeys()
 
     }, [fetchKeys])
-
 
 
     const onOtpFormChange = (event) => {
@@ -72,15 +80,18 @@ const AuthForm = (props) => {
     }
 
     const verifyUser = (response) => {
-
-        firebase.auth().currentUser.getIdToken(/* forceRefresh */ true)
+        const user = firebase.auth().currentUser
+        user.getIdToken(/* forceRefresh */ true)
             .then((idToken) => {
                 axios.post(`${NETWORK_URL}/auth/user`, {
                     idToken: idToken,
-                    userData : response
+                    userData: response
                 })
                     .then((response) => {
                         console.log(response.data)
+                        // console.log(user.uid)
+                        // window.location.reload();
+
                     })
             })
 

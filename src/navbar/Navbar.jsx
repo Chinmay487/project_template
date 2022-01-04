@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState , useEffect , useCallback } from 'react';
 import { AppBar, Toolbar, Typography, Box, TextField, IconButton, Avatar, useTheme, useMediaQuery, Button } from '@mui/material'
 import SearchOutlinedIcon from '@mui/icons-material/SearchOutlined';
 import Sidenav from './Sidenav';
@@ -8,11 +8,17 @@ import MenuRoundedIcon from '@mui/icons-material/MenuRounded';
 import { NavLink } from 'react-router-dom';
 import { ListClass, NavMenuItem } from './utilClasses';
 import AuthForm from '../authentication/AuthForm';
+import firebase from 'firebase/compat/app';
 
 
 const Navbar = (props) => {
 
+    
+
+    // console.log(userData)
+
     const [avatarEl, setAvatarEl] = useState(null);
+
 
     const [fashionEl, setFashionEl] = useState({ el: null, status: false });
     const [electronicsEl, setElectronicsEl] = useState({ el: null, status: false });
@@ -193,9 +199,18 @@ const Navbar = (props) => {
                         <Box sx={searchFormGroup}>
                             {medium ? null
                                 : searchFormComponent}
-                            <IconButton onClick={avatarClick} >
-                                <Avatar sx={avatarStyle}>#</Avatar>
-                            </IconButton>
+                            {
+                                1===2? 
+                                <IconButton onClick={avatarClick}>
+                                <Avatar sx={avatarStyle}> # </Avatar>
+                                </IconButton> 
+                                :
+                                <Button variant="contained" sx={{fontSize:{sm:'0.8rem',xs:'0.8rem'},backgroundColor:'#CFD8DC',color:'black',"&:hover": {
+                                    backgroundColor: "#ECEFF1"
+                                }}} onClick={handleOpenDilog} > Login </Button>
+
+
+                            }
                         </Box>
 
                     </Box>
@@ -245,7 +260,6 @@ const Navbar = (props) => {
                                     </>
                                 })
                             }
-                            <Button variant="text" onClick={handleOpenDilog} > Login </Button>
                         </Box>
                     </Box>) : <Box sx={{
                         width: '100%',

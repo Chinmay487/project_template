@@ -88,9 +88,6 @@ const Sidenav = (props) => {
                     )
 
                 })}
-                <ListItem button onClick={props.handleOpenDilog}>
-                    Login
-                </ListItem>
             </List>
         </Drawer>
     )
