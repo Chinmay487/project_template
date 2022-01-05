@@ -6,8 +6,9 @@ import axios from 'axios';
 import { NETWORK_URL } from '../links';
 import firebase from "firebase/compat/app";
 import "firebase/compat/auth";
-import { getAuth, RecaptchaVerifier, signInWithPhoneNumber } from "firebase/auth";
+import { getAuth, RecaptchaVerifier, signInWithPhoneNumber ,PhoneAuthProvider} from "firebase/auth";
 import { getFirebaseKeys } from '../user';
+
 
 const AuthForm = (props) => {
 
@@ -79,11 +80,11 @@ const AuthForm = (props) => {
         })
     }
 
-    const verifyUser = (response) => {
+    const verifyEmailUser = (response) => {
         const user = firebase.auth().currentUser
         user.getIdToken(/* forceRefresh */ true)
             .then((idToken) => {
-                axios.post(`${NETWORK_URL}/auth/user`, {
+                axios.post(`${NETWORK_URL}/auth/email`, {
                     idToken: idToken,
                     userData: response
                 })
@@ -103,6 +104,23 @@ const AuthForm = (props) => {
             });
     }
 
+    const verifyPhoneNumberUser = (response) => {
+        const user = firebase.auth().currentUser
+        user.getIdToken(/* forceRefresh */ true)
+        .then((idToken)=>{
+            axios.post(`${NETWORK_URL}/auth/phone`,{
+                idToken: idToken, 
+                userData : response
+            })
+            .then((response)=>{
+                console.log(response)
+            })
+        })
+        .catch((error)=>{
+            console.log("something went wrong")
+        })
+    }
+
     const authUser = () => {
         const app = firebase.initializeApp(firebaseKeys)
         const googleProvider = new firebase.auth.GoogleAuthProvider();
@@ -111,7 +129,7 @@ const AuthForm = (props) => {
                 console.log(response)
                 // const idToken = window.gapi.auth2.getAuthInstance().currentUser.get().getAuthResponse().id_token
                 // console.log(idToken)
-                verifyUser(response)
+                verifyEmailUser(response)
             })
             .catch((error) => {
                 alert("something went wrong")
@@ -149,9 +167,11 @@ const AuthForm = (props) => {
             setOtpSent(true)
             configCaptcha()
             const appVerifier = window.recaptchaVerifier;
+
             // sendOtp(mobileNumber)
             signInWithPhoneNumber(auth, mobileNumber, appVerifier)
                 .then((confirmationResult) => {
+                    
                     // SMS sent. Prompt user to type the code from the message, then sign the
                     // user in with confirmationResult.confirm(code).
                     window.confirmationResult = confirmationResult;
@@ -178,9 +198,12 @@ const AuthForm = (props) => {
         window.confirmationResult.confirm(code)
             .then((result) => {
                 // User signed in successfully.
-                // const user = result.user;
-                // console.log(user)
-                verifyUser(result)
+                const user = result.user;
+                console.log(user)
+                // verifyUser(result)
+                verifyPhoneNumberUser(result)
+                // console.log(PhoneAuthProvider.verifyPhoneNumber())
+
                 props.handleDialogClose()
 
                 // ...
