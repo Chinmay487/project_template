@@ -6,7 +6,7 @@ import {Box} from '@mui/material'
 const HomePage = () => {
 
     return (
-        <Box sx={{mt:"10rem"}}>
+        <Box sx={{mt:"10rem" ,backgroundColor:'#F5F5F5'}}>
             <ShortCategory/>
             <ShortCategory/>
             <ShortCategory/>

@@ -1,16 +1,38 @@
-import React from 'react';
-import { Typography, Grid, Button, useTheme, NativeSelect } from '@mui/material';
+import React, {useState,useCallback,useEffect} from 'react';
+import { Typography, Grid, Button, useTheme, NativeSelect ,Box} from '@mui/material';
 import History from '../user/History';
+import axios from 'axios';
+import {NETWORK_URL} from '../links';
+
 
 const ViewCart = () => {
 
     const theme = useTheme();
 
+    const [productList , setProductList ] = useState([]);
+
+    const fetchProduct = useCallback(() => {
+        axios.get(`${NETWORK_URL}/seller/panel`)
+            .then((response) => response.data)
+            .then((data) => {
+                if (data.length > 0) {
+                    setProductList([...data])
+                }
+            })
+            .catch((error) => {
+                alert('something went wrong');
+
+            })
+    }, [])
+
+
     return (
-        <Grid container sx={{
+        <Box sx={{marginTop:'10rem'}}>
+            <Grid container sx={{
             width: '80%',
             mx: 'auto',
-            my: { lg: '2%', md: '2%', sm: '4%', xs: '4%' }
+            my: { lg: '2%', md: '2%', sm: '4%', xs: '4%' },
+            
         }}
             columnGap={2}
             rowGap={2}>
@@ -51,14 +73,20 @@ const ViewCart = () => {
                 </Button>
             </Grid>
             <Grid item md={7} sm={12} xs={12}>
-                <Grid container rowGap={2}>
-                    <History is_cart={true} />
-                    <History is_cart={true} />
-                    <History is_cart={true} />
-                    <History is_cart={true} />
+                <Grid container rowGap={2}  >
+                    {
+                        productList.map((product)=>{
+                            return <History isSeller = {false} is_cart={true} item={product} />
+                        })
+                    }
+                    {/* <History isSeller = {false} is_cart={true} />
+                    <History isSeller = {false} is_cart={true} />
+                    <History isSeller = {false} is_cart={true} />
+                    <History isSeller = {false} is_cart={true} /> */}
                 </Grid>
             </Grid>
         </Grid>
+        </Box>
     )
 }
 

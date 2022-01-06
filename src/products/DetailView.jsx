@@ -175,7 +175,8 @@ const DetailView = (props) => {
                             display: "flex",
                             justifyContent: "center",
                             alignItems: "center",
-                            my: "20rem"
+                            my: "20rem",
+                            
                         }}>
                         <Typography variant="h4">Fetching... &nbsp; </Typography>
                         <CircularProgress />
@@ -193,7 +194,8 @@ const DetailView = (props) => {
                                         src={productData.productImages[index]}
                                         sx={{
                                             maxWidth: '100%',
-                                            height: '27rem'
+                                            height: '27rem',
+                                            
                                         }}
                                     />
                                 </Grid>
