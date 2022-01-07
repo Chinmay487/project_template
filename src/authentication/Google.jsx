@@ -30,7 +30,14 @@ const Google = (props) => {
                         window.localStorage.setItem('name', user.displayName)
                         window.localStorage.setItem('photoURL', user.photoURL)
                         // console.log(user.uid)
-                        window.location.reload();
+                        // window.location.reload();
+                        if(response.data){
+                            props.setIsNew(true)
+                        } else {
+                            props.setIsNew(false)
+                            window.location.reload();
+                            props.handleDialogClose()
+                        }
 
                     })
             })
@@ -56,7 +63,6 @@ const Google = (props) => {
 
     const googleSignIn = () => {
         authUser()
-        props.handleDialogClose()
     }
     return (
         <Button
