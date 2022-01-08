@@ -32,7 +32,7 @@ const Phone = (props) => {
   };
 
   const verifyPhoneNumberUser = (response) => {
-    const path = props.isNew ? 'auth/email_phone':'auth/phone'
+    const path = props.isNew ? "auth/email_phone" : "auth/phone";
     const user = firebase.auth().currentUser;
     user
       .getIdToken(/* forceRefresh */ true)
@@ -43,7 +43,11 @@ const Phone = (props) => {
             userData: response,
           })
           .then((response) => {
-            console.log(response);
+            // console.log(response);
+            window.localStorage.setItem("uid", user.uid);
+            window.localStorage.setItem("name", user.displayName);
+            window.localStorage.setItem("photoURL", user.photoURL);
+            window.location.reload();
           });
       })
       .catch((error) => {
@@ -68,6 +72,40 @@ const Phone = (props) => {
     );
   };
 
+  const linkNumber = (mobileNumber, appVerifier) => {
+    const user = firebase.auth().currentUser;
+    user
+      .linkWithPhoneNumber(mobileNumber, appVerifier)
+      .then((confirmationResult) => {
+        // SMS sent. Prompt user to type the code from the message, then sign the
+        // user in with confirmationResult.confirm(code).
+        window.confirmationResult = confirmationResult;
+        console.log("OTP has been sent");
+        // ...
+      })
+      .catch((error) => {
+        // Error; SMS not sent
+        console.log("something went wrong");
+        // ...
+      });
+  };
+
+  const signInWithnumber = (auth, mobileNumber, appVerifier) => {
+    signInWithPhoneNumber(auth, mobileNumber, appVerifier)
+      .then((confirmationResult) => {
+        // SMS sent. Prompt user to type the code from the message, then sign the
+        // user in with confirmationResult.confirm(code).
+        window.confirmationResult = confirmationResult;
+        console.log("OTP has been sent");
+        // ...
+      })
+      .catch((error) => {
+        // Error; SMS not sent
+        console.log("something went wrong");
+        // ...
+      });
+  };
+
   const onOtpSubmit = (event) => {
     firebase.initializeApp(props.firebaseKeys);
     const mobileNumber = "+91" + mobileNumberForm.mobileNumber;
@@ -82,19 +120,26 @@ const Phone = (props) => {
       const appVerifier = window.recaptchaVerifier;
 
       // sendOtp(mobileNumber)
-      signInWithPhoneNumber(auth, mobileNumber, appVerifier)
-        .then((confirmationResult) => {
-          // SMS sent. Prompt user to type the code from the message, then sign the
-          // user in with confirmationResult.confirm(code).
-          window.confirmationResult = confirmationResult;
-          console.log("OTP has been sent");
-          // ...
-        })
-        .catch((error) => {
-          // Error; SMS not sent
-          console.log("something went wrong");
-          // ...
-        });
+      // signInWithPhoneNumber(auth, mobileNumber, appVerifier)
+      //   .then((confirmationResult) => {
+      //     // SMS sent. Prompt user to type the code from the message, then sign the
+      //     // user in with confirmationResult.confirm(code).
+      //     window.confirmationResult = confirmationResult;
+      //     console.log("OTP has been sent");
+      //     // ...
+      //   })
+      //   .catch((error) => {
+      //     // Error; SMS not sent
+      //     console.log("something went wrong");
+      //     // ...
+      //   });
+
+      if (props.isNew) {
+        linkNumber(mobileNumber, appVerifier);
+      } else {
+        // sendOtp(mobileNumber)
+        signInWithnumber(auth, mobileNumber, appVerifier);
+      }
     } else {
       setCorrectNumber(true);
       setOtpSent(false);
@@ -113,9 +158,17 @@ const Phone = (props) => {
         console.log(user);
         // verifyUser(result)
         verifyPhoneNumberUser(result);
-        // console.log(PhoneAuthProvider.verifyPhoneNumber())
-
+        // console.log(result);
+        // window.location.reload()
         props.handleDialogClose();
+
+        // if (!props.isNew) {
+        //   // const user = firebase.auth().currentUser
+        //   window.localStorage.setItem("uid", user.uid);
+        //   window.localStorage.setItem("name", user.displayName);
+        //   window.localStorage.setItem("photoURL", user.photoURL);
+        //   window.location.reload()
+        // }
 
         // ...
       })

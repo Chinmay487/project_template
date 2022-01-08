@@ -18,6 +18,7 @@ import "firebase/compat/auth";
 import { getFirebaseKeys } from "../user";
 import Google from "./Google";
 import Phone from "./Phone";
+import {linkWithPhoneNumber} from 'firebase/auth';
 
 const AuthForm = (props) => {
   const [isNew, setIsNew] = useState(false);
@@ -31,6 +32,8 @@ const AuthForm = (props) => {
     messagingSenderId: "",
     appId: "",
   });
+
+  // linkWithCredential()
 
   const fetchKeys = useCallback(() => {
     setProgressStatus(true);
@@ -57,7 +60,7 @@ const AuthForm = (props) => {
       <Dialog
         fullWidth
         open={props.dialogOpen}
-        onClose={props.handleDialogClose}
+        // onClose={props.handleDialogClose}
       >
         {progressStatus ? (
           <CircularProgress />
