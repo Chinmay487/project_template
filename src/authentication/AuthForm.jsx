@@ -18,10 +18,11 @@ import "firebase/compat/auth";
 import { getFirebaseKeys } from "../user";
 import Google from "./Google";
 import Phone from "./Phone";
-import {linkWithPhoneNumber} from 'firebase/auth';
+import { linkWithPhoneNumber } from "firebase/auth";
 
 const AuthForm = (props) => {
   const [isNew, setIsNew] = useState(false);
+  const [isNewPhone, setIsNewPhone] = useState(false);
   const [progressStatus, setProgressStatus] = useState(false);
 
   const [firebaseKeys, setFirebaseKeys] = useState({
@@ -91,7 +92,7 @@ const AuthForm = (props) => {
               <Typography variant="h6">Welcome to ShopHeaven</Typography>
             </Box>
 
-            {!isNew ? (
+            {!isNew && !isNewPhone ? (
               <>
                 <DialogActions
                   sx={{
@@ -103,15 +104,35 @@ const AuthForm = (props) => {
                   <Google
                     setIsNew={setIsNew}
                     firebaseKeys={firebaseKeys}
-                    // googleSignIn={googleSignIn}
                     handleDialogClose={props.handleDialogClose}
+                    isNewPhone={false}
                   />
                 </DialogActions>
 
-                <Phone firebaseKeys={firebaseKeys} isNew={false} />
+                <Phone
+                  firebaseKeys={firebaseKeys}
+                  isNew={false}
+                  setIsNewPhone={setIsNewPhone}
+                />
               </>
             ) : (
-              <Phone firebaseKeys={firebaseKeys} isNew={true} />
+              <>
+                {isNew ? (
+                  <Phone
+                    firebaseKeys={firebaseKeys}
+                    isNew={true}
+                    setIsNewPhone={setIsNewPhone}
+                  />
+                ) : null}
+                {isNewPhone ? (
+                  <Google
+                    setIsNew={setIsNew}
+                    firebaseKeys={firebaseKeys}
+                    handleDialogClose={props.handleDialogClose}
+                    isNewPhone={true}
+                  />
+                ) : null}
+              </>
             )}
           </>
         )}

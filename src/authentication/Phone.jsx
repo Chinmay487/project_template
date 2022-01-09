@@ -44,10 +44,14 @@ const Phone = (props) => {
           })
           .then((response) => {
             // console.log(response);
-            window.localStorage.setItem("uid", user.uid);
-            window.localStorage.setItem("name", user.displayName);
-            window.localStorage.setItem("photoURL", user.photoURL);
-            window.location.reload();
+            if(response.data){
+              props.setIsNewPhone(true)
+            } else {
+              window.localStorage.setItem("uid", user.uid);
+              window.localStorage.setItem("name", user.displayName);
+              window.localStorage.setItem("photoURL", user.photoURL);
+              window.location.reload();  
+            }
           });
       })
       .catch((error) => {
