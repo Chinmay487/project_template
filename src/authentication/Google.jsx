@@ -24,7 +24,7 @@ const Google = (props) => {
         // Accounts successfully linked.
         const credential = googleProvider.credentialFromResult(result);
         const new_user = result.user;
-        console.log(new_user);
+        // console.log(new_user);
         window.localStorage.setItem("uid", user.uid);
         window.localStorage.setItem("name", user.displayName);
         window.localStorage.setItem("photoURL", user.photoURL);
@@ -62,7 +62,7 @@ const Google = (props) => {
           });
       })
 
-      .catch(function (error) {
+      .catch((error) => {
         alert("something went wrong");
       });
   };

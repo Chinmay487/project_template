@@ -32,7 +32,7 @@ const Phone = (props) => {
   };
 
   const verifyPhoneNumberUser = (response) => {
-    const path = props.isNew ? "auth/email_phone" : "auth/phone";
+    const path = "auth/phone";
     const user = firebase.auth().currentUser;
     user
       .getIdToken(/* forceRefresh */ true)
@@ -46,6 +46,7 @@ const Phone = (props) => {
             // console.log(response);
             if(response.data){
               props.setIsNewPhone(true)
+              // window.location.reload();
             } else {
               window.localStorage.setItem("uid", user.uid);
               window.localStorage.setItem("name", user.displayName);
@@ -161,7 +162,11 @@ const Phone = (props) => {
         const user = result.user;
         console.log(user);
         // verifyUser(result)
+        if(!props.isNew){
         verifyPhoneNumberUser(result);
+        } else {
+          window.location.reload()
+        }
         // console.log(result);
         // window.location.reload()
         props.handleDialogClose();
