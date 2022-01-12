@@ -5,7 +5,9 @@ import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import History from './History';
 import axios from 'axios';
 import { NETWORK_URL } from '../links'
-
+import firebase from 'firebase/compat/app';
+import 'firebase/compat/auth';
+import {getFirebaseKeys} from '../user'
 
 
 const ProfilePage = () => {
@@ -56,19 +58,30 @@ const ProfilePage = () => {
 
     const [len, setLen] = useState(false)
 
-    const fetchData = useCallback(() => {
-        axios.get(`${NETWORK_URL}/seller/panel`)
+    const fetchData = useCallback(async() => {
+       const  keys=await getFirebaseKeys()
+        firebase.initializeApp(keys)
+        const user = firebase.auth().currentUser
+        user.getIdToken(/* forceRefresh */ true)
+        .then((idToken)=>{
+            console.log(idToken)
+            axios.post(`${NETWORK_URL}/auth/info`,{
+                idToken:idToken
+            })
             .then((response) => response.data)
             .then((data) => {
-                if (data.length > 0) {
-                    setDataList([...data])
-                }
-                setLen(data.length > 0);
+                console.log(data)
             })
             .catch((error) => {
                 alert('something went wrong');
 
             })
+
+        })
+        .catch((error) => {
+            alert('something went wrong');
+
+        })
     }, [])
 
     useEffect(() => {
@@ -191,7 +204,7 @@ const ProfilePage = () => {
                 Purchase History
             </Typography>
 
-            {
+            {/* {
                 (!dataList.length > 0) ?
                     <Box
                         sx={{
@@ -244,7 +257,7 @@ const ProfilePage = () => {
                                 </Grid>
                         }
                     </>
-            }
+            } */}
 
         </>
     )
