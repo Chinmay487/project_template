@@ -46,20 +46,12 @@ const ProductCard = (props) => {
         }
     }
 
-    // const cardContent = {
-    //     width : "100%" ,
-    //     display:"flex",
-    //     justifyContent:"flex-start",
-    //     // backgroundColor:"cyan"
-    // }
 
-
-    // console.log(props.item)
 
     return (
         <>
 
-            <Link to={`/detail/${props.item.id}`}className="link">
+            <Link to={`/detail/${props.item.key}`}className="link">
                 <Box sx={productBox1} >
                     <Box component="img" src={props.item.thumbnail} sx={cardImageStyle} />
                     <Box component="div" sx={{ display: "flex", flexDirection: "column" }}>

@@ -28,6 +28,7 @@ const Google = (props) => {
         window.localStorage.setItem("uid", user.uid);
         window.localStorage.setItem("name", user.displayName);
         window.localStorage.setItem("photoURL", user.photoURL);
+        window.location.reload()
         // ...
       })
       .catch((error) => {
@@ -46,7 +47,7 @@ const Google = (props) => {
             userData: response,
           })
           .then((response) => {
-            console.log(response.data);
+            // console.log(response.data);
             window.localStorage.setItem("uid", user.uid);
             window.localStorage.setItem("name", user.displayName);
             window.localStorage.setItem("photoURL", user.photoURL);
