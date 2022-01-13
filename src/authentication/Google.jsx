@@ -48,9 +48,11 @@ const Google = (props) => {
           })
           .then((response) => {
             // console.log(response.data);
-            window.localStorage.setItem("uid", user.uid);
+            window.localStorage.setItem("idToken",idToken);
             window.localStorage.setItem("name", user.displayName);
             window.localStorage.setItem("photoURL", user.photoURL);
+            window.localStorage.setItem("email",user.email)
+            window.localStorage.setItem("contact",user.phoneNumber)
             // console.log(user.uid)
             // window.location.reload();
             if (response.data) {

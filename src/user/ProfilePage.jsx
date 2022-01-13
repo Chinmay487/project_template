@@ -9,14 +9,14 @@ import {
   IconButton,
   CircularProgress,
 } from "@mui/material";
-import profile from "../images/profile.jpg";
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
 import History from "./History";
 import axios from "axios";
 import { NETWORK_URL } from "../links";
-import firebase from "firebase/compat/app";
-import "firebase/compat/auth";
-import { getFirebaseKeys } from "../user";
+// import firebase from "firebase/compat/app";
+// import "firebase/compat/auth";
+import Address from "./Address";
+import AddressForm from "./AddressForm";
 
 const ProfilePage = () => {
   const theme = useTheme();
@@ -24,14 +24,22 @@ const ProfilePage = () => {
   const profileGrid = {
     width: "80%",
     mx: "auto",
-    my: "2%",
+    // my: "2%",
+    marginTop: "10rem",
+    marginBottom: "2rem",
   };
 
   const profile1 = {
-    height: "30rem",
+    // height: "30rem",
     border: "1px solid #B0BEC5",
     display: "flex",
-    flexDirection: "column",
+    flexDirection: {
+      xl: "row",
+      lg: "row",
+      md: "row",
+      sm: "column",
+      xs: "column",
+    },
     justifyContent: "space-evenly",
     boxShadow: theme.shadows[5],
     backgroundColor: "#EEEEEE",
@@ -42,6 +50,7 @@ const ProfilePage = () => {
     display: "flex",
     boxShadow: theme.shadows[5],
     backgroundColor: "#EEEEEE",
+    // height:"30rem"
   };
 
   const addressForm = {
@@ -61,25 +70,35 @@ const ProfilePage = () => {
     px: "2%",
   };
 
-  const [dataList, setDataList] = useState({
-    "seller_id": null,
-    "addresses": [],
-    "uid": "",
-    "cart": [],
-    "is_seller": false,
-    "purchase_history": []
-});
+  const [dataStatus, setDataStatus] = useState(false);
 
-  
+  const [dataList, setDataList] = useState({
+    seller_id: null,
+    addresses: [],
+    uid: "",
+    cart: [],
+    is_seller: false,
+    purchase_history: [],
+    name: "",
+    email: "",
+    contact: "",
+  });
+
   const fetchData = useCallback(async () => {
+    setDataStatus(true);
     axios
       .post(`${NETWORK_URL}/auth/info`, {
-        uid: window.localStorage.getItem('uid'),
+        idToken: window.localStorage.getItem("idToken"),
       })
       .then((response) => response.data)
       .then((data) => {
-    
-        setDataList({...data})
+        setDataList({
+          ...data,
+          name: window.localStorage.getItem("name"),
+          email: window.localStorage.getItem("email"),
+          contact: window.localStorage.getItem("contact"),
+        });
+        setDataStatus(false);
       })
       .catch((error) => {
         alert("something went wrong");
@@ -89,194 +108,120 @@ const ProfilePage = () => {
   useEffect(() => {
     fetchData();
   }, [fetchData]);
-  console.log(dataList)
+  // console.log(dataList);
   return (
     <>
-      <Typography
-        variant="h5"
-        sx={{
-          my: "2rem",
-          textAlign: "center",
-        }}
-        gutterBottom
-      >
-        Hello User
-      </Typography>
-      <Grid container columnGap={3} rowGap={3} sx={profileGrid}>
-        <Grid item md={3} sm={12} xs={12} sx={profile1}>
-          <Box
-            component="img"
-            src={profile}
-            sx={{
-              height: "15rem",
-              width: "70%",
-              mx: "auto",
-            }}
-          />
-          <Typography sx={{ mx: "4%" }} variant="h6">
-            Name : Username
+      {dataStatus ? (
+        <Box
+          sx={{
+            my: "10rem",
+            mx: "auto",
+            width: "50%",
+            height: "4rem",
+            textAlign: "center",
+          }}
+        >
+          <Typography variant="h4" color="initial" gutterBottom>
+            Please wait...
           </Typography>
-          <Typography sx={{ mx: "4%" }} variant="h6">
-            Contact : 9999999999
-          </Typography>
-          <Typography sx={{ mx: "4%" }} variant="h6">
-            {" "}
-            Email : abcd@email.com{" "}
-          </Typography>
-          <Typography sx={{ mx: "4%" }} variant="h6">
-            City : Mumbai
-          </Typography>
-        </Grid>
-        <Grid item md={8} sm={12} xs={12} sx={profile2}>
-          <Box sx={{ width: "100%", height: "100%" }}>
-            <Typography variant="h6" sx={{ textAlign: "center" }}>
-              Address Info
-            </Typography>
-            <Grid container>
-              <Grid
-                item
-                md={6}
-                sm={12}
-                xs={12}
-                sx={{
-                  display: "flex",
-                  height: "27rem",
-                  flexDirection: "column",
-                  justifyContent: "space-evenly",
-                }}
-              >
-                <Box component="div" sx={addressStyle}>
-                  <Box
-                    sx={{
-                      width: "100%",
-                      display: "flex",
-                      justifyContent: "space-between",
-                      alignItems: "center",
-                    }}
-                  >
-                    <Typography variant="h6">Address 1</Typography>
-                    <IconButton>
-                      <DeleteForeverIcon sx={{ color: "red" }} />
-                    </IconButton>
-                  </Box>
-                  <Typography>Address Line 1</Typography>
-                  <Typography>Address Line 2</Typography>
-                  <Typography>City</Typography>
-                  <Typography>District</Typography>
-                  <Typography>State</Typography>
-                  <Typography>Pin code</Typography>
-                </Box>
-                <Box component="div" sx={addressStyle}>
-                  <Box
-                    sx={{
-                      width: "100%",
-                      display: "flex",
-                      justifyContent: "space-between",
-                      alignItems: "center",
-                    }}
-                  >
-                    <Typography variant="h6">Address 2</Typography>
-                    <IconButton>
-                      <DeleteForeverIcon sx={{ color: "red" }} />
-                    </IconButton>
-                  </Box>
-                  <Typography>Address Line 1</Typography>
-                  <Typography>Address Line 2</Typography>
-                  <Typography>City</Typography>
-                  <Typography>District</Typography>
-                  <Typography>State</Typography>
-                  <Typography>Pin code</Typography>
-                </Box>
-              </Grid>
-              <Grid item md={6} sm={12} xs={12}>
-                <Box component="form" sx={addressForm}>
-                  <Typography>Address Form</Typography>
-                  <TextField variant="outlined" label="Address line 1" />
-                  <TextField variant="outlined" label="Address line 2" />
-                  <TextField variant="outlined" label="City" />
-                  <TextField variant="outlined" label="District" />
-                  <TextField variant="outlined" label="State" />
-                  <TextField
-                    variant="outlined"
-                    type="number"
-                    label="Pin code"
-                  />
-                  <Button
-                    variant="outlined"
-                    sx={{
-                      display: "block",
-                      width: "60%",
-                      mx: "auto",
-                      mt: "2%",
-                    }}
-                  >
-                    Add
-                  </Button>
-                </Box>
-              </Grid>
+          <CircularProgress />
+        </Box>
+      ) : (
+        <>
+          <Grid container columnGap={3} rowGap={3} sx={profileGrid}>
+            <Grid item md={12} sm={12} xs={12} sx={profile1}>
+              <Typography variant="h6">Name : {dataList.name}</Typography>
+              <Typography variant="h6">Contact : {dataList.contact}</Typography>
+              <Typography variant="h6">Email : {dataList.email}</Typography>
             </Grid>
-          </Box>
-        </Grid>
-      </Grid>
-
-      <Typography variant="h4" sx={{ textAlign: "center" }}>
-        Purchase History
-      </Typography>
-
-      {/* {
-                (!dataList.length > 0) ?
-                    <Box
-                        sx={{
-                            width: '100%',
-                            display: 'flex',
-                            justifyContent: 'center',
-                            alignItems: 'center'
-                        }}>
-                        <Typography variant='h5'>
-                            Fetching your products &nbsp;
+            <Grid item md={12} sm={12} xs={12} sx={profile2}>
+              <Box sx={{ width: "100%", height: "100%" }}>
+                <Typography variant="h6" sx={{ textAlign: "center" }}>
+                  Address Info
+                </Typography>
+                <Grid container>
+                  <Grid
+                    item
+                    md={6}
+                    sm={12}
+                    xs={12}
+                    sx={{
+                      display: "flex",
+                      height: "27rem",
+                      flexDirection: "column",
+                      justifyContent: "space-evenly",
+                    }}
+                  >
+                    {dataList.addresses.length > 0 ? (
+                      <>
+                        {dataList.addresses.map((address, index) => {
+                          return (
+                            <Address
+                              address={address}
+                              index={index}
+                              key={`address${index}`}
+                            />
+                          );
+                        })}
+                      </>
+                    ) : (
+                      <>
+                        <Typography variant="h5" textAlign="center">
+                          Please add atleast one address
                         </Typography>
-                        <CircularProgress />
-                    </Box> : <>
-                        {
-                            !len ?
-                                <Box
-                                    sx={{
-                                        width: '100%',
-                                        display: 'flex',
-                                        justifyContent: 'center',
-                                        alignItems: 'center'
-                                    }}>
-                                    <Typography variant='h5'>
-                                        No products added
-                                    </Typography>
-                                </Box>
-                                :
+                      </>
+                    )}
+                  </Grid>
+                  <Grid item md={6} sm={12} xs={12}>
+                    <AddressForm />
+                  </Grid>
+                </Grid>
+              </Box>
+            </Grid>
+          </Grid>
 
-                                <Grid
-                                    container
-                                    sx={{
-                                        width: '75%',
-                                        mx: 'auto',
-                                        my: '3%'
-                                    }}
-                                    rowGap={3}
-                                >
-                                    {
-                                        dataList.map((item) => {
-                                            return (
-                                                <History
-                                                    isCart={true}
-                                                    isSeller={false}
-                                                    item={item}
-                                                    key={item.key}
-                                                />
-                                            )
-                                        })
-                                    }
-                                </Grid>
-                        }
-                    </>
-            } */}
+          <Typography variant="h4" sx={{ textAlign: "center" }}>
+            Purchase History
+          </Typography>
+
+          {!dataList.purchase_history.length > 0 ? (
+            <Box
+              sx={{
+                width: "100%",
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+              }}
+            >
+              <Typography variant="h5">No products bought yet</Typography>
+              {/* <CircularProgress /> */}
+            </Box>
+          ) : (
+            <>
+              <Grid
+                container
+                sx={{
+                  width: "75%",
+                  mx: "auto",
+                  my: "3%",
+                }}
+                rowGap={3}
+              >
+                {dataList.purchase_history.map((item) => {
+                  return (
+                    <History
+                      isCart={true}
+                      isSeller={false}
+                      item={item}
+                      key={item.key}
+                    />
+                  );
+                })}
+              </Grid>
+            </>
+          )}
+        </>
+      )}
     </>
   );
 };

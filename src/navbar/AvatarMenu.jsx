@@ -30,11 +30,12 @@ const AvatarMenu = (props) => {
         .then((keys)=>{
             // console.log("logging Out")
             const app = firebase.initializeApp(keys);
-            window.localStorage.removeItem('uid');
+            window.localStorage.removeItem('idToken');
             window.localStorage.removeItem('name');
             window.localStorage.removeItem('photoURL');
             firebase.auth().signOut()
             .then(()=>{
+                navigate('/');
                 window.location.reload();
             })
             .catch("firebase error");

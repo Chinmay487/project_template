@@ -48,7 +48,7 @@ const Phone = (props) => {
               props.setIsNewPhone(true)
               // window.location.reload();
             } else {
-              window.localStorage.setItem("uid", user.uid);
+              window.localStorage.setItem("idToken",idToken);
               window.localStorage.setItem("name", user.displayName);
               window.localStorage.setItem("photoURL", user.photoURL);
               window.location.reload();  
