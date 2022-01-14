@@ -84,7 +84,7 @@ const ProfilePage = () => {
     contact: "",
   });
 
-  const fetchData = useCallback(async () => {
+  const fetchData = useCallback(() => {
     setDataStatus(true);
     axios
       .post(`${NETWORK_URL}/auth/info`, {
