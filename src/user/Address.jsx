@@ -1,6 +1,9 @@
 import React from "react";
 import { Box, Typography, IconButton, useTheme } from "@mui/material";
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
+import {NETWORK_URL} from '../links';
+import axios from 'axios';
+
 
 const Address = (props) => {
   const theme = useTheme();
@@ -13,6 +16,23 @@ const Address = (props) => {
     px: "2%",
   };
 
+  const deleteAddress = () => {
+    axios
+      .post(`${NETWORK_URL}/auth/update_address`, {
+        address: '',
+        idToken: window.localStorage.getItem("idToken"),
+        add : false,
+        index : props.index
+      })
+      .then((response) => {
+        console.log(response.data);
+        props.fetchData();
+      })
+      .catch((error) => {
+        console.log("something went wrong");
+      });
+  }
+
   return (
     <Box component="div" sx={addressStyle}>
       <Box
@@ -24,7 +44,7 @@ const Address = (props) => {
         }}
       >
         <Typography variant="h6">Address : {props.index + 1}</Typography>
-        <IconButton>
+        <IconButton onClick={deleteAddress}>
           <DeleteForeverIcon sx={{ color: "red" }} />
         </IconButton>
       </Box>

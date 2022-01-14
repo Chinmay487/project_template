@@ -3,7 +3,7 @@ import { Box, Typography, TextField, Button } from "@mui/material";
 import { NETWORK_URL } from "../links";
 import axios from "axios";
 
-const AddressForm = () => {
+const AddressForm = (props) => {
   const addressForm = {
     height: "27rem",
     px: "12%",
@@ -19,11 +19,11 @@ const AddressForm = () => {
     city: "",
     district: "",
     state: "",
-    pin:""
+    pin: "",
   });
 
   const [pin, setPin] = useState("");
-  const [wrongPin,setWrongPin] = useState(false)
+  const [wrongPin, setWrongPin] = useState(false);
 
   const onAddressFormInputChange = (event) => {
     const { name, value } = event.target;
@@ -35,34 +35,37 @@ const AddressForm = () => {
     });
   };
 
-//   const onPinChange = (event) => {
-//     const { name, value } = event.target;
-//     const pinPatternt = /^[1-9]{1}[0-9]{2}\s{0,1}[0-9]{3}$/im;
-//     if (pinPatternt.test(value)) {
-//       //   setButtonState(true);
-//     } else {
-//       //   setButtonState(false);
-//     }
-//     setPin(value);
-//   };
+  const updateAddress = () => {
+    axios
+      .post(`${NETWORK_URL}/auth/update_address`, {
+        address: addressFormData,
+        idToken: window.localStorage.getItem("idToken"),
+        add : true,
+        index : ''
+      })
+      .then((response) => {
+        console.log(response.data);
+        props.fetchData();
+      })
+      .catch((error) => {
+        console.log("something went wrong");
+      });
+  };
 
-const onAddressFormSubmit = (event) => {
-    event.preventDefault()
-    // const pinPattern = /^[1-9]{1}[0-9]{2}\s{0,1}[0-9]{3}$/im;
-    const pinPattern = /^[1-9][0-9]{5}$/im;
-    // const pinPattern = /(^\d{6}$)/;
-    console.log(pinPattern.test(addressFormData.pin))
-    // if (!pinPatternt.test(pin)){
-    //    alert("wrong pin")
-    //     setAddressForm((oldData)=>{
-    //         return {
-    //             ...oldData,[pin]:""
-    //         }
-    //     })
-    // } else {
-    //     console.log("hahaha")
-    // }
-}
+  const onAddressFormSubmit = (event) => {
+    event.preventDefault();
+    if (props.length >= 2) {
+      alert("u cant add more than 2 addresses");
+    } else {
+      const pinPattern = /^[1-9]{1}[0-9]{2}\s{0,1}[0-9]{3}$/im;
+      console.log(pinPattern.test(addressFormData.pin));
+      if (pinPattern.test(addressFormData.pin)) {
+        updateAddress();
+      } else {
+        alert("please enter correct pin");
+      }
+    }
+  };
 
   return (
     <Box component="form" onSubmit={onAddressFormSubmit} sx={addressForm}>
@@ -74,7 +77,6 @@ const onAddressFormSubmit = (event) => {
         variant="outlined"
         label="Address line 1"
         required={true}
-        autoComplete="off"
       />
 
       <TextField
@@ -84,8 +86,6 @@ const onAddressFormSubmit = (event) => {
         variant="outlined"
         label="Address line 2"
         required={true}
-        autoComplete="off"
-
       />
 
       <TextField
@@ -95,8 +95,6 @@ const onAddressFormSubmit = (event) => {
         variant="outlined"
         label="City"
         required={true}
-        autoComplete="off"
-
       />
 
       <TextField
@@ -106,8 +104,6 @@ const onAddressFormSubmit = (event) => {
         label="District"
         name="district"
         required={true}
-        autoComplete="off"
-
       />
 
       <TextField
@@ -117,8 +113,6 @@ const onAddressFormSubmit = (event) => {
         label="State"
         name="state"
         required={true}
-        autoComplete="off"
-
       />
 
       <TextField
@@ -128,7 +122,6 @@ const onAddressFormSubmit = (event) => {
         value={addressFormData.pin}
         label="Pin code"
         required={true}
-        autoComplete="off"
       />
 
       <Button

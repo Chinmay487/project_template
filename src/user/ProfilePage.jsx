@@ -160,6 +160,7 @@ const ProfilePage = () => {
                               address={address}
                               index={index}
                               key={`address${index}`}
+                              fetchData={fetchData}
                             />
                           );
                         })}
@@ -173,7 +174,7 @@ const ProfilePage = () => {
                     )}
                   </Grid>
                   <Grid item md={6} sm={12} xs={12}>
-                    <AddressForm />
+                    <AddressForm fetchData={fetchData} length={dataList.addresses.length} />
                   </Grid>
                 </Grid>
               </Box>
