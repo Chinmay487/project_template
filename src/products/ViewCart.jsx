@@ -145,6 +145,7 @@ const ViewCart = () => {
                   <Typography>Please add atleast one address</Typography>
                 ) : (
                   <>
+                  <Typography>Shipping Address : </Typography>
                     <Typography>
                       {dataList.addresses[addressList].line1}
                     </Typography>

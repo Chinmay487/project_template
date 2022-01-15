@@ -103,6 +103,7 @@ const History = (props) => {
         quantity: '',
         add: false,
         index: props.index,
+        is_qty : false,
         idToken: window.localStorage.getItem("idToken"),
       })
       .then((response) => {
@@ -123,6 +124,24 @@ const History = (props) => {
       deleteProduct();
     }
   };
+
+  const onQuantityChange = (event) => {
+    const {name,value} = event.target
+    axios.post(`${NETWORK_URL}/client/update_cart`, {
+      product_id: '',
+      quantity: value,
+      add: false,
+      index: props.index,
+      is_qty : true,
+      idToken: window.localStorage.getItem("idToken"),
+    })
+    .then((response)=>{
+      console.log(response.data)
+    })
+    .catch((error)=>{
+      console.log("hahahahahaha")
+    })
+  }
 
   return (
     <Grid item sm={12} xs={12}>
@@ -155,7 +174,7 @@ const History = (props) => {
           {props.is_cart ? (
             <Box sx={quantity}>
               <Typography variant="h6"> Qty : &nbsp;</Typography>
-              <Box component="select" sx={{ fontSize: "1.3rem" }}>
+              <Box component="select" onChange={onQuantityChange} sx={{ fontSize: "1.3rem" }}>
                 <Box component="option" value={1} selectteed>
                   1
                 </Box>

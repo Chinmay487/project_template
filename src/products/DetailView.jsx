@@ -175,6 +175,7 @@ const DetailView = (props) => {
       quantity : selectState,
       add : true,
       index : -1,
+      is_qty:false,
       idToken : window.localStorage.getItem("idToken")
     })
     .then((response)=>{
