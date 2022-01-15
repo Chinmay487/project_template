@@ -99,21 +99,22 @@ const History = (props) => {
     setDeleteButtonState(true);
     axios
       .post(`${NETWORK_URL}/client/update_cart`, {
-        product_id: '',
-        quantity: '',
+        product_id: "",
+        quantity: "",
         add: false,
         index: props.index,
-        is_qty : false,
+        is_qty: false,
         idToken: window.localStorage.getItem("idToken"),
+        price: props.item.price,
       })
       .then((response) => {
         console.log(response.data);
-        window.location.reload()
+        window.location.reload();
       })
-      .catch((error)=>{
-        alert("hahaha \naaj ka din kharab he tera")
-        window.location.reload()
-      })
+      .catch((error) => {
+        alert("hahaha \naaj ka din kharab he tera");
+        window.location.reload();
+      });
     setDeleteButtonState(false);
   };
 
@@ -126,22 +127,24 @@ const History = (props) => {
   };
 
   const onQuantityChange = (event) => {
-    const {name,value} = event.target
-    axios.post(`${NETWORK_URL}/client/update_cart`, {
-      product_id: '',
-      quantity: value,
-      add: false,
-      index: props.index,
-      is_qty : true,
-      idToken: window.localStorage.getItem("idToken"),
-    })
-    .then((response)=>{
-      console.log(response.data)
-    })
-    .catch((error)=>{
-      console.log("hahahahahaha")
-    })
-  }
+    const { name, value } = event.target;
+    axios
+      .post(`${NETWORK_URL}/client/update_cart`, {
+        product_id: "",
+        quantity: value,
+        add: false,
+        index: props.index,
+        is_qty: true,
+        idToken: window.localStorage.getItem("idToken"),
+        price: props.item.discount_price,
+      })
+      .then((response) => {
+        console.log(response.data);
+      })
+      .catch((error) => {
+        console.log("hahahahahaha");
+      });
+  };
 
   return (
     <Grid item sm={12} xs={12}>
@@ -174,35 +177,42 @@ const History = (props) => {
           {props.is_cart ? (
             <Box sx={quantity}>
               <Typography variant="h6"> Qty : &nbsp;</Typography>
-              <Box component="select" onChange={onQuantityChange} sx={{ fontSize: "1.3rem" }}>
-                <Box component="option" value={1} selectteed>
+              <Box
+                component="select"
+                onChange={onQuantityChange}
+                sx={{
+                  fontSize: "1.3rem",
+                }}
+                defaultValue={`${props.is_cart ? props.qty : 1}`}
+              >
+                <Box component="option" value={1}>
                   1
                 </Box>
-                <Box component="option" value={2} selectteed>
+                <Box component="option" value={2}>
                   2
                 </Box>
-                <Box component="option" value={3} selectteed>
+                <Box component="option" value={3}>
                   3
                 </Box>
-                <Box component="option" value={4} selectteed>
+                <Box component="option" value={4}>
                   4
                 </Box>
-                <Box component="option" value={5} selectteed>
+                <Box component="option" value={5}>
                   5
                 </Box>
-                <Box component="option" value={7} selectteed>
+                <Box component="option" value={7}>
                   7
                 </Box>
-                <Box component="option" value={6} selectteed>
+                <Box component="option" value={6}>
                   6
                 </Box>
-                <Box component="option" value={8} selectteed>
+                <Box component="option" value={8}>
                   8
                 </Box>
-                <Box component="option" value={9} selectteed>
+                <Box component="option" value={9}>
                   9
                 </Box>
-                <Box component="option" value={10} selectteed>
+                <Box component="option" value={10}>
                   10
                 </Box>
               </Box>

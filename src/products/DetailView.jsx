@@ -176,6 +176,7 @@ const DetailView = (props) => {
       add : true,
       index : -1,
       is_qty:false,
+      price : productData.discountPrice,
       idToken : window.localStorage.getItem("idToken")
     })
     .then((response)=>{

@@ -182,6 +182,7 @@ const ViewCart = () => {
                           item={item}
                           key={`cart${item.key}${index}`}
                           index = {index}
+                          qty = {item.quantity}
                         />
                       );
                     })}
