@@ -58,17 +58,18 @@ const ShortCategory = () => {
       <Typography variant="h3" sx={{ textAlign: "center" }}>
         Fashion
       </Typography>
+
       <ProductGrid prodGrid={prodGrid} />
       {prodGrid.length > 0 ? (
-        <Button
-          sx={buttonSyle1}
-          onClick={() => {
-            navigate("/wishlist");
-          }}
-          variant="outlined"
-        >
-          View More
-        </Button>
+          <Button
+            sx={buttonSyle1}
+            onClick={() => {
+              navigate("/wishlist");
+            }}
+            variant="outlined"
+          >
+            View More
+          </Button>
       ) : null}
     </Box>
   );

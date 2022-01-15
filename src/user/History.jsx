@@ -95,6 +95,35 @@ const History = (props) => {
       });
   };
 
+  const removeFromCart = () => {
+    setDeleteButtonState(true);
+    axios
+      .post(`${NETWORK_URL}/client/update_cart`, {
+        product_id: '',
+        quantity: '',
+        add: false,
+        index: props.index,
+        idToken: window.localStorage.getItem("idToken"),
+      })
+      .then((response) => {
+        console.log(response.data);
+        window.location.reload()
+      })
+      .catch((error)=>{
+        alert("hahaha \naaj ka din kharab he tera")
+        window.location.reload()
+      })
+    setDeleteButtonState(false);
+  };
+
+  const callDeletefunction = () => {
+    if (props.is_cart) {
+      removeFromCart();
+    } else {
+      deleteProduct();
+    }
+  };
+
   return (
     <Grid item sm={12} xs={12}>
       <Grid
@@ -184,11 +213,15 @@ const History = (props) => {
               ) : (
                 <Button
                   variant="text"
-                  onClick={deleteProduct}
+                  onClick={callDeletefunction}
                   color="error"
                   sx={{
-                    width: `${props.isSeller ? "100%" : "30%"}`,
-                    height: `${props.isSeller ? "auto" : "2rem"}`,
+                    width: `${
+                      props.isSeller || props.is_cart ? "100%" : "30%"
+                    }`,
+                    height: `${
+                      props.isSeller || props.is_cart ? "auto" : "2rem"
+                    }`,
                   }}
                 >
                   <DeleteForeverIcon sx={{ color: "red" }} />
