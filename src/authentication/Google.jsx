@@ -22,12 +22,12 @@ const Google = (props) => {
     linkWithPopup(user, googleProvider)
       .then((result) => {
         // Accounts successfully linked.
-        const credential = googleProvider.credentialFromResult(result);
-        const new_user = result.user;
-        // console.log(new_user);
-        window.localStorage.setItem("uid", user.uid);
-        window.localStorage.setItem("name", user.displayName);
-        window.localStorage.setItem("photoURL", user.photoURL);
+        // const credential = googleProvider.credentialFromResult(result);
+        const new_user = result._tokenResponse;
+        // console.log(result);
+        window.localStorage.setItem("idToken", new_user.idToken);
+        window.localStorage.setItem("name", new_user.displayName);
+        window.localStorage.setItem("photoURL", new_user.photoURL);
         window.location.reload()
         // ...
       })
