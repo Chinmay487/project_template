@@ -128,11 +128,11 @@ const History = (props) => {
 
   const onQuantityChange = (event) => {
     
-    const { name, value } = event.target;
+    // const { name, value } = event.target;
     axios
       .post(`${NETWORK_URL}/client/update_cart`, {
         product_id: "",
-        quantity: value,
+        quantity: event.target.value,
         add: false,
         index: props.index,
         is_qty: true,
@@ -141,8 +141,6 @@ const History = (props) => {
       })
       .then((response) => {
         props.getAmount()
-        // console.log(response.data);
-        // props.fetchCart()
       })
       .catch((error) => {
         console.log("hahahahahaha");

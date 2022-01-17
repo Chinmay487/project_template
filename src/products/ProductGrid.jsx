@@ -1,4 +1,4 @@
-import React from "react";
+import React,{useState,useEffect} from "react";
 import {
   Grid,
   useTheme,
@@ -9,6 +9,14 @@ import {
 } from "@mui/material";
 import ProductCard from "./ProductCard";
 
+// const GridItemElement = (props) => {
+//   return (
+//     <Grid item >
+//       <ProductCard item={props.item} />
+//     </Grid>
+//   );
+// };
+
 const ProductGrid = (props) => {
   const theme = useTheme();
 
@@ -17,6 +25,20 @@ const ProductGrid = (props) => {
   const gridStyle2 = {
     alignItems: "center",
   };
+
+  // const [productList,setProductList] = useState([])
+
+  // useEffect(()=>{
+  //   setProductList([])
+  //   props.prodGrid.forEach((item,index)=>{
+  //     if(!small && index===2){
+  //       return
+  //     }
+  //     setProductList((oldListData)=>{
+  //       return [ ...oldListData,item]
+  //     })
+  //   })
+  // },[small,props.prodGrid])
 
   return (
     <>
@@ -63,6 +85,18 @@ const ProductGrid = (props) => {
               </Grid>
             </>
           ) : null}
+          {/* {
+            productList.map((item,index)=>{
+              if(small && index>2){
+                return null
+              }
+              return (
+                <GridItemElement item={item} key={`listItem${index}`} />
+              )
+            })
+          } */}
+
+
         </Grid>
       )}
     </>

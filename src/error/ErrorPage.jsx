@@ -1,8 +1,15 @@
 import React from 'react';
+import {Box,Typography} from '@mui/material';
 
 
 const ErrorPage = () => {
-    return <h1>Invalid URL</h1>
+    return <>
+        <Box sx={{my:"10rem",width:"50%",mx:"auto",textAlign:"center"}}>
+            <Typography variant='h1'>
+                404 Page not found
+            </Typography>
+        </Box>
+    </>
 }
 
 

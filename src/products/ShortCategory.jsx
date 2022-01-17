@@ -7,7 +7,6 @@ import { NETWORK_URL } from "../links";
 
 const ShortCategory = () => {
   const navigate = useNavigate();
-  const [len, setLen] = useState(false);
 
   const productGridBox1 = {
     borderTop: "1px solid #9c9c9c",
@@ -32,17 +31,16 @@ const ShortCategory = () => {
 
   const [prodGrid, setProdGrid] = useState([]);
 
-  const fetchProducts = useCallback(() => {
+  const fetchProducts = useCallback((isMounted) => {
     axios
       .get(`${NETWORK_URL}/client/fetch`)
       .then((response) => {
         return response.data;
       })
       .then((data) => {
-        if (data.length > 0) {
+        if (data.length > 0 && isMounted) {
           setProdGrid([...data]);
         }
-        setLen(data.length > 0);
       })
       .catch((error) => {
         alert("something went wrong");
@@ -50,7 +48,9 @@ const ShortCategory = () => {
   }, []);
 
   useEffect(() => {
-    fetchProducts();
+    let isMounted = true;
+    fetchProducts(isMounted);
+    return () => {isMounted=false;}
   }, [fetchProducts]);
 
   return (

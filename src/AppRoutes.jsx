@@ -14,8 +14,6 @@ import ReviewPage from "./products/ReviewPage";
 const AppRoutes = (props) => {
   return (
     <Routes>
-      <Route exact={true} path="/becomeseller" element={<NewSeller />} />
-      <Route exact={true} path="/profile" element={<ProfilePage />} />
       {props.isSeller ? (
         <Route
           exact={true}
@@ -37,7 +35,16 @@ const AppRoutes = (props) => {
           element={<ProductForm isUpdate={false} />}
         />
       ) : null}
-      <Route exact={true} path="/viewcart" element={<ViewCart />} />
+      {window.localStorage.getItem("idToken") ? (
+        <>
+          <Route exact={true} path="/viewcart" element={<ViewCart />} />
+          <Route exact={true} path="/profile" element={<ProfilePage />} />
+          <Route exact={true} path="/becomeseller" element={<NewSeller />} />
+        </>
+      ) : (
+        null
+      )}
+
       <Route
         exact={true}
         path="/detail/:key"

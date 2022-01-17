@@ -95,28 +95,37 @@ const DetailView = (props) => {
 
   const [reviewFormStatus, setReviewFormStatus] = useState(false);
 
-  const fetchData = useCallback(() => {
-    axios
-      .get(`${NETWORK_URL}/client/detail/${key}`)
-      .then((response) => response.data)
-      .then((data) => {
-        setProductData({
-          title: data.title,
-          description: data.description,
-          price: data.price,
-          discountPrice: data.discount_price,
-          quantity: data.quantity,
-          productImages: data.images,
+  const fetchData = useCallback(
+    (isMounted) => {
+      axios
+        .get(`${NETWORK_URL}/client/detail/${key}`)
+        .then((response) => response.data)
+        .then((data) => {
+          if (isMounted) {
+            setProductData({
+              title: data.title,
+              description: data.description,
+              price: data.price,
+              discountPrice: data.discount_price,
+              quantity: data.quantity,
+              productImages: data.images,
+            });
+            setFetchStatus(false);
+          }
+        })
+        .catch((error) => {
+          alert("something went wrong");
         });
-        setFetchStatus(false);
-      })
-      .catch((error) => {
-        alert("something went wrong");
-      });
-  }, [key]);
+    },
+    [key]
+  );
 
   useEffect(() => {
-    fetchData();
+    let isMounted = true;
+    fetchData(isMounted);
+    return () => {
+      isMounted = true;
+    };
   }, [fetchData]);
 
   setInterval(() => {
@@ -167,39 +176,39 @@ const DetailView = (props) => {
     navigate(`/update/${key}`);
   };
 
-  const [selectState,setSelectState] = useState(1);
+  const [selectState, setSelectState] = useState(1);
 
-  const addProductToCart = (message,cart) => {
-    axios.post(`${NETWORK_URL}/client/update_cart`,{
-      product_id : key,
-      quantity : selectState,
-      add : true,
-      index : -1,
-      is_qty:false,
-      price : productData.discountPrice,
-      idToken : window.localStorage.getItem("idToken")
-    })
-    .then((response)=>{
-      // console.log(response.data)
-      if(cart){
-        alert(message)
-      } else {
-        navigate("/viewcart")
-      }
-    })
-    .catch((error)=>{
-      console.log("something went wrong")
-    })
-  }
-
+  const addProductToCart = (message, cart) => {
+    axios
+      .post(`${NETWORK_URL}/client/update_cart`, {
+        product_id: key,
+        quantity: selectState,
+        add: true,
+        index: -1,
+        is_qty: false,
+        price: productData.discountPrice,
+        idToken: window.localStorage.getItem("idToken"),
+      })
+      .then((response) => {
+        // console.log(response.data)
+        if (cart) {
+          alert(message);
+        } else {
+          navigate("/viewcart");
+        }
+      })
+      .catch((error) => {
+        console.log("something went wrong");
+      });
+  };
 
   const addToCart = () => {
-    addProductToCart("Added to your cart",true)
-  }
+    addProductToCart("Added to your cart", true);
+  };
 
   const buyNow = () => {
-    addProductToCart("",false)
-  }
+    addProductToCart("", false);
+  };
 
   return (
     <>
@@ -280,9 +289,9 @@ const DetailView = (props) => {
                       <Typography variant="h6"> Qty : &nbsp;</Typography>
                       <Box
                         component="select"
-                          onChange={(event)=>{
-                            setSelectState(event.target.value)
-                          }}
+                        onChange={(event) => {
+                          setSelectState(event.target.value);
+                        }}
                         sx={{
                           fontSize: "1.3rem",
                         }}
@@ -320,22 +329,46 @@ const DetailView = (props) => {
                       </Box>
                     </Box>
                     <Box sx={gridBox2}>
-                      <Button 
-                      variant="contained"
-                       sx={buttonGroupStyle1}
-                       onClick = {buyNow}
-                       >
-                        <ShoppingBagOutlinedIcon />
-                        &nbsp; Buy now
-                      </Button>
-                      <Button 
-                      variant="contained"
-                       sx={buttonGroupStyle1}
-                       onClick = {addToCart}
-                       >
-                        <AddShoppingCartOutlinedIcon />
-                        &nbsp; Add to Cart
-                      </Button>
+                      {window.localStorage.getItem("idToken") ? (
+                        <>
+                          <Button
+                            variant="contained"
+                            sx={buttonGroupStyle1}
+                            onClick={buyNow}
+                          >
+                            <ShoppingBagOutlinedIcon />
+                            &nbsp; Buy now
+                          </Button>
+                          <Button
+                            variant="contained"
+                            sx={buttonGroupStyle1}
+                            onClick={addToCart}
+                          >
+                            <AddShoppingCartOutlinedIcon />
+                            &nbsp; Add to Cart
+                          </Button>
+                        </>
+                      ) : (
+                        <>
+                          <Button
+                            variant="contained"
+                            sx={buttonGroupStyle1}
+                            disabled
+                          >
+                            <ShoppingBagOutlinedIcon />
+                            &nbsp; Buy now
+                          </Button>
+                          <Button
+                            variant="contained"
+                            sx={buttonGroupStyle1}
+                            disabled
+                          >
+                            <AddShoppingCartOutlinedIcon />
+                            &nbsp; Add to Cart
+                          </Button>
+                        </>
+                      )}
+
                       {props.isSeller ? (
                         <Button
                           variant="contained"
@@ -415,16 +448,36 @@ const DetailView = (props) => {
                         <CircularProgress />
                       </Box>
                     ) : (
-                      <Button
-                        variant="outlined"
-                        type="submit"
-                        sx={{
-                          display: "block",
-                          width: "30%",
-                        }}
-                      >
-                        Post
-                      </Button>
+                      <>
+                        {window.localStorage.getItem("idToken") ? (
+                          <>
+                            <Button
+                              variant="outlined"
+                              type="submit"
+                              sx={{
+                                display: "block",
+                                width: "30%",
+                              }}
+                            >
+                              Post
+                            </Button>
+                          </>
+                        ) : (
+                          <>
+                            <Button
+                              variant="outlined"
+                              type="submit"
+                              sx={{
+                                display: "block",
+                                width: "30%",
+                              }}
+                              disabled
+                            >
+                              Post
+                            </Button>
+                          </>
+                        )}
+                      </>
                     )}
                   </Box>
                 </Grid>

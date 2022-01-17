@@ -68,29 +68,29 @@ const ViewCart = () => {
       });
   };
 
-  const [amount,setAmount] = useState({
-    subTotal : 0,
-    total : 0,
-    charges : 0,
-  })
+  const [amount, setAmount] = useState({
+    subTotal: 0,
+    total: 0,
+    charges: 0,
+  });
 
   const getAmount = () => {
-    axios.post(`${NETWORK_URL}/client/bill`,{
-      idToken : window.localStorage.getItem("idToken")
-    })
-    .then((response)=>{
-      setAmount({...response.data})
-    })
-    .catch((error)=>{
-      console.log("price not fetching")
-    })
-
-  }
+    axios
+      .post(`${NETWORK_URL}/client/bill`, {
+        idToken: window.localStorage.getItem("idToken"),
+      })
+      .then((response) => {
+        setAmount({ ...response.data });
+      })
+      .catch((error) => {
+        console.log("price not fetching");
+      });
+  };
 
   useEffect(() => {
     fetchData();
     fetchCart();
-    getAmount()
+    getAmount();
   }, [fetchData]);
   // console.log(dataList);
 
@@ -172,17 +172,17 @@ const ViewCart = () => {
                   </>
                 ) : (
                   <>
-                  <Typography>No Products Bought</Typography>
+                    <Typography>No Products Bought</Typography>
                     <Button
-                    variant="outlined"
-                    sx={{
-                      display: "block",
-                      mx: "auto",
-                    }}
-                    disabled
-                  >
-                    Place Order
-                  </Button>
+                      variant="outlined"
+                      sx={{
+                        display: "block",
+                        mx: "auto",
+                      }}
+                      disabled
+                    >
+                      Place Order
+                    </Button>
                   </>
                 )}
               </Grid>
