@@ -12,7 +12,6 @@ const App = () => {
   // })
 
   // checkAuth()
-
   if (window.localStorage.getItem("idToken")) {
     setCurrentAuthState();
   }

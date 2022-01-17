@@ -36,7 +36,7 @@ const ViewCart = () => {
     purchase_history: [],
   });
 
-  const [cartList,setCartList] = useState([])
+  const [cartList, setCartList] = useState([]);
 
   const fetchData = useCallback(() => {
     setDataStatus(true);
@@ -55,21 +55,42 @@ const ViewCart = () => {
   }, []);
 
   const fetchCart = () => {
-    axios.post(`${NETWORK_URL}/client/get_cart`,{
+    axios
+      .post(`${NETWORK_URL}/client/get_cart`, {
+        idToken: window.localStorage.getItem("idToken"),
+      })
+      .then((response) => {
+        // console.log(response.data);
+        setCartList([...response.data]);
+      })
+      .catch((error) => {
+        console.log("error fetching cart");
+      });
+  };
+
+  const [amount,setAmount] = useState({
+    subTotal : 0,
+    total : 0,
+    charges : 0,
+  })
+
+  const getAmount = () => {
+    axios.post(`${NETWORK_URL}/client/bill`,{
       idToken : window.localStorage.getItem("idToken")
     })
     .then((response)=>{
-      console.log(response.data)
-      setCartList([...response.data])
+      setAmount({...response.data})
     })
     .catch((error)=>{
-      console.log("error fetching cart")
+      console.log("price not fetching")
     })
+
   }
 
   useEffect(() => {
     fetchData();
     fetchCart();
+    getAmount()
   }, [fetchData]);
   // console.log(dataList);
 
@@ -127,25 +148,50 @@ const ViewCart = () => {
                     </>
                   )}
                 </NativeSelect>
-                <Typography variant="h5">Price : 69999</Typography>
-                <Typography variant="h5">Delivery Charges : 69.99</Typography>
-                <Typography variant="h5">Total : 696969.666</Typography>
-                <Button
-                  variant="outlined"
-                  sx={{
-                    display: "block",
-                    mx: "auto",
-                  }}
-                >
-                  Place Order
-                </Button>
+
+                {dataList.addresses.length > 0 && dataList.cart.length > 0 ? (
+                  <>
+                    <Typography variant="subtitle1">
+                      Sub Total : {amount.subTotal}
+                    </Typography>
+                    <Typography variant="subtitle1">
+                      Delivery Charges : {amount.charges}
+                    </Typography>
+                    <Typography variant="subtitle1">
+                      Total : {amount.total}
+                    </Typography>
+                    <Button
+                      variant="outlined"
+                      sx={{
+                        display: "block",
+                        mx: "auto",
+                      }}
+                    >
+                      Place Order
+                    </Button>
+                  </>
+                ) : (
+                  <>
+                  <Typography>No Products Bought</Typography>
+                    <Button
+                    variant="outlined"
+                    sx={{
+                      display: "block",
+                      mx: "auto",
+                    }}
+                    disabled
+                  >
+                    Place Order
+                  </Button>
+                  </>
+                )}
               </Grid>
               <Grid item md={5} sm={12} xs={12} sx={cartGrid}>
                 {!dataList.addresses.length > 0 ? (
                   <Typography>Please add atleast one address</Typography>
                 ) : (
                   <>
-                  <Typography>Shipping Address : </Typography>
+                    <Typography>Shipping Address : </Typography>
                     <Typography>
                       {dataList.addresses[addressList].line1}
                     </Typography>
@@ -168,25 +214,61 @@ const ViewCart = () => {
                 )}
               </Grid>
               <Grid md={12} sm={12} xs={12} item>
-                {!cartList.length > 0 ? (
+                {!dataList.cart.length > 0 && cartList.length === 0 ? (
                   <>
-                    <Typography>No Products to your cart</Typography>
+                    <Typography
+                      variant="h4"
+                      sx={{
+                        textAlign: "center",
+                        my: "4rem",
+                      }}
+                    >
+                      No Products to your cart
+                    </Typography>
                   </>
                 ) : (
-                  <Grid container rowGap={2}>
-                    {cartList.map((item, index) => {
-                      return (
-                        <History
-                          is_cart={true}
-                          isSeller={false}
-                          item={item}
-                          key={`cart${item.key}${index}`}
-                          index = {index}
-                          qty = {item.quantity}
-                        />
-                      );
-                    })}
-                  </Grid>
+                  <>
+                    {!cartList.length > 0 ? (
+                      <Box
+                        sx={{
+                          width: "50%",
+                          display: "flex",
+                          justifyContent: "center",
+                          mx: "auto",
+                          my: "10rem",
+                          alignItems: "center",
+                        }}
+                      >
+                        <Typography>Fetching Cart ...</Typography> &nbsp;
+                        <CircularProgress />
+                      </Box>
+                    ) : (
+                      <Grid container rowGap={2}>
+                        <Grid
+                          item
+                          md={12}
+                          sm={12}
+                          xs={12}
+                          sx={{ textAlign: "center" }}
+                        >
+                          <Typography variant="h6">Your Orders</Typography>
+                        </Grid>
+                        {cartList.map((item, index) => {
+                          return (
+                            <History
+                              is_cart={true}
+                              isSeller={false}
+                              item={item}
+                              key={`cart${item.key}${index}`}
+                              index={index}
+                              qty={item.quantity}
+                              getAmount={getAmount}
+                            />
+                          );
+                        })}
+                      </Grid>
+                    )}
+                  </>
                 )}
               </Grid>
             </Grid>

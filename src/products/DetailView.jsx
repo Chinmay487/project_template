@@ -180,7 +180,7 @@ const DetailView = (props) => {
       idToken : window.localStorage.getItem("idToken")
     })
     .then((response)=>{
-      console.log(response.data)
+      // console.log(response.data)
       if(cart){
         alert(message)
       } else {

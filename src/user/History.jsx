@@ -108,7 +108,7 @@ const History = (props) => {
         price: props.item.price,
       })
       .then((response) => {
-        console.log(response.data);
+        // console.log(response.data);
         window.location.reload();
       })
       .catch((error) => {
@@ -127,6 +127,7 @@ const History = (props) => {
   };
 
   const onQuantityChange = (event) => {
+    
     const { name, value } = event.target;
     axios
       .post(`${NETWORK_URL}/client/update_cart`, {
@@ -139,7 +140,9 @@ const History = (props) => {
         price: props.item.discount_price,
       })
       .then((response) => {
-        console.log(response.data);
+        props.getAmount()
+        // console.log(response.data);
+        // props.fetchCart()
       })
       .catch((error) => {
         console.log("hahahahahaha");
