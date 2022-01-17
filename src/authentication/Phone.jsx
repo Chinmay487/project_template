@@ -10,6 +10,7 @@ import {
   signInWithPhoneNumber,
   PhoneAuthProvider,
 } from "firebase/auth";
+import {checkAuthTimeout} from '../user';
 
 const Phone = (props) => {
   const [otpSent, setOtpSent] = useState(false);
@@ -32,6 +33,7 @@ const Phone = (props) => {
   };
 
   const verifyPhoneNumberUser = (response) => {
+    const expirationDate = new Date(new Date().getTime() + 3600 *1000);
     const path = "auth/phone";
     const user = firebase.auth().currentUser;
     user
@@ -51,6 +53,9 @@ const Phone = (props) => {
               window.localStorage.setItem("idToken",idToken);
               window.localStorage.setItem("name", user.displayName);
               window.localStorage.setItem("photoURL", user.photoURL);
+              window.localStorage.setItem('email',user.email)
+              window.localStorage.setItem('expiration',expirationDate);
+              checkAuthTimeout()
               window.location.reload();  
             }
           });
@@ -124,21 +129,6 @@ const Phone = (props) => {
       configCaptcha();
       const appVerifier = window.recaptchaVerifier;
 
-      // sendOtp(mobileNumber)
-      // signInWithPhoneNumber(auth, mobileNumber, appVerifier)
-      //   .then((confirmationResult) => {
-      //     // SMS sent. Prompt user to type the code from the message, then sign the
-      //     // user in with confirmationResult.confirm(code).
-      //     window.confirmationResult = confirmationResult;
-      //     console.log("OTP has been sent");
-      //     // ...
-      //   })
-      //   .catch((error) => {
-      //     // Error; SMS not sent
-      //     console.log("something went wrong");
-      //     // ...
-      //   });
-
       if (props.isNew) {
         linkNumber(mobileNumber, appVerifier);
       } else {
@@ -161,25 +151,12 @@ const Phone = (props) => {
         // User signed in successfully.
         const user = result.user;
         console.log(user);
-        // verifyUser(result)
         if(!props.isNew){
         verifyPhoneNumberUser(result);
         } else {
           window.location.reload()
         }
-        // console.log(result);
-        // window.location.reload()
         props.handleDialogClose();
-
-        // if (!props.isNew) {
-        //   // const user = firebase.auth().currentUser
-        //   window.localStorage.setItem("uid", user.uid);
-        //   window.localStorage.setItem("name", user.displayName);
-        //   window.localStorage.setItem("photoURL", user.photoURL);
-        //   window.location.reload()
-        // }
-
-        // ...
       })
       .catch((error) => {
         console.log("otp form error");

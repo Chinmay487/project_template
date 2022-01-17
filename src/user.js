@@ -2,31 +2,59 @@ import firebase from "firebase/compat/app";
 import axios from "axios";
 import { NETWORK_URL } from "./links";
 
-// firebase.initializeApp()
-
 const getFirebaseKeys = async () => {
   const keys = await axios.get(`${NETWORK_URL}/auth/keys`);
-  // console.log(response.data)
   return keys.data;
 };
 
-const getUserData = async () => {
-  const firebaseKey = await getFirebaseKeys();
-  const app = firebase.initializeApp(firebaseKey);
-  const user = firebase.auth().currentUser;
-
-  // if (user !== null){
-  //     const idToken = await user.getIdToken(/* forceRefresh */ true)
-  //     return {
-  //         name : user.displayName,
-  //         email : user.email,
-  //         photoUrl : user.photoURL,
-  //         idToken : idToken
-  //     }
-  // }
-  return user;
+const logoutUser = () => {
+  getFirebaseKeys()
+    .then((keys) => {
+      // console.log("logging Out")
+      const app = firebase.initializeApp(keys);
+      window.localStorage.removeItem("idToken");
+      window.localStorage.removeItem("name");
+      window.localStorage.removeItem("photoURL");
+      window.localStorage.removeItem("email");
+      window.localStorage.removeItem("contact");
+      window.localStorage.removeItem("expiration");
+      firebase
+        .auth()
+        .signOut()
+        .then(() => {
+          window.location.reload();
+        })
+        .catch("firebase error");
+    })
+    .catch((error) => {
+      console.log("something went wrong");
+    });
 };
 
-// getFirebaseKeys()
+const checkAuthTimeout = (expirationDate) => {
+  setTimeout(
+      () => {
+        logoutUser()
+      },
+      expirationDate * 1000
+  )
+}
 
-export { getFirebaseKeys, getUserData };
+const setCurrentAuthState = () => {
+  const idToken = window.localStorage.getItem("idToken")
+  if(idToken === undefined){
+    return logoutUser()
+  } else {
+    const expirationDate = new Date(localStorage.getItem('expiration'));
+    if(expirationDate <= new Date()){
+      return logoutUser()
+  } else {
+      const remainingTime = (expirationDate.getTime() - new Date().getTime())/1000
+      return checkAuthTimeout(remainingTime);
+      // authSuccess(token,username);
+  }
+
+  }
+}
+
+export { getFirebaseKeys, logoutUser,setCurrentAuthState,checkAuthTimeout };

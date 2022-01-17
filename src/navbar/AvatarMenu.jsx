@@ -4,7 +4,7 @@ import { NavMenuItem } from './utilClasses';
 import { useNavigate } from 'react-router-dom';
 import {menuItemStyle,menuStyle} from '../styles';
 import firebase from 'firebase/compat/app';
-import {getFirebaseKeys} from '../user';
+import {logoutUser} from '../user';
 
 
 const AvatarMenu = (props) => {
@@ -25,27 +25,33 @@ const AvatarMenu = (props) => {
         navigate(path);
     }
 
-    const logoutUser = () => {
-        getFirebaseKeys()
-        .then((keys)=>{
-            // console.log("logging Out")
-            const app = firebase.initializeApp(keys);
-            window.localStorage.removeItem('idToken');
-            window.localStorage.removeItem('name');
-            window.localStorage.removeItem('photoURL');
-            firebase.auth().signOut()
-            .then(()=>{
-                navigate('/');
-                window.location.reload();
-            })
-            .catch("firebase error");
+    // const logoutUser = () => {
+    //     getFirebaseKeys()
+    //     .then((keys)=>{
+    //         // console.log("logging Out")
+    //         const app = firebase.initializeApp(keys);
+    //         window.localStorage.removeItem('idToken');
+    //         window.localStorage.removeItem('name');
+    //         window.localStorage.removeItem('photoURL');
+    //         firebase.auth().signOut()
+    //         .then(()=>{
+    //             navigate('/');
+    //             window.location.reload();
+    //         })
+    //         .catch("firebase error");
 
-        })
-        .catch((error)=>{
-            console.log("something went wrong");
-        })
+    //     })
+    //     .catch((error)=>{
+    //         console.log("something went wrong");
+    //     })
         
+    // }
+
+    const signoutUser = () => {
+        navigate('/');
+        logoutUser()
     }
+
     return (
         <>
             <Menu sx={menuStyle} anchorEl={props.anchorEl} open={props.openMenu} onClose={props.handleClose}>
@@ -58,7 +64,7 @@ const AvatarMenu = (props) => {
                         </MenuItem>
                     })
                 }
-                <MenuItem onClick={logoutUser}>Logout</MenuItem>
+                <MenuItem onClick={signoutUser}>Logout</MenuItem>
             </Menu>
         </>
     )
