@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useState, useEffect} from "react";
 import {
   AppBar,
   Toolbar,
@@ -78,15 +78,6 @@ const Navbar = (props) => {
   };
 
   const openAvatarMenu = Boolean(avatarEl);
-
-  const avatarMenuItems = [
-    new NavMenuItem("Username", "", "aa"),
-    new NavMenuItem("Profile", "/profile", "bb"),
-    new NavMenuItem("View Cart", "/viewcart", "cc"),
-    new NavMenuItem("Become Seller", "/new_seller", "dd"),
-    new NavMenuItem("Add Product", "/addproduct", "ff"),
-  ];
-  // new NavMenuItem('Logout', '/logout', 'ee'),
 
   const navList2 = [
     new ListClass(
@@ -267,21 +258,14 @@ const Navbar = (props) => {
             </Box>
           </Box>
           <AvatarMenu
-            // haveCategory={false}
             anchorEl={avatarEl}
             handleClose={handleAvatarClose}
             openMenu={openAvatarMenu}
-            // NavMenuItemList={avatarMenuItems}
           />
         </Toolbar>
         {!small ? (
           <Box component="div" sx={navbarStyle2}>
             <Box component="div" sx={navbarDiveStyle2}>
-              {props.isSeller ? (
-                <NavLink to="/panel" className="link">
-                  <Typography sx={typographyStyle2}>Panel</Typography>
-                </NavLink>
-              ) : null}
               {navList2.map((item, index) => {
                 return (
                   <>
@@ -325,7 +309,6 @@ const Navbar = (props) => {
       <AuthForm handleDialogClose={handleDilogClose} dialogOpen={dialogOpen} />
       <Sidenav
         isSeller={props.isSeller}
-        // uid={10000}
         items={navList2}
         drawerStatus={drawerStatus}
         setDrawerStatus={setDrawerStatus}
