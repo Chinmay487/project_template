@@ -22,9 +22,6 @@ const AddressForm = (props) => {
     pin: "",
   });
 
-  const [pin, setPin] = useState("");
-  const [wrongPin, setWrongPin] = useState(false);
-
   const onAddressFormInputChange = (event) => {
     const { name, value } = event.target;
     setAddressForm((oldData) => {
@@ -40,12 +37,15 @@ const AddressForm = (props) => {
       .post(`${NETWORK_URL}/auth/update_address`, {
         address: addressFormData,
         idToken: window.localStorage.getItem("idToken"),
-        add : true,
-        index : ''
+        add: true,
+        index: "",
       })
       .then((response) => {
-        console.log(response.data);
-        props.fetchData();
+        if (response.data) {
+          props.fetchData();
+        } else {
+          window.location.reload();
+        }
       })
       .catch((error) => {
         console.log("something went wrong");

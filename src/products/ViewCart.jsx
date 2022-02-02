@@ -46,8 +46,12 @@ const ViewCart = () => {
       })
       .then((response) => response.data)
       .then((data) => {
+       if(data){
         setDataList({ ...data });
         setDataStatus(false);
+       } else {
+         window.location.reload();
+       }
       })
       .catch((error) => {
         alert("something went wrong");
@@ -60,8 +64,11 @@ const ViewCart = () => {
         idToken: window.localStorage.getItem("idToken"),
       })
       .then((response) => {
-        // console.log(response.data);
-        setCartList([...response.data]);
+        if (response.data) {
+          setCartList([...response.data]);
+        } else {
+          window.location.reload();
+        }
       })
       .catch((error) => {
         console.log("error fetching cart");
@@ -80,10 +87,14 @@ const ViewCart = () => {
         idToken: window.localStorage.getItem("idToken"),
       })
       .then((response) => {
-        setAmount({ ...response.data });
+        if (response.data) {
+          setAmount({ ...response.data });
+        } else {
+          window.location.reload();
+        }
       })
       .catch((error) => {
-        console.log("price not fetching");
+        alert("Something went wrong");
       });
   };
 
@@ -92,7 +103,6 @@ const ViewCart = () => {
     fetchCart();
     getAmount();
   }, [fetchData]);
-  // console.log(dataList);
 
   const [addressList, setAddressList] = useState(0);
 

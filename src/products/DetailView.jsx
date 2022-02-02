@@ -137,7 +137,6 @@ const DetailView = (props) => {
     }
   }, 6000);
 
-  // console.log(productData)
 
   const onInputChange = (event) => {
     const { name, value } = event.target;
@@ -172,10 +171,6 @@ const DetailView = (props) => {
 
   const navigate = useNavigate();
 
-  const gotoUpdate = () => {
-    navigate(`/update/${key}`);
-  };
-
   const [selectState, setSelectState] = useState(1);
 
   const addProductToCart = (message, cart) => {
@@ -190,11 +185,15 @@ const DetailView = (props) => {
         idToken: window.localStorage.getItem("idToken"),
       })
       .then((response) => {
-        // console.log(response.data)
-        if (cart) {
-          alert(message);
-        } else {
-          navigate("/viewcart");
+        if(response.data){
+          if (cart) {
+            alert(message);
+          } else {
+            navigate("/viewcart");
+          }
+        } else{
+          alert("please login");
+          window.location.reload();
         }
       })
       .catch((error) => {
@@ -368,16 +367,6 @@ const DetailView = (props) => {
                           </Button>
                         </>
                       )}
-
-                      {props.isSeller ? (
-                        <Button
-                          variant="contained"
-                          onClick={gotoUpdate}
-                          sx={buttonGroupStyle1}
-                        >
-                          Update
-                        </Button>
-                      ) : null}
                     </Box>
                   </Box>
                 </Grid>

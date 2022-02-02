@@ -4,17 +4,11 @@ import {
   Grid,
   Box,
   useTheme,
-  TextField,
-  Button,
-  IconButton,
   CircularProgress,
 } from "@mui/material";
-import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
 import History from "./History";
 import axios from "axios";
 import { NETWORK_URL } from "../links";
-// import firebase from "firebase/compat/app";
-// import "firebase/compat/auth";
 import Address from "./Address";
 import AddressForm from "./AddressForm";
 
@@ -24,13 +18,11 @@ const ProfilePage = () => {
   const profileGrid = {
     width: "80%",
     mx: "auto",
-    // my: "2%",
     marginTop: "10rem",
     marginBottom: "2rem",
   };
 
   const profile1 = {
-    // height: "30rem",
     border: "1px solid #B0BEC5",
     display: "flex",
     flexDirection: {
@@ -50,24 +42,6 @@ const ProfilePage = () => {
     display: "flex",
     boxShadow: theme.shadows[5],
     backgroundColor: "#EEEEEE",
-    // height:"30rem"
-  };
-
-  const addressForm = {
-    height: "27rem",
-    px: "12%",
-    pb: "3%",
-    display: "flex",
-    flexDirection: "column",
-    justifyContent: "space-between",
-  };
-
-  const addressStyle = {
-    width: "80%",
-    mx: "auto",
-    border: "1px solid #BDBDBD",
-    boxShadow: theme.shadows[3],
-    px: "2%",
   };
 
   const [dataStatus, setDataStatus] = useState(false);
@@ -92,13 +66,17 @@ const ProfilePage = () => {
       })
       .then((response) => response.data)
       .then((data) => {
-        setDataList({
-          ...data,
-          name: window.localStorage.getItem("name"),
-          email: window.localStorage.getItem("email"),
-          contact: window.localStorage.getItem("contact"),
-        });
-        setDataStatus(false);
+        if (data) {
+          setDataList({
+            ...data,
+            name: window.localStorage.getItem("name"),
+            email: window.localStorage.getItem("email"),
+            contact: window.localStorage.getItem("contact"),
+          });
+          setDataStatus(false);
+        } else {
+          window.location.reload();
+        }
       })
       .catch((error) => {
         alert("something went wrong");
@@ -108,7 +86,6 @@ const ProfilePage = () => {
   useEffect(() => {
     fetchData();
   }, [fetchData]);
-  // console.log(dataList);
   return (
     <>
       {dataStatus ? (
@@ -174,7 +151,10 @@ const ProfilePage = () => {
                     )}
                   </Grid>
                   <Grid item md={6} sm={12} xs={12}>
-                    <AddressForm fetchData={fetchData} length={dataList.addresses.length} />
+                    <AddressForm
+                      fetchData={fetchData}
+                      length={dataList.addresses.length}
+                    />
                   </Grid>
                 </Grid>
               </Box>
@@ -195,7 +175,6 @@ const ProfilePage = () => {
               }}
             >
               <Typography variant="h5">No products bought yet</Typography>
-              {/* <CircularProgress /> */}
             </Box>
           ) : (
             <>

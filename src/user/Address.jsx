@@ -4,7 +4,6 @@ import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
 import {NETWORK_URL} from '../links';
 import axios from 'axios';
 
-
 const Address = (props) => {
   const theme = useTheme();
 
@@ -25,8 +24,11 @@ const Address = (props) => {
         index : props.index
       })
       .then((response) => {
-        console.log(response.data);
-        props.fetchData();
+        if(response.data){
+          props.fetchData();
+        } else {
+          window.localStorage.reload()
+        }
       })
       .catch((error) => {
         console.log("something went wrong");
