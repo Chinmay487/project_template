@@ -14,7 +14,7 @@ import {
   getAuth,
   RecaptchaVerifier,
   signInWithPhoneNumber,
-  PhoneAuthProvider,
+  // PhoneAuthProvider,
 } from "firebase/auth";
 import { checkAuthTimeout } from "../user";
 

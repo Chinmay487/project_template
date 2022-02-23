@@ -1,28 +1,21 @@
 import React from "react";
-import { Drawer, List, ListItem, ListItemIcon, Collapse } from "@mui/material";
+import { Drawer, List, ListItem, ListItemIcon } from "@mui/material";
 import MenuOpenOutlinedIcon from "@mui/icons-material/MenuOpenOutlined";
 import { useNavigate } from "react-router-dom";
-import ExpandLess from "@mui/icons-material/ExpandLess";
-import ExpandMore from "@mui/icons-material/ExpandMore";
 import { drawerStyle } from "../styles";
-import { Link } from "react-router-dom";
+// import { Link } from "react-router-dom";
 
 const Sidenav = (props) => {
-  // let uid = props.uid
-
   const navigate = useNavigate();
 
-  const onClickEvent = (url) => {
-    navigate(url);
+  const onClickEvent = () => {
+    // navigate(url);
     props.setDrawerStatus(!props.drawerStatus);
   };
 
-  const closeUnused = (index) => {
-    for (let i = 0; i < props.items.length; i++) {
-      if (i !== index && props.items[i].status === true) {
-        props.items[i].handleList();
-      }
-    }
+  const onLinkClickEvent = (url) => {
+    navigate(url);
+    onClickEvent();
   };
 
   return (
@@ -35,76 +28,52 @@ const Sidenav = (props) => {
     >
       <List sx={{ marginTop: "3rem" }}>
         <ListItem
-          key="111"
           divider
           button
           onClick={() => {
-            props.setDrawerStatus(!props.drawerStatus);
+            // props.setDrawerStatus(!props.drawerStatus)
+            onClickEvent();
           }}
+          key="101"
         >
-          <ListItemIcon>
-            <MenuOpenOutlinedIcon />
+          <ListItemIcon key="1011" id="sidenav111">
+            <MenuOpenOutlinedIcon key="10111" />
           </ListItemIcon>
         </ListItem>
         <ListItem
-          key="113"
           divider
           button
           onClick={() => {
-            navigate("/");
-            props.setDrawerStatus(!props.drawerStatus);
+            onLinkClickEvent("/");
           }}
           sx={{ textAlign: "center" }}
+          key="100"
         >
-          <ListItemIcon key="114">Homepage</ListItemIcon>
+          <ListItemIcon key="1004">Homepage</ListItemIcon>
         </ListItem>
-       
+
         {props.items.map((item, index) => {
           return (
-            <>
               <ListItem
-                onClick={() => {
-                  item.handleList();
-                  closeUnused(index);
-                }}
-                key={`${props.uid}${props.uid}${props.subKey}`}
+                // onClick={() => {
+                //   props.setDrawerStatus(!props.drawerStatus);
+                // }}
+                key={`sidenav0${index}`}
                 divider
                 button
                 sx={{ textAlign: "center" }}
+                onClick={() => {
+                  onLinkClickEvent(`categories/${item.path}`);
+                }}
               >
-                <ListItemIcon key={`${item.key}${index}0`}>
-                  {item.title} {!item.status ? <ExpandMore /> : <ExpandLess />}{" "}
-                </ListItemIcon>
+                <ListItemIcon key={`sidenav2${index}`}>{item.title}</ListItemIcon>
               </ListItem>
-              <Collapse in={item.status} imeout="auto">
-                <List>
-                  {item.list.map((listItem, index) => {
-                    return (
-                      <ListItem
-                        key={`${item.key}${listItem.subKey}${index}`}
-                        button
-                        onClick={() => {
-                          item.handleList();
-                          onClickEvent(listItem.path);
-                        }}
-                      >
-                        <ListItemIcon
-                          key={`${item.key}${listItem.subKey}${index}1`}
-                        >
-                          {listItem.name}
-                        </ListItemIcon>
-                      </ListItem>
-                    );
-                  })}
-                </List>
-              </Collapse>
-            </>
           );
-        })}
+        })
+      }
       </List>
     </Drawer>
   );
 };
 
-// /categories/${props.parent.toLowerCase().replace(/ /g, "")}/${item.toLowerCase().replace(/ /g, "")}
 export default Sidenav;

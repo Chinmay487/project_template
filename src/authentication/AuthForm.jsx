@@ -4,21 +4,19 @@ import {
   DialogActions,
   DialogTitle,
   Typography,
-  Button,
   Box,
   IconButton,
-  TextField,
   CircularProgress,
 } from "@mui/material";
-import GoogleIcon from "@mui/icons-material/Google";
+// import GoogleIcon from "@mui/icons-material/Google";
 import CloseIcon from "@mui/icons-material/Close";
-import { NETWORK_URL } from "../links";
-import firebase from "firebase/compat/app";
+// import { NETWORK_URL } from "../links";
+// import firebase from "firebase/compat/app";
 import "firebase/compat/auth";
 import { getFirebaseKeys } from "../user";
 import Google from "./Google";
 import Phone from "./Phone";
-import { linkWithPhoneNumber } from "firebase/auth";
+// import { linkWithPhoneNumber } from "firebase/auth";
 
 const AuthForm = (props) => {
   const [isNew, setIsNew] = useState(false);
@@ -52,7 +50,7 @@ const AuthForm = (props) => {
     fetchKeys();
   }, [fetchKeys]);
 
-  console.log(isNew);
+  // console.log(isNew);
 
   // End of google sign in
 

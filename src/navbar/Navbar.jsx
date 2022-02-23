@@ -1,4 +1,4 @@
-import React, { useState, useEffect} from "react";
+import React, { useState, useEffect } from "react";
 import {
   AppBar,
   Toolbar,
@@ -13,7 +13,7 @@ import {
 } from "@mui/material";
 import SearchOutlinedIcon from "@mui/icons-material/SearchOutlined";
 import Sidenav from "./Sidenav";
-import NavMenu from "./NavMenu";
+// import NavMenu from "./NavMenu";
 import {
   appBarStyle,
   navbarDivStyle,
@@ -27,7 +27,7 @@ import {
 } from "../styles";
 import MenuRoundedIcon from "@mui/icons-material/MenuRounded";
 import { NavLink } from "react-router-dom";
-import { ListClass, NavMenuItem } from "./utilClasses";
+// import { ListClass, NavMenuItem } from "./utilClasses";
 import AuthForm from "../authentication/AuthForm";
 // import firebase from 'firebase/compat/app';
 import AvatarMenu from "./AvatarMenu";
@@ -175,28 +175,26 @@ const Navbar = (props) => {
 
   const navList2 = [
     {
-      title:"Camera",
-      path:"camera"
+      title: "Camera",
+      path: "camera",
     },
     {
-      title : "Laptop",
-      path : "laptop"
+      title: "Laptop",
+      path: "laptop",
     },
     {
-      title : "Watches",
-      path : "watch"
+      title: "Watches",
+      path: "watch",
     },
     {
-      title : "Clock",
-      path : "clock"
+      title: "Clock",
+      path: "clock",
     },
     {
-      title : "iPhone",
-      path : "iphone"
-    }
-  ]
-
-
+      title: "iPhone",
+      path: "iphone",
+    },
+  ];
 
   const searchFormComponent = (
     <Box sx={searchForm}>
@@ -291,45 +289,19 @@ const Navbar = (props) => {
         {!small ? (
           <Box component="div" sx={navbarStyle2}>
             <Box component="div" sx={navbarDiveStyle2}>
-              {/* {navList2.map((item, index) => {
+              {navList2.map((item, index) => {
                 return (
-                  <>
-                    <Typography
-                      key={`${item.key}${index}`}
-                      sx={typographyStyle2}
-                      onClick={item.menuOpenFunction}
-                    >
-                      {item.title}
-                    </Typography>
-                    <NavMenu
-                      key={`${index}${item.key}${item.key}`}
-                      uid={item.key}
-                      haveCategory={true}
-                      parent={item.title}
-                      anchorEl={item.openEl}
-                      handleClose={item.menuCloseFunction}
-                      openMenu={item.onOpenMenu}
-                      NavMenuItemList={item.list}
-                    />
-                  </>
+                  <NavLink
+                  key={`navbarItem${index}`}
+                  to={`categories/${item.path}`}
+                  className="link"
+                >
+                  <Typography key={`item${index}`} sx={typographyStyle2}>
+                    {item.title}
+                  </Typography>
+                </NavLink>
                 );
-              })} */}
-
-              {
-                navList2.map((item,index)=>{
-                  return <>
-                    <NavLink to={`categories/${item.path}`} className="link">
-                    <Typography
-                      key={`item + ${index}`}
-                      sx={typographyStyle2}
-                    >
-                      {item.title}
-                    </Typography>
-                    </NavLink>
-                  </>
-                })
-              }
-
+              })}
             </Box>
           </Box>
         ) : (

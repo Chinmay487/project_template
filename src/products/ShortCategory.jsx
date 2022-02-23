@@ -32,6 +32,9 @@ const ShortCategory = () => {
   const [prodGrid, setProdGrid] = useState([]);
 
   const fetchProducts = useCallback((isMounted) => {
+    if(!isMounted){
+      return
+    }
     axios
       .get(`${NETWORK_URL}/client/fetch`)
       .then((response) => {
@@ -50,7 +53,10 @@ const ShortCategory = () => {
   useEffect(() => {
     let isMounted = true;
     fetchProducts(isMounted);
-    return () => {isMounted=false;}
+    return () => {
+      isMounted = false;
+      setProdGrid([])
+    };
   }, [fetchProducts]);
 
   return (
@@ -61,15 +67,15 @@ const ShortCategory = () => {
 
       <ProductGrid prodGrid={prodGrid} />
       {prodGrid.length > 0 ? (
-          <Button
-            sx={buttonSyle1}
-            onClick={() => {
-              navigate("/wishlist");
-            }}
-            variant="outlined"
-          >
-            View More
-          </Button>
+        <Button
+          sx={buttonSyle1}
+          onClick={() => {
+            navigate("/wishlist");
+          }}
+          variant="outlined"
+        >
+          View More
+        </Button>
       ) : null}
     </Box>
   );

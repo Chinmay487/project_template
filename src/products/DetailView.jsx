@@ -125,6 +125,14 @@ const DetailView = (props) => {
     fetchData(isMounted);
     return () => {
       isMounted = true;
+      setProductData({
+        title: "",
+        description: "",
+        price: "",
+        discountPrice: "",
+        quantity: "",
+        productImages: [],
+      })
     };
   }, [fetchData]);
 
