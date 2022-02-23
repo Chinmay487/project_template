@@ -46,12 +46,12 @@ const ViewCart = () => {
       })
       .then((response) => response.data)
       .then((data) => {
-       if(data){
-        setDataList({ ...data });
-        setDataStatus(false);
-       } else {
-         window.location.reload();
-       }
+        if (data) {
+          setDataList({ ...data });
+          setDataStatus(false);
+        } else {
+          window.location.reload();
+        }
       })
       .catch((error) => {
         alert("something went wrong");
@@ -159,7 +159,7 @@ const ViewCart = () => {
                   )}
                 </NativeSelect>
 
-                {dataList.addresses.length > 0 && dataList.cart.length > 0 ? (
+                { dataList.cart.length > 0 ? (
                   <>
                     <Typography variant="subtitle1">
                       Sub Total : {amount.subTotal}

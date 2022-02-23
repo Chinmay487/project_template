@@ -1,5 +1,11 @@
 import React, { useState } from "react";
-import { Box, Typography, Button, TextField } from "@mui/material";
+import {
+  Box,
+  Typography,
+  Button,
+  TextField,
+  CircularProgress,
+} from "@mui/material";
 import axios from "axios";
 import { NETWORK_URL } from "../links";
 import firebase from "firebase/compat/app";
@@ -10,7 +16,7 @@ import {
   signInWithPhoneNumber,
   PhoneAuthProvider,
 } from "firebase/auth";
-import {checkAuthTimeout} from '../user';
+import { checkAuthTimeout } from "../user";
 
 const Phone = (props) => {
   const [otpSent, setOtpSent] = useState(false);
@@ -21,6 +27,8 @@ const Phone = (props) => {
     otp: 0,
     mobileNumber: "",
   });
+
+  const [buttonProgressStatus, setButtonProgressState] = useState(false);
 
   const onOtpFormChange = (event) => {
     const { name, value } = event.target;
@@ -33,7 +41,7 @@ const Phone = (props) => {
   };
 
   const verifyPhoneNumberUser = (response) => {
-    const expirationDate = new Date(new Date().getTime() + 3600 *1000);
+    const expirationDate = new Date(new Date().getTime() + 3600 * 1000);
     const path = "auth/phone";
     const user = firebase.auth().currentUser;
     user
@@ -46,17 +54,17 @@ const Phone = (props) => {
           })
           .then((response) => {
             // console.log(response);
-            if(response.data){
-              props.setIsNewPhone(true)
+            if (response.data) {
+              props.setIsNewPhone(true);
               // window.location.reload();
             } else {
-              window.localStorage.setItem("idToken",idToken);
+              window.localStorage.setItem("idToken", idToken);
               window.localStorage.setItem("name", user.displayName);
               window.localStorage.setItem("photoURL", user.photoURL);
-              window.localStorage.setItem('email',user.email)
-              window.localStorage.setItem('expiration',expirationDate);
-              checkAuthTimeout()
-              window.location.reload();  
+              window.localStorage.setItem("email", user.email);
+              window.localStorage.setItem("expiration", expirationDate);
+              checkAuthTimeout();
+              window.location.reload();
             }
           });
       })
@@ -130,9 +138,11 @@ const Phone = (props) => {
       const appVerifier = window.recaptchaVerifier;
 
       if (props.isNew) {
+        console.log("calling link number method");
         linkNumber(mobileNumber, appVerifier);
       } else {
         // sendOtp(mobileNumber)
+        console.log("calling siginin with number method");
         signInWithnumber(auth, mobileNumber, appVerifier);
       }
     } else {
@@ -144,6 +154,7 @@ const Phone = (props) => {
   const onOtpFormSubmit = (event) => {
     event.preventDefault();
     firebase.initializeApp(props.firebaseKeys);
+    setButtonProgressState(true);
     const code = mobileNumberForm.otp;
     window.confirmationResult
       .confirm(code)
@@ -151,12 +162,13 @@ const Phone = (props) => {
         // User signed in successfully.
         const user = result.user;
         console.log(user);
-        if(!props.isNew){
-        verifyPhoneNumberUser(result);
+        if (!props.isNew) {
+          verifyPhoneNumberUser(result);
         } else {
-          window.location.reload()
+          window.location.reload();
         }
         props.handleDialogClose();
+        setButtonProgressState(false);
       })
       .catch((error) => {
         console.log("otp form error");
@@ -260,22 +272,28 @@ const Phone = (props) => {
             alignItems: "center",
           }}
         >
-          <Button
-            onClick={onOtpSubmit}
-            sx={{ my: "1rem", mx: "1rem" }}
-            variant="contained"
-          >
-            {otpSent ? "Resend OTP" : "Send OTP"}
-          </Button>
-          {otpSent ? (
-            <Button
-              type="submit"
-              sx={{ my: "1rem", mx: "1rem" }}
-              variant="contained"
-            >
-              Submit OTP
-            </Button>
-          ) : null}
+          {buttonProgressStatus ? (
+            <CircularProgress />
+          ) : (
+            <>
+              <Button
+                onClick={onOtpSubmit}
+                sx={{ my: "1rem", mx: "1rem" }}
+                variant="contained"
+              >
+                {otpSent ? "Resend OTP" : "Send OTP"}
+              </Button>
+              {otpSent ? (
+                <Button
+                  type="submit"
+                  sx={{ my: "1rem", mx: "1rem" }}
+                  variant="contained"
+                >
+                  Submit OTP
+                </Button>
+              ) : null}
+            </>
+          )}
         </Box>
       </Box>
     </>
