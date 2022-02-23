@@ -24,7 +24,7 @@ const AppRoutes = (props) => {
       />
       <Route
         exact={true}
-        path="categories/:category/:subCategory"
+        path="categories/:category"
         element={<CategoryView />}
       />
       <Route exact={true} path="/" element={<HomePage />} />

@@ -42,7 +42,7 @@ const Sidenav = (props) => {
             props.setDrawerStatus(!props.drawerStatus);
           }}
         >
-          <ListItemIcon key="112">
+          <ListItemIcon>
             <MenuOpenOutlinedIcon />
           </ListItemIcon>
         </ListItem>
@@ -58,20 +58,7 @@ const Sidenav = (props) => {
         >
           <ListItemIcon key="114">Homepage</ListItemIcon>
         </ListItem>
-        {props.isSeller ? (
-          <Link
-            key="key000"
-            onClick={() => {
-              props.setDrawerStatus(!props.drawerStatus);
-            }}
-            className="link"
-            to="/panel"
-          >
-            <ListItem key="000" divider button>
-              <ListItemIcon key="001">Panel</ListItemIcon>
-            </ListItem>
-          </Link>
-        ) : null}
+       
         {props.items.map((item, index) => {
           return (
             <>
