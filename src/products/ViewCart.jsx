@@ -36,7 +36,7 @@ const ViewCart = () => {
     purchase_history: [],
   });
 
-  const [cartList, setCartList] = useState([]);
+  // const [cartList, setCartList] = useState([]);
 
   const fetchData = useCallback(() => {
     setDataStatus(true);
@@ -58,21 +58,29 @@ const ViewCart = () => {
       });
   }, []);
 
-  const fetchCart = () => {
-    axios
-      .post(`${NETWORK_URL}/client/get_cart`, {
-        idToken: window.localStorage.getItem("idToken"),
-      })
-      .then((response) => {
-        if (response.data) {
-          setCartList([...response.data]);
-        } else {
-          window.location.reload();
-        }
-      })
-      .catch((error) => {
-        console.log("error fetching cart");
-      });
+  const fetchCart = (isMounted) => {
+    if (isMounted) {
+      axios
+        .post(`${NETWORK_URL}/client/get_cart`, {
+          idToken: window.localStorage.getItem("idToken"),
+        })
+        .then((response) => {
+          if (response.data) {
+            // setCartList([...response.data]);
+            setDataList((existingData) => {
+              return {
+                ...existingData,
+                cart: [...response.data],
+              };
+            });
+          } else {
+            window.location.reload();
+          }
+        })
+        .catch((error) => {
+          console.log("error fetching cart");
+        });
+    }
   };
 
   const [amount, setAmount] = useState({
@@ -81,27 +89,46 @@ const ViewCart = () => {
     charges: 0,
   });
 
-  const getAmount = () => {
-    axios
-      .post(`${NETWORK_URL}/client/bill`, {
-        idToken: window.localStorage.getItem("idToken"),
-      })
-      .then((response) => {
-        if (response.data) {
-          setAmount({ ...response.data });
-        } else {
-          window.location.reload();
-        }
-      })
-      .catch((error) => {
-        alert("Something went wrong");
-      });
+  const getAmount = (isMounted) => {
+    if (isMounted) {
+      axios
+        .post(`${NETWORK_URL}/client/bill`, {
+          idToken: window.localStorage.getItem("idToken"),
+        })
+        .then((response) => {
+          if (response.data) {
+            setAmount({ ...response.data });
+          } else {
+            window.location.reload();
+          }
+        })
+        .catch((error) => {
+          alert("Something went wrong");
+        });
+    }
   };
 
   useEffect(() => {
-    fetchData();
-    fetchCart();
-    getAmount();
+    let isMounted = true;
+    fetchData(isMounted);
+    fetchCart(isMounted);
+    getAmount(isMounted);
+    return () => {
+      isMounted = false;
+      setAmount({
+        subTotal: 0,
+        total: 0,
+        charges: 0,
+      });
+      setDataList({
+        seller_id: null,
+        addresses: [],
+        uid: "",
+        cart: [],
+        is_seller: false,
+        purchase_history: [],
+      });
+    };
   }, [fetchData]);
 
   const [addressList, setAddressList] = useState(0);
@@ -158,18 +185,24 @@ const ViewCart = () => {
                     </>
                   )}
                 </NativeSelect>
-
-                { dataList.cart.length > 0 ? (
+                {dataList.cart.length > 0 ? (
                   <>
                     <Typography variant="subtitle1">
-                      Sub Total : {amount.subTotal}
+                      Sub Total : &#8377; {amount.subTotal}
                     </Typography>
                     <Typography variant="subtitle1">
-                      Delivery Charges : {amount.charges}
+                      Delivery Charges : &#8377; {amount.charges}
                     </Typography>
                     <Typography variant="subtitle1">
-                      Total : {amount.total}
+                      Total : &#8377; {amount.total}
                     </Typography>
+                  </>
+                ) : (
+                  <Typography>No Products Bought</Typography>
+                )}
+
+                {dataList.addresses.length > 0 ? (
+                  <>
                     <Button
                       variant="outlined"
                       sx={{
@@ -182,7 +215,6 @@ const ViewCart = () => {
                   </>
                 ) : (
                   <>
-                    <Typography>No Products Bought</Typography>
                     <Button
                       variant="outlined"
                       sx={{
@@ -198,7 +230,7 @@ const ViewCart = () => {
               </Grid>
               <Grid item md={5} sm={12} xs={12} sx={cartGrid}>
                 {!dataList.addresses.length > 0 ? (
-                  <Typography>Please add atleast one address</Typography>
+                  <Typography>Please add atleast one address to coplete your order</Typography>
                 ) : (
                   <>
                     <Typography>Shipping Address : </Typography>
@@ -224,7 +256,7 @@ const ViewCart = () => {
                 )}
               </Grid>
               <Grid md={12} sm={12} xs={12} item>
-                {!dataList.cart.length > 0 && cartList.length === 0 ? (
+                {!dataList.cart.length > 0 ? (
                   <>
                     <Typography
                       variant="h4"
@@ -238,7 +270,7 @@ const ViewCart = () => {
                   </>
                 ) : (
                   <>
-                    {!cartList.length > 0 ? (
+                    {!dataList.cart.length > 0 ? (
                       <Box
                         sx={{
                           width: "50%",
@@ -263,7 +295,7 @@ const ViewCart = () => {
                         >
                           <Typography variant="h6">Your Orders</Typography>
                         </Grid>
-                        {cartList.map((item, index) => {
+                        {dataList.cart.map((item, index) => {
                           return (
                             <History
                               is_cart={true}
@@ -273,6 +305,7 @@ const ViewCart = () => {
                               index={index}
                               qty={item.quantity}
                               getAmount={getAmount}
+                              fetchCart={fetchCart}
                             />
                           );
                         })}

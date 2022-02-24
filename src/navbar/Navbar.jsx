@@ -13,7 +13,6 @@ import {
 } from "@mui/material";
 import SearchOutlinedIcon from "@mui/icons-material/SearchOutlined";
 import Sidenav from "./Sidenav";
-// import NavMenu from "./NavMenu";
 import {
   appBarStyle,
   navbarDivStyle,
@@ -27,15 +26,14 @@ import {
 } from "../styles";
 import MenuRoundedIcon from "@mui/icons-material/MenuRounded";
 import { NavLink } from "react-router-dom";
-// import { ListClass, NavMenuItem } from "./utilClasses";
 import AuthForm from "../authentication/AuthForm";
-// import firebase from 'firebase/compat/app';
 import AvatarMenu from "./AvatarMenu";
+import PersonRoundedIcon from '@mui/icons-material/PersonRounded';
 
 const Navbar = (props) => {
-  // console.log(userData)
+
   const [userData, setUserData] = useState(null);
-  const [photoUrl, setPhotoUrl] = useState("");
+
 
   useEffect(() => {
     const newData =
@@ -43,25 +41,10 @@ const Navbar = (props) => {
         ? null
         : window.localStorage.getItem("idToken");
     setUserData(newData);
-    const photoUrl =
-      window.localStorage.getItem("photoURL") === undefined
-        ? ""
-        : window.localStorage.getItem("photoURL");
-    setPhotoUrl(photoUrl);
   }, []);
 
   const [avatarEl, setAvatarEl] = useState(null);
 
-  // const [fashionEl, setFashionEl] = useState({ el: null, status: false });
-  // const [electronicsEl, setElectronicsEl] = useState({
-  //   el: null,
-  //   status: false,
-  // });
-  // const [mobileEl, setMobileEl] = useState({ el: null, status: false });
-  // const [grosseryEl, setGrosseryEl] = useState({ el: null, status: false });
-  // const [stationaryEl, setStationaryEl] = useState({ el: null, status: false });
-  // const [selfCareEl, setSelfCareEl] = useState({ el: null, status: false });
-  // const [othersEl, setOthersEl] = useState({ el: null, status: false });
 
   const [drawerStatus, setDrawerStatus] = useState(false);
 
@@ -79,99 +62,6 @@ const Navbar = (props) => {
 
   const openAvatarMenu = Boolean(avatarEl);
 
-  // const navList2 = [
-  //   new ListClass(
-  //     "Fashion",
-  //     [
-  //       new NavMenuItem("All", "/categories/fashion/all", "a"),
-  //       new NavMenuItem("kids", "/categories/fashion/kids", "b"),
-  //       new NavMenuItem("Men", "/categories/fashion/men", "c"),
-  //       new NavMenuItem("Women", "/categories/fashion/women", "d"),
-  //     ],
-  //     fashionEl,
-  //     setFashionEl,
-  //     "A"
-  //   ),
-  //   new ListClass(
-  //     "Electronics",
-  //     [
-  //       new NavMenuItem("All", "/categories/electronics/all", "a"),
-  //       new NavMenuItem("TV", "/categories/electronics/tv", "b"),
-  //       new NavMenuItem("Computer", "/categories/electronics/computer", "c"),
-  //       new NavMenuItem("Laptop", "/categories/electronics/laptop", "d"),
-  //       new NavMenuItem(
-  //         "Accessories",
-  //         "/categories/electronics/accessories",
-  //         "e"
-  //       ),
-  //       new NavMenuItem("Camera", "/categories/electronics/camera", "f"),
-  //       new NavMenuItem("toys", "/categories/electronics/toys", "g"),
-  //     ],
-  //     electronicsEl,
-  //     setElectronicsEl,
-  //     "B"
-  //   ),
-  //   new ListClass(
-  //     "Mobile",
-  //     [
-  //       new NavMenuItem("All", "/categories/mobile/all", "a"),
-  //       new NavMenuItem("Accessories", "/categories/mobile/accessories", "b"),
-  //       new NavMenuItem("iOS", "/categories/mobile/ios", "c"),
-  //       new NavMenuItem("Android", "/categories/mobile/android", "d"),
-  //     ],
-  //     mobileEl,
-  //     setMobileEl,
-  //     "C"
-  //   ),
-  //   new ListClass(
-  //     "Grossery",
-  //     [
-  //       new NavMenuItem("All", "/categories/grossery/all", "a"),
-  //       new NavMenuItem("Jam", "/categories/grossery/jam", "b"),
-  //       new NavMenuItem("Sauce", "/categories/grossery/sauce", "c"),
-  //       new NavMenuItem("Spices", "/categories/grossery/spices", "d"),
-  //       new NavMenuItem("Papad", "/categories/grossery/papad", "e"),
-  //       new NavMenuItem("Pickle", "/categories/grossery/pickle", "f"),
-  //     ],
-  //     grosseryEl,
-  //     setGrosseryEl,
-  //     "D"
-  //   ),
-  //   new ListClass(
-  //     "Stationary",
-  //     [
-  //       new NavMenuItem("All", "/categories/stationary/all", "a"),
-  //       new NavMenuItem("Books", "/categories/stationary/books", "b"),
-  //       new NavMenuItem("Note Books", "/categories/stationary/notebooks", "c"),
-  //       new NavMenuItem("Office stuff", "/categories/stationary/office", "d"),
-  //     ],
-  //     stationaryEl,
-  //     setStationaryEl,
-  //     "E"
-  //   ),
-  //   new ListClass(
-  //     "Self Care",
-  //     [
-  //       new NavMenuItem("All", "/categories/selfcare/all", "a"),
-  //       new NavMenuItem("kids", "/categories/selfcare/kids", "b"),
-  //       new NavMenuItem("Adults", "/categories/selfcare/adults", "c"),
-  //       new NavMenuItem("Women", "/categories/selfcare/women", "d"),
-  //     ],
-  //     selfCareEl,
-  //     setSelfCareEl,
-  //     "F"
-  //   ),
-  //   new ListClass(
-  //     "Others",
-  //     [
-  //       new NavMenuItem("All", "/categories/others/all", "a"),
-  //       new NavMenuItem("Jewelary", "/categories/others/jewelary", "b"),
-  //     ],
-  //     othersEl,
-  //     setOthersEl,
-  //     "G"
-  //   ),
-  // ];
 
   const navList2 = [
     {
@@ -256,7 +146,9 @@ const Navbar = (props) => {
               {medium ? null : searchFormComponent}
               {userData !== null ? (
                 <IconButton onClick={avatarClick}>
-                  <Avatar sx={avatarStyle} src={photoUrl} alt="#" />
+                  <Avatar sx={avatarStyle} alt="#" >
+                    <PersonRoundedIcon/>
+                  </Avatar>
                 </IconButton>
               ) : (
                 <Button

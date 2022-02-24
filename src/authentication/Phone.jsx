@@ -59,9 +59,9 @@ const Phone = (props) => {
               // window.location.reload();
             } else {
               window.localStorage.setItem("idToken", idToken);
-              window.localStorage.setItem("name", user.displayName);
-              window.localStorage.setItem("photoURL", user.photoURL);
-              window.localStorage.setItem("email", user.email);
+              // window.localStorage.setItem("name", user.displayName);
+              // window.localStorage.setItem("photoURL", user.photoURL);
+              // window.localStorage.setItem("email", user.email);
               window.localStorage.setItem("expiration", expirationDate);
               checkAuthTimeout();
               window.location.reload();

@@ -277,7 +277,7 @@ const DetailView = (props) => {
                       <Typography>
                         Discount price : &#8377; {productData.discountPrice}
                       </Typography>
-                      <Typography>Quantity : {productData.quantity}</Typography>
+                      {/* <Typography>Quantity : {productData.quantity}</Typography> */}
                       <Typography>{productData.description}</Typography>
                     </Box>
                     <Box

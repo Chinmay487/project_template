@@ -22,20 +22,20 @@ const ProfilePage = () => {
     marginBottom: "2rem",
   };
 
-  const profile1 = {
-    border: "1px solid #B0BEC5",
-    display: "flex",
-    flexDirection: {
-      xl: "row",
-      lg: "row",
-      md: "row",
-      sm: "column",
-      xs: "column",
-    },
-    justifyContent: "space-evenly",
-    boxShadow: theme.shadows[5],
-    backgroundColor: "#EEEEEE",
-  };
+  // const profile1 = {
+  //   border: "1px solid #B0BEC5",
+  //   display: "flex",
+  //   flexDirection: {
+  //     xl: "row",
+  //     lg: "row",
+  //     md: "row",
+  //     sm: "column",
+  //     xs: "column",
+  //   },
+  //   justifyContent: "space-evenly",
+  //   boxShadow: theme.shadows[5],
+  //   backgroundColor: "#EEEEEE",
+  // };
 
   const profile2 = {
     border: "1px solid #B0BEC5",
@@ -106,11 +106,6 @@ const ProfilePage = () => {
       ) : (
         <>
           <Grid container columnGap={3} rowGap={3} sx={profileGrid}>
-            <Grid item md={12} sm={12} xs={12} sx={profile1}>
-              <Typography variant="h6">Name : {dataList.name}</Typography>
-              <Typography variant="h6">Contact : {dataList.contact}</Typography>
-              <Typography variant="h6">Email : {dataList.email}</Typography>
-            </Grid>
             <Grid item md={12} sm={12} xs={12} sx={profile2}>
               <Box sx={{ width: "100%", height: "100%" }}>
                 <Typography variant="h6" sx={{ textAlign: "center" }}>

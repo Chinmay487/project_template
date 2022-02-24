@@ -9,7 +9,6 @@ import {
 } from "@mui/material";
 import { Link } from "react-router-dom";
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
-import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { NETWORK_URL } from "../links";
 
@@ -72,12 +71,6 @@ const History = (props) => {
     mx: "1%",
   };
 
-  const navigate = useNavigate();
-
-  const gotoUpdate = () => {
-    navigate(`/update/${props.item.key}`);
-  };
-
   const deleteProduct = () => {
     setDeleteButtonState(true);
     const data = new FormData();
@@ -86,12 +79,10 @@ const History = (props) => {
       .post(`${NETWORK_URL}/seller/deleteproduct`, data)
       .then((response) => {
         setDeleteButtonState(false);
-        alert(response.data);
-        window.location.reload();
+        props.fetchCart(true)
       })
       .catch((error) => {
         alert("Something went wrong");
-        window.location.reload();
       });
   };
 
@@ -108,11 +99,10 @@ const History = (props) => {
         price: props.item.price,
       })
       .then((response) => {
-        // console.log(response.data);
-        window.location.reload();
+        props.fetchCart(true)
       })
       .catch((error) => {
-        alert("hahaha \naaj ka din kharab he tera");
+        alert("something went wrong");
         window.location.reload();
       });
     setDeleteButtonState(false);
@@ -127,8 +117,7 @@ const History = (props) => {
   };
 
   const onQuantityChange = (event) => {
-    
-    // const { name, value } = event.target;
+
     axios
       .post(`${NETWORK_URL}/client/update_cart`, {
         product_id: "",
@@ -140,10 +129,10 @@ const History = (props) => {
         price: props.item.discount_price,
       })
       .then((response) => {
-        props.getAmount()
+        props.getAmount(true)
       })
       .catch((error) => {
-        console.log("hahahahahaha");
+        alert("something went wrong")
       });
   };
 
@@ -226,7 +215,7 @@ const History = (props) => {
           )}
         </Grid>
         <Grid item md={2} sm={12} xs={12} sx={profileGridItem}>
-          {props.is_cart || props.isSeller ? (
+          {props.is_cart  ? (
             <Box sx={cartButtons}>
               {deleteButtonState ? (
                 <Box
@@ -247,28 +236,17 @@ const History = (props) => {
                   color="error"
                   sx={{
                     width: `${
-                      props.isSeller || props.is_cart ? "100%" : "30%"
+                      props.is_cart ? "100%" : "30%"
                     }`,
                     height: `${
-                      props.isSeller || props.is_cart ? "auto" : "2rem"
+                      props.is_cart ? "auto" : "2rem"
                     }`,
                   }}
                 >
                   <DeleteForeverIcon sx={{ color: "red" }} />
                 </Button>
               )}
-              {props.isSeller ? (
-                <Button
-                  variant="outlined"
-                  onClick={gotoUpdate}
-                  sx={{
-                    width: { lg: "50%", md: "50%", sm: "60%", xs: "60%" },
-                    mx: "auto",
-                  }}
-                >
-                  Update
-                </Button>
-              ) : null}
+              
             </Box>
           ) : (
             <Typography sx={profileGridItemText} variant="h6">

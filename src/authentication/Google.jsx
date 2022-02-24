@@ -56,10 +56,10 @@ const Google = (props) => {
           .then((response) => {
             // console.log(response.data);
             window.localStorage.setItem("idToken",idToken);
-            window.localStorage.setItem("name", user.displayName);
-            window.localStorage.setItem("photoURL", user.photoURL);
-            window.localStorage.setItem("email",user.email)
-            window.localStorage.setItem("contact",user.phoneNumber)
+            // window.localStorage.setItem("name", user.displayName);
+            // window.localStorage.setItem("photoURL", user.photoURL);
+            // window.localStorage.setItem("email",user.email)
+            // window.localStorage.setItem("contact",user.phoneNumber)
             window.localStorage.setItem('expiration',expirationDate);
             checkAuthTimeout()
             // console.log(user.uid)
@@ -86,8 +86,6 @@ const Google = (props) => {
       .signInWithPopup(googleProvider)
       .then((response) => {
         console.log(response);
-        // const idToken = window.gapi.auth2.getAuthInstance().currentUser.get().getAuthResponse().id_token
-        // console.log(idToken)
         verifyEmailUser(response);
       })
       .catch((error) => {
