@@ -26,12 +26,7 @@ const Google = (props) => {
         // Accounts successfully linked.
         // const credential = googleProvider.credentialFromResult(result);
         const new_user = result._tokenResponse;
-        // console.log(result);
         window.localStorage.setItem("idToken", new_user.idToken);
-        window.localStorage.setItem("name", new_user.displayName);
-        window.localStorage.setItem("photoURL", new_user.photoUrl);
-        window.localStorage.setItem("email",user.email)
-        window.localStorage.setItem("contact",result.user.phoneNumber)
         window.localStorage.setItem('expiration',expirationDate);
         checkAuthTimeout()
         window.location.reload()
@@ -54,16 +49,9 @@ const Google = (props) => {
             userData: response,
           })
           .then((response) => {
-            // console.log(response.data);
             window.localStorage.setItem("idToken",idToken);
-            // window.localStorage.setItem("name", user.displayName);
-            // window.localStorage.setItem("photoURL", user.photoURL);
-            // window.localStorage.setItem("email",user.email)
-            // window.localStorage.setItem("contact",user.phoneNumber)
             window.localStorage.setItem('expiration',expirationDate);
             checkAuthTimeout()
-            // console.log(user.uid)
-            // window.location.reload();
             if (response.data) {
               props.setIsNew(true);
             } else {

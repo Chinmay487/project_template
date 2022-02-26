@@ -19,7 +19,7 @@ const AppRoutes = (props) => {
       ) : null}
       <Route
         exact={true}
-        path="/detail/:key"
+        path="/detail/:category/:key"
         element={<DetailView isSeller={props.isSeller} />}
       />
       <Route

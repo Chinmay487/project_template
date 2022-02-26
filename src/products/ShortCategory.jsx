@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { NETWORK_URL } from "../links";
 
-const ShortCategory = () => {
+const ShortCategory = (props) => {
   const navigate = useNavigate();
 
   const productGridBox1 = {
@@ -36,7 +36,7 @@ const ShortCategory = () => {
       return
     }
     axios
-      .get(`${NETWORK_URL}/client/fetch`)
+      .get(`${NETWORK_URL}/client/fetch/${props.category}`)
       .then((response) => {
         return response.data;
       })
@@ -48,7 +48,7 @@ const ShortCategory = () => {
       .catch((error) => {
         alert("something went wrong");
       });
-  }, []);
+  }, [props.category]);
 
   useEffect(() => {
     let isMounted = true;
@@ -62,10 +62,10 @@ const ShortCategory = () => {
   return (
     <Box sx={productGridBox1} component="div">
       <Typography variant="h3" sx={{ textAlign: "center" }}>
-        Fashion
+        {props.title}
       </Typography>
 
-      <ProductGrid prodGrid={prodGrid} />
+      <ProductGrid prodGrid={prodGrid} category={props.category} />
       {prodGrid.length > 0 ? (
         <Button
           sx={buttonSyle1}

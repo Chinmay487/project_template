@@ -7,9 +7,11 @@ const HomePage = () => {
 
     return (
         <Box sx={{mt:"10rem" ,backgroundColor:'#F5F5F5'}}>
-            <ShortCategory/>
-            <ShortCategory/>
-            <ShortCategory/>
+            <ShortCategory category="laptop" title="Laptop" />
+            <ShortCategory category="camera" title="Camera" />
+            <ShortCategory category="iphone" title="iPhone" />
+            <ShortCategory category="clock" title="Clock" />
+            <ShortCategory category="watch" title="Watch" />
         </Box>
     )
 }

@@ -44,7 +44,7 @@ const ProductCard = (props) => {
 
   return (
     <>
-      <Link to={`/detail/${props.item.key}`} className="link">
+      <Link to={`/detail/${props.category}/${props.item.key}`} className="link">
         <Box sx={productBox1}>
           <Box component="img" src={props.item.thumbnail} sx={cardImageStyle} />
           <Box
@@ -52,9 +52,6 @@ const ProductCard = (props) => {
             sx={{ display: "flex", flexDirection: "column" }}
           >
             <Typography variant="subtitle1">{props.item.title}</Typography>
-            {/* <Typography variant="subtitle2">
-                            JCB ki khudai
-                        </Typography> */}
             <Typography variant="subtitle2">
               Price : {props.item.price}
             </Typography>

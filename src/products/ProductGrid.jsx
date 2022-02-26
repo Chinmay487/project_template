@@ -1,4 +1,4 @@
-import React,{useState,useEffect} from "react";
+import React, { useState, useEffect } from "react";
 import {
   Grid,
   useTheme,
@@ -62,41 +62,13 @@ const ProductGrid = (props) => {
           sx={gridStyle2}
           rowGap={2}
         >
-          <Grid item>
-            <ProductCard item={props.prodGrid[0]} />
-          </Grid>
-          <Grid item>
-            <ProductCard item={props.prodGrid[1]} />
-          </Grid>
-          <Grid item>
-            <ProductCard item={props.prodGrid[2]} />
-          </Grid>
-
-          {!small ? (
-            <>
-              <Grid item>
-                <ProductCard item={props.prodGrid[3]} />
+          {props.prodGrid.map((element, index) => {
+            return (
+              <Grid item key={`prodGrid${index}`}>
+                <ProductCard item={element} category={props.category} key={`prodGridElement${index}`} />
               </Grid>
-              <Grid item>
-                <ProductCard item={props.prodGrid[4]} />
-              </Grid>
-              <Grid item>
-                <ProductCard item={props.prodGrid[5]} />
-              </Grid>
-            </>
-          ) : null}
-          {/* {
-            productList.map((item,index)=>{
-              if(small && index>2){
-                return null
-              }
-              return (
-                <GridItemElement item={item} key={`listItem${index}`} />
-              )
-            })
-          } */}
-
-
+            );
+          })}
         </Grid>
       )}
     </>
