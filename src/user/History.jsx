@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState} from "react";
 import {
   Grid,
   Typography,
@@ -75,6 +75,7 @@ const History = (props) => {
     setDeleteButtonState(true);
     const data = new FormData();
     data.append("id", props.item.key);
+    data.append("category",props.item.category)
     axios
       .post(`${NETWORK_URL}/seller/deleteproduct`, data)
       .then((response) => {
@@ -99,16 +100,19 @@ const History = (props) => {
         price: props.item.price,
       })
       .then((response) => {
+        setDeleteButtonState(false);
         props.fetchCart(true)
       })
       .catch((error) => {
         alert("something went wrong");
         window.location.reload();
+        setDeleteButtonState(false);
       });
-    setDeleteButtonState(false);
+    
   };
 
   const callDeletefunction = () => {
+    // setDeleteButtonState(true)
     if (props.is_cart) {
       removeFromCart();
     } else {
@@ -121,6 +125,7 @@ const History = (props) => {
     axios
       .post(`${NETWORK_URL}/client/update_cart`, {
         product_id: "",
+        category:props.item.category,
         quantity: event.target.value,
         add: false,
         index: props.index,
@@ -135,6 +140,7 @@ const History = (props) => {
         alert("something went wrong")
       });
   };
+
 
   return (
     <Grid item sm={12} xs={12}>
@@ -155,7 +161,7 @@ const History = (props) => {
           </Box>
         </Grid>
         <Grid item md={7} sm={12} xs={12} sx={profileGridItem}>
-          <Link to={`/detail/${props.item.key}`} className="link">
+          <Link to={`/detail/${props.item.category}/${props.item.key}`} className="link">
             <Typography sx={profileGridItemText} variant="h6">
               {props.item.title}
             </Typography>

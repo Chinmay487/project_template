@@ -18,7 +18,7 @@ import { NETWORK_URL } from "../links";
 
 const DetailView = (props) => {
   const theme = useTheme();
-  const { key } = useParams();
+  const { category, key } = useParams();
 
   const gridBox2 = {
     display: "flex",
@@ -98,7 +98,7 @@ const DetailView = (props) => {
   const fetchData = useCallback(
     (isMounted) => {
       axios
-        .get(`${NETWORK_URL}/client/detail/${key}`)
+        .get(`${NETWORK_URL}/client/detail/${category}/${key}`)
         .then((response) => response.data)
         .then((data) => {
           if (isMounted) {
@@ -117,7 +117,7 @@ const DetailView = (props) => {
           alert("something went wrong");
         });
     },
-    [key]
+    [key,category]
   );
 
   useEffect(() => {
@@ -132,7 +132,7 @@ const DetailView = (props) => {
         discountPrice: "",
         quantity: "",
         productImages: [],
-      })
+      });
     };
   }, [fetchData]);
 
@@ -144,7 +144,6 @@ const DetailView = (props) => {
       });
     }
   }, 6000);
-
 
   const onInputChange = (event) => {
     const { name, value } = event.target;
@@ -160,6 +159,8 @@ const DetailView = (props) => {
     event.preventDefault();
     setReviewFormStatus(true);
     const data = new FormData();
+    data.append("idToken",window.localStorage.getItem("idToken"))
+    data.append("category",category)
     data.append("id", key);
     data.append("title", reviewData.title);
     data.append("description", reviewData.description);
@@ -184,6 +185,7 @@ const DetailView = (props) => {
   const addProductToCart = (message, cart) => {
     axios
       .post(`${NETWORK_URL}/client/update_cart`, {
+        category: category,
         product_id: key,
         quantity: selectState,
         add: true,
@@ -193,13 +195,13 @@ const DetailView = (props) => {
         idToken: window.localStorage.getItem("idToken"),
       })
       .then((response) => {
-        if(response.data){
+        if (response.data) {
           if (cart) {
             alert(message);
           } else {
             navigate("/viewcart");
           }
-        } else{
+        } else {
           alert("please login");
           window.location.reload();
         }
@@ -336,45 +338,32 @@ const DetailView = (props) => {
                       </Box>
                     </Box>
                     <Box sx={gridBox2}>
-                      {window.localStorage.getItem("idToken") ? (
-                        <>
-                          <Button
-                            variant="contained"
-                            sx={buttonGroupStyle1}
-                            onClick={buyNow}
-                          >
-                            <ShoppingBagOutlinedIcon />
-                            &nbsp; Buy now
-                          </Button>
-                          <Button
-                            variant="contained"
-                            sx={buttonGroupStyle1}
-                            onClick={addToCart}
-                          >
-                            <AddShoppingCartOutlinedIcon />
-                            &nbsp; Add to Cart
-                          </Button>
-                        </>
-                      ) : (
-                        <>
-                          <Button
-                            variant="contained"
-                            sx={buttonGroupStyle1}
-                            disabled
-                          >
-                            <ShoppingBagOutlinedIcon />
-                            &nbsp; Buy now
-                          </Button>
-                          <Button
-                            variant="contained"
-                            sx={buttonGroupStyle1}
-                            disabled
-                          >
-                            <AddShoppingCartOutlinedIcon />
-                            &nbsp; Add to Cart
-                          </Button>
-                        </>
-                      )}
+                      <>
+                        <Button
+                          variant="contained"
+                          sx={buttonGroupStyle1}
+                          onClick={buyNow}
+                          disabled={
+                            window.localStorage.getItem("idToken") === null ||
+                            window.localStorage.getItem("idToken") === undefined
+                          }
+                        >
+                          <ShoppingBagOutlinedIcon />
+                          &nbsp; Buy now
+                        </Button>
+                        <Button
+                          variant="contained"
+                          sx={buttonGroupStyle1}
+                          onClick={addToCart}
+                          disabled={
+                            window.localStorage.getItem("idToken") === null ||
+                            window.localStorage.getItem("idToken") === undefined
+                          }
+                        >
+                          <AddShoppingCartOutlinedIcon />
+                          &nbsp; Add to Cart
+                        </Button>
+                      </>
                     </Box>
                   </Box>
                 </Grid>
@@ -446,34 +435,20 @@ const DetailView = (props) => {
                       </Box>
                     ) : (
                       <>
-                        {window.localStorage.getItem("idToken") ? (
-                          <>
-                            <Button
-                              variant="outlined"
-                              type="submit"
-                              sx={{
-                                display: "block",
-                                width: "30%",
-                              }}
-                            >
-                              Post
-                            </Button>
-                          </>
-                        ) : (
-                          <>
-                            <Button
-                              variant="outlined"
-                              type="submit"
-                              sx={{
-                                display: "block",
-                                width: "30%",
-                              }}
-                              disabled
-                            >
-                              Post
-                            </Button>
-                          </>
-                        )}
+                        <Button
+                          variant="outlined"
+                          type="submit"
+                          sx={{
+                            display: "block",
+                            width: "30%",
+                          }}
+                          disabled={
+                            window.localStorage.getItem("idToken") === null ||
+                            window.localStorage.getItem("idToken") === undefined
+                          }
+                        >
+                          Post
+                        </Button>
                       </>
                     )}
                   </Box>
@@ -488,7 +463,7 @@ const DetailView = (props) => {
                       mx: "auto",
                     }}
                     onClick={() => {
-                      navigate(`/review/${key}`);
+                      navigate(`/review/${category}/${key}`);
                     }}
                   >
                     View More

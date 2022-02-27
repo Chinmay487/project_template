@@ -34,6 +34,7 @@ const ViewCart = () => {
     cart: [],
     is_seller: false,
     purchase_history: [],
+    category: "",
   });
 
   // const [cartList, setCartList] = useState([]);
@@ -66,7 +67,6 @@ const ViewCart = () => {
         })
         .then((response) => {
           if (response.data) {
-            // setCartList([...response.data]);
             setDataList((existingData) => {
               return {
                 ...existingData,
@@ -127,6 +127,7 @@ const ViewCart = () => {
         cart: [],
         is_seller: false,
         purchase_history: [],
+        category: "",
       });
     };
   }, [fetchData]);
@@ -230,7 +231,9 @@ const ViewCart = () => {
               </Grid>
               <Grid item md={5} sm={12} xs={12} sx={cartGrid}>
                 {!dataList.addresses.length > 0 ? (
-                  <Typography>Please add atleast one address to coplete your order</Typography>
+                  <Typography>
+                    Please add atleast one address to coplete your order
+                  </Typography>
                 ) : (
                   <>
                     <Typography>Shipping Address : </Typography>
