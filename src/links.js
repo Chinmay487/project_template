@@ -8,3 +8,5 @@ export const NETWORK_URL = 'http://192.168.0.102:8000'  // Rushikesh ka link
 // export const NETWORK_URL='http://127.0.0.1:8000'; //aman ka link
 // export const NETWORK_URL='http://192.168.0.110:8000' // Krishna ka link
 // export const NETWORK_URL = "http://192.168.0.238:8000" // College ka link
+
+
