@@ -11,7 +11,7 @@ import {
 import History from "../user/History";
 import axios from "axios";
 import { NETWORK_URL } from "../links";
-import { initiatePayment } from "../payment/Payment";
+import Payment from "../payment/Payment";
 
 const ViewCart = () => {
   const theme = useTheme();
@@ -38,7 +38,7 @@ const ViewCart = () => {
     category: "",
   });
 
-  // const [cartList, setCartList] = useState([]);
+  const [paymentOpen, setPaymentOpen]= useState(false);
 
   const fetchData = useCallback(() => {
     setDataStatus(true);
@@ -109,16 +109,6 @@ const ViewCart = () => {
     }
   };
 
-  const getPayment = () => {
-    initiatePayment()
-    .then((data)=>{
-      console.log(data)
-    })
-    .catch((error)=>{
-      console.log("something wrong")
-    })
-  }
-
   useEffect(() => {
     let isMounted = true;
     fetchData(isMounted);
@@ -152,6 +142,9 @@ const ViewCart = () => {
 
   return (
     <>
+
+      <Payment paymentOpen={paymentOpen} setPaymentOpen={setPaymentOpen} amount={amount}/>
+
       {dataStatus ? (
         <Box
           sx={{
@@ -221,6 +214,11 @@ const ViewCart = () => {
                         display: "block",
                         mx: "auto",
                       }}
+                      onClick ={
+                        () => {
+                          setPaymentOpen(true);
+                        }
+                      }
                     >
                       Place Order
                     </Button>
