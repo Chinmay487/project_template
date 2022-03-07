@@ -16,15 +16,14 @@ import { useSearchParams } from "react-router-dom";
 
 
 const Payment = (props) => {
-  let [searchParams, setSearchParams] = useSearchParams();
+  const [searchParams] = useSearchParams("");
   const payment_id = searchParams.get("payment_id");
   const payment_status = searchParams.get("payment_status");
   const payment_request_id = searchParams.get("payment_request_id");
 
-  console.log(payment_id)
-  console.log(payment_status)
-  console.log(payment_request_id)
-
+  if(payment_id && payment_status && payment_request_id){
+    console.log("haha")
+  }
   const [paymentLink, setPaymentLink] = useState("");
 
   const initiatePayment = useCallback(() => {
@@ -66,8 +65,14 @@ const Payment = (props) => {
           <CloseIcon />
         </Button>
       </Box>
-      <Typography>Total charges : {props.amount.total}</Typography>
-      <Box component="a" href={paymentLink}>
+      <Typography sx={{textAlign:'center',fontSize:'1.5rem'}}>Total charges : {props.amount.total}</Typography>
+      <Box component="a" href={paymentLink} 
+      sx={{textAlign:"center",
+          border:'1px solid blue',
+          width:'45%',
+          margin:"1rem auto",
+          textDecoration:'none'
+          }}>
         Pay Now
       </Box>
     </Dialog>
