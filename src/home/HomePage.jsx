@@ -13,6 +13,7 @@ const HomePage = () => {
             <ShortCategory category="clock" title="Clock" />
             <ShortCategory category="watch" title="Watch" /> */}
         </Box>
+        
     )
 }
 
