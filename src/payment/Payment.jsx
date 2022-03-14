@@ -7,24 +7,47 @@ import {
   DialogTitle,
   Typography,
   Box,
-  // IconButton,
-  // CircularProgress,
 } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
-import { useSearchParams } from "react-router-dom";
+import { useSearchParams,useNavigate } from "react-router-dom";
 
 
 
 const Payment = (props) => {
+
+  const navigate = useNavigate()
+    
+  const [paymentInfo, setPaymentInfo] = useState({
+    id : "",
+    longurl:""
+  });
+
   const [searchParams] = useSearchParams("");
   const payment_id = searchParams.get("payment_id");
   const payment_status = searchParams.get("payment_status");
   const payment_request_id = searchParams.get("payment_request_id");
 
-  if(payment_id && payment_status && payment_request_id){
-    console.log("haha")
+  const sendPaymentInfoToServer = () => {
+    // console.log(payment_request_id)
+    axios.post(`${NETWORK_URL}/payment/success`,{
+      idToken:window.localStorage.getItem("idToken"),
+      payment_id : payment_request_id,
+      payment_id_local : window.localStorage.getItem("payment_id_local"),
+      shipping_address : props.addressList
+    })
+    .then((response)=>{
+      console.log(response.data)
+      navigate("/viewcart")
+      props.loadData(true)
+    })
+    .catch((error)=>{
+      console.log("something went wrong")
+    })
   }
-  const [paymentLink, setPaymentLink] = useState("");
+
+  if(payment_id && payment_status && payment_request_id){
+    sendPaymentInfoToServer()
+  }
 
   const initiatePayment = useCallback(() => {
     const idToken = window.localStorage.getItem("idToken");
@@ -33,7 +56,13 @@ const Payment = (props) => {
         idToken: idToken,
       })
       .then((response) => {
-        setPaymentLink(response.data);
+        setPaymentInfo((oldInfo)=>{
+          return {
+            id : response.data.id,
+            longurl : response.data.longurl
+          }
+        });
+        window.localStorage.setItem("payment_id_local",response.data.id)
       })
       .catch((error) => {
         console.log("Error");
@@ -41,13 +70,19 @@ const Payment = (props) => {
   }, []);
 
   useEffect(() => {
-    initiatePayment();
+    if(!payment_id && !payment_status && !payment_request_id){
+      initiatePayment();
+    }
     return () => {
-      setPaymentLink("");
+      window.localStorage.removeItem("payment_id_local")
+      setPaymentInfo({
+        id : "",
+        longurl:""
+      });
     };
   }, []);
 
-  console.log(paymentLink);
+  // console.log(paymentInfo);
   return (
     <Dialog fullWidth open={props.paymentOpen}>
       <Box
@@ -65,8 +100,14 @@ const Payment = (props) => {
           <CloseIcon />
         </Button>
       </Box>
-      <Typography sx={{textAlign:'center',fontSize:'1.5rem'}}>Total charges : {props.amount.total}</Typography>
-      <Box component="a" href={paymentLink} 
+      <Typography 
+        sx={{
+          textAlign:'center',
+          fontSize:'1.5rem'
+          }}>
+            Total charges : {props.amount.total}
+      </Typography>
+      <Box component="a" href={paymentInfo.longurl} 
       sx={{textAlign:"center",
           border:'1px solid blue',
           width:'45%',

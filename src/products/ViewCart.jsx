@@ -38,7 +38,7 @@ const ViewCart = () => {
     category: "",
   });
 
-  const [paymentOpen, setPaymentOpen]= useState(false);
+  const [paymentOpen, setPaymentOpen] = useState(false);
 
   const fetchData = useCallback(() => {
     setDataStatus(true);
@@ -109,11 +109,15 @@ const ViewCart = () => {
     }
   };
 
-  useEffect(() => {
-    let isMounted = true;
+  const loadData = (isMounted) => {
     fetchData(isMounted);
     fetchCart(isMounted);
     getAmount(isMounted);
+  }
+
+  useEffect(() => {
+    let isMounted = true;
+    loadData(isMounted)
     return () => {
       isMounted = false;
       setAmount({
@@ -142,8 +146,13 @@ const ViewCart = () => {
 
   return (
     <>
-
-      <Payment paymentOpen={paymentOpen} setPaymentOpen={setPaymentOpen} amount={amount}/>
+      <Payment
+        paymentOpen={paymentOpen}
+        setPaymentOpen={setPaymentOpen}
+        amount={amount}
+        addressList={addressList}
+        loadData={loadData}
+      />
 
       {dataStatus ? (
         <Box
@@ -206,23 +215,23 @@ const ViewCart = () => {
                   <Typography>No Products Bought</Typography>
                 )}
 
-                {dataList.addresses.length > 0 ? (
-                  <>
-                    <Button
-                      variant="outlined"
-                      sx={{
-                        display: "block",
-                        mx: "auto",
-                      }}
-                      onClick ={
-                        () => {
-                          setPaymentOpen(true);
-                        }
+                {dataList.addresses.length > 0 && dataList.cart.length > 0 ? (
+                <>
+                  <Button
+                    variant="outlined"
+                    sx={{
+                      display: "block",
+                      mx: "auto",
+                    }}
+                    onClick={() => {
+                      if(dataList.addresses.length > 0 && dataList.cart.length > 0){
+                        setPaymentOpen(true);
                       }
-                    >
-                      Place Order
-                    </Button>
-                  </>
+                    }}
+                  >
+                    Place Order
+                  </Button>
+                </>
                 ) : (
                   <>
                     <Button
