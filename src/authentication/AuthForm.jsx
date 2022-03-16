@@ -59,7 +59,6 @@ const AuthForm = (props) => {
       <Dialog
         fullWidth
         open={props.dialogOpen}
-        // onClose={props.handleDialogClose}
       >
         {progressStatus ? (
           <CircularProgress />

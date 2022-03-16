@@ -1,9 +1,9 @@
 import React from "react";
 import { Grid, Typography } from "@mui/material";
-import InstagramIcon from "@mui/icons-material/Instagram";
-import FacebookIcon from "@mui/icons-material/Facebook";
-import YouTubeIcon from "@mui/icons-material/YouTube";
-import TwitterIcon from "@mui/icons-material/Twitter";
+// import InstagramIcon from "@mui/icons-material/Instagram";
+// import FacebookIcon from "@mui/icons-material/Facebook";
+// import YouTubeIcon from "@mui/icons-material/YouTube";
+// import TwitterIcon from "@mui/icons-material/Twitter";
 import { Link } from "react-router-dom";
 
 const Footer = () => {

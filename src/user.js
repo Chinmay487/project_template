@@ -11,7 +11,7 @@ const logoutUser = () => {
   getFirebaseKeys()
     .then((keys) => {
       // console.log("logging Out")
-      const app = firebase.initializeApp(keys);
+      firebase.initializeApp(keys);
       window.localStorage.removeItem("idToken");
       window.localStorage.removeItem("name");
       window.localStorage.removeItem("photoURL");

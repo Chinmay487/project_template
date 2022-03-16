@@ -1,8 +1,8 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import {
   Grid,
-  useTheme,
-  useMediaQuery,
+  // useTheme,
+  // useMediaQuery,
   Typography,
   CircularProgress,
   Box,
@@ -18,9 +18,9 @@ import ProductCard from "./ProductCard";
 // };
 
 const ProductGrid = (props) => {
-  const theme = useTheme();
+  // const theme = useTheme();
 
-  const small = useMediaQuery(theme.breakpoints.down("sm"));
+  // const small = useMediaQuery(theme.breakpoints.down("sm"));
 
   const gridStyle2 = {
     alignItems: "center",

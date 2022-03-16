@@ -28,15 +28,23 @@ const Payment = (props) => {
   const payment_request_id = searchParams.get("payment_request_id");
 
   const sendPaymentInfoToServer = () => {
+    const payment_request_id_func  = payment_request_id;
+    // const payment_status_func = payment_status;
+    // const payment_id_func = payment_id;
+    searchParams.delete("payment_id");
+    searchParams.delete("payment_status");
+    searchParams.delete("payment_request_id");
+
     // console.log(payment_request_id)
     axios.post(`${NETWORK_URL}/payment/success`,{
       idToken:window.localStorage.getItem("idToken"),
-      payment_id : payment_request_id,
+      payment_id : payment_request_id_func,
       payment_id_local : window.localStorage.getItem("payment_id_local"),
       shipping_address : props.addressList
     })
     .then((response)=>{
       console.log(response.data)
+
       navigate("/viewcart")
       props.loadData(true)
     })
