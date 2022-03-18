@@ -1,23 +1,26 @@
 import React from "react";
-import { Box, Typography } from "@mui/material";
+import { Box, Typography,useTheme } from "@mui/material";
 // import jcb from '../images/jcb.jpg';
 import { Link } from "react-router-dom";
 
 const ProductCard = (props) => {
+
+  const theme = useTheme()
+
   const productBox1 = {
     padding: "5px",
     height: {
-      md: "12rem",
-      sm: "10rem",
+      md: "15rem",
+      sm: "12rem",
     },
     width: {
-      xl: "10rem",
-      lg: "10rem",
+      xl: "12rem",
+      lg: "12rem",
       sm: "100%",
     },
     border: "1px solid #e8ebe9",
-    boxShadow: "2px 2px 2px 4px #f2f2f2",
-    borderRadius: "10px",
+    boxShadow: theme.shadows[5],
+    borderRadius: "7px",
     mx: "1rem",
     display: "flex",
     justifyContent: "space-around",
@@ -26,6 +29,10 @@ const ProductCard = (props) => {
       md: "column",
       sm: "row",
       xs: "row",
+    },
+    transition:"all 0.5s ease",
+    "&:hover": {
+      boxShadow: theme.shadows[15]
     },
   };
 
