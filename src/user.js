@@ -28,7 +28,7 @@ const logoutUser = () => {
 };
 
 const checkAuthTimeout = (expirationDate) => {
-  // console.log("check auth time out ")
+  console.log("check auth time out ")
   setTimeout(
       () => {
         logoutUser()

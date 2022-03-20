@@ -43,13 +43,12 @@ const Phone = (props) => {
 
 
 
-  const addUserInfo = (idToken) => {
+  const addUserInfo = () => {
     axios.post(`${NETWORK_URL}/auth/new_user`, {
-      idToken: idToken
+      idToken: window.localStorage.getItem("idToken")
     })
     .then((response)=>{
-      // console.log(response.data)
-      return
+      console.log(response.data)
     })
     .catch((error)=>{
       console.log("something went wrong")
@@ -119,6 +118,7 @@ const Phone = (props) => {
   };
 
   const onOtpSubmit = (event) => {
+    console.log("otp submitted")
     event.preventDefault();
     props.disableClose();
     setButtonProgressState(true);
@@ -127,6 +127,7 @@ const Phone = (props) => {
       .confirm(code)
       .then((result) => {
         // User signed in successfully.
+        console.log("login successful")
         const idToken = result._tokenResponse.idToken;
         const expirationDate = new Date(new Date().getTime() + 3600 * 1000);
         window.localStorage.setItem("idToken", idToken);
@@ -136,12 +137,11 @@ const Phone = (props) => {
         const status = details.isNewUser;
         props.setIsNewPhoneNumberUserState(status);
         if(!status){
-          window.location.reload()
-        } else {
-          addUserInfo();
+          console.log("old user");
         }
-        // ...
-        if (props.isNewGoogleUser) {
+        if (props.isNewGoogleUser && status) {
+          console.log("new Google User")
+          addUserInfo();
           linkPhoneNumberToGoogleAccount();
         } 
 
@@ -195,7 +195,7 @@ const Phone = (props) => {
           my: "1rem",
         }}
       >
-        {!props.isNew ? (
+        {!props.isNewGoogleUser ? (
           <>
             <Typography sx={{ my: "1rem" }}>OR</Typography>
             <Typography

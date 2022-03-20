@@ -32,13 +32,12 @@ const Google = (props) => {
 
   
 
-  const addUserInfo = (idToken) => {
+  const addUserInfo = () => {
     axios.post(`${NETWORK_URL}/auth/new_user`, {
-      idToken: idToken
+      idToken: window.localStorage.getItem("idToken")
     })
     .then((response)=>{
-      // console.log(response.data)
-      return
+      console.log(response.data)
     })
     .catch((error)=>{
       console.log("something went wrong")
@@ -58,7 +57,6 @@ const Google = (props) => {
     .then((result)=>{
       // console.log(result)
       addUserInfo()
-      alert("Accounts Linked Successfully")
       window.location.reload()
     })
     .catch((error)=>{
