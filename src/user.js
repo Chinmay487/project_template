@@ -13,10 +13,6 @@ const logoutUser = () => {
       // console.log("logging Out")
       firebase.initializeApp(keys);
       window.localStorage.removeItem("idToken");
-      window.localStorage.removeItem("name");
-      window.localStorage.removeItem("photoURL");
-      window.localStorage.removeItem("email");
-      window.localStorage.removeItem("contact");
       window.localStorage.removeItem("expiration");
       firebase
         .auth()
@@ -32,6 +28,7 @@ const logoutUser = () => {
 };
 
 const checkAuthTimeout = (expirationDate) => {
+  // console.log("check auth time out ")
   setTimeout(
       () => {
         logoutUser()
@@ -41,6 +38,7 @@ const checkAuthTimeout = (expirationDate) => {
 }
 
 const setCurrentAuthState = () => {
+  console.log("set current auth state called")
   const idToken = window.localStorage.getItem("idToken")
   if(idToken === undefined){
     return logoutUser()
@@ -51,7 +49,6 @@ const setCurrentAuthState = () => {
   } else {
       const remainingTime = (expirationDate.getTime() - new Date().getTime())/1000
       return checkAuthTimeout(remainingTime);
-      // authSuccess(token,username);
   }
 
   }

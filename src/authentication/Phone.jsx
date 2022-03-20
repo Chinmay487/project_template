@@ -14,7 +14,8 @@ import {
   getAuth,
   RecaptchaVerifier,
   signInWithPhoneNumber,
-  // PhoneAuthProvider,
+  linkWithPhoneNumber,
+  getAdditionalUserInfo
 } from "firebase/auth";
 import { checkAuthTimeout } from "../user";
 
@@ -40,146 +41,147 @@ const Phone = (props) => {
     });
   };
 
-  const verifyPhoneNumberUser = (response) => {
-    const expirationDate = new Date(new Date().getTime() + 3600 * 1000);
-    const path = "auth/phone";
-    const user = firebase.auth().currentUser;
-    user
-      .getIdToken(/* forceRefresh */ true)
-      .then((idToken) => {
-        axios
-          .post(`${NETWORK_URL}/${path}`, {
-            idToken: idToken,
-            userData: response,
-          })
-          .then((response) => {
-            // console.log(response);
-            if (response.data) {
-              props.setIsNewPhone(true);
-              // window.location.reload();
-            } else {
-              window.localStorage.setItem("idToken", idToken);
-              // window.localStorage.setItem("name", user.displayName);
-              // window.localStorage.setItem("photoURL", user.photoURL);
-              // window.localStorage.setItem("email", user.email);
-              window.localStorage.setItem("expiration", expirationDate);
-              checkAuthTimeout();
-              window.location.reload();
-            }
-          });
-      })
-      .catch((error) => {
-        console.log("something went wrong");
-      });
-  };
 
-  const configCaptcha = () => {
-    const auth = getAuth();
+
+  const addUserInfo = (idToken) => {
+    axios.post(`${NETWORK_URL}/auth/new_user`, {
+      idToken: idToken
+    })
+    .then((response)=>{
+      // console.log(response.data)
+      return
+    })
+    .catch((error)=>{
+      console.log("something went wrong")
+    })
+  }
+
+
+  const configureCaptcha = () => {
     firebase.initializeApp(props.firebaseKeys);
+    const auth = getAuth();
     window.recaptchaVerifier = new RecaptchaVerifier(
       "sign-in-button",
       {
         size: "invisible",
         callback: (response) => {
           // reCAPTCHA solved, allow signInWithPhoneNumber.
-          onOtpSubmit();
+          if (props.isNewGoogleUser) {
+            linkPhoneNumberToGoogleAccount();
+          } else {
+            onPhoneNumberSubmit();
+          }
         },
-        defaultCountry: "IN",
       },
       auth
     );
   };
 
-  const linkNumber = (mobileNumber, appVerifier) => {
-    const user = firebase.auth().currentUser;
-    user
-      .linkWithPhoneNumber(mobileNumber, appVerifier)
+  const linkPhoneNumberToGoogleAccount = () => {
+    const auth = getAuth();
+    const user = auth.currentUser;
+    configureCaptcha();
+    const appVerifier = window.recaptchaVerifier;
+    const phoneNumber = "+91"+mobileNumberForm.mobileNumber;
+    linkWithPhoneNumber(user,phoneNumber, appVerifier)
       .then((confirmationResult) => {
         // SMS sent. Prompt user to type the code from the message, then sign the
         // user in with confirmationResult.confirm(code).
         window.confirmationResult = confirmationResult;
-        console.log("OTP has been sent");
+        alert("OTP has been sent");
         // ...
       })
       .catch((error) => {
         // Error; SMS not sent
-        console.log("something went wrong");
+        // console.log("something went wrong");
         // ...
       });
   };
 
-  const signInWithnumber = (auth, mobileNumber, appVerifier) => {
-    signInWithPhoneNumber(auth, mobileNumber, appVerifier)
+  const onPhoneNumberSubmit = () => {
+    const phoneNumber = "+91" + mobileNumberForm.mobileNumber;
+    configureCaptcha();
+    const appVerifier = window.recaptchaVerifier;
+
+    const auth = getAuth();
+    signInWithPhoneNumber(auth, phoneNumber, appVerifier)
       .then((confirmationResult) => {
         // SMS sent. Prompt user to type the code from the message, then sign the
         // user in with confirmationResult.confirm(code).
         window.confirmationResult = confirmationResult;
-        console.log("OTP has been sent");
+        alert("OTP SENT");
         // ...
       })
       .catch((error) => {
         // Error; SMS not sent
-        console.log("something went wrong");
         // ...
       });
   };
 
   const onOtpSubmit = (event) => {
-    firebase.initializeApp(props.firebaseKeys);
-    const mobileNumber = "+91" + mobileNumberForm.mobileNumber;
-    const auth = getAuth();
-    const mobileNumberPattern =
-      /^(?:(?:\+|0{0,2})91(\s*[-]\s*)?|[0]?)?[789]\d{9}$/im;
-    if (mobileNumberPattern.test(mobileNumber)) {
-      setCorrectNumber(false);
-      console.log(mobileNumber);
-      setOtpSent(true);
-      configCaptcha();
-      const appVerifier = window.recaptchaVerifier;
-
-      if (props.isNew) {
-        console.log("calling link number method");
-        linkNumber(mobileNumber, appVerifier);
-      } else {
-        // sendOtp(mobileNumber)
-        console.log("calling siginin with number method");
-        signInWithnumber(auth, mobileNumber, appVerifier);
-      }
-    } else {
-      setCorrectNumber(true);
-      setOtpSent(false);
-    }
-  };
-
-  const onOtpFormSubmit = (event) => {
     event.preventDefault();
-    firebase.initializeApp(props.firebaseKeys);
+    props.disableClose();
     setButtonProgressState(true);
     const code = mobileNumberForm.otp;
     window.confirmationResult
       .confirm(code)
       .then((result) => {
         // User signed in successfully.
-        const user = result.user;
-        console.log(user);
-        if (!props.isNew) {
-          verifyPhoneNumberUser(result);
+        const idToken = result._tokenResponse.idToken;
+        const expirationDate = new Date(new Date().getTime() + 3600 * 1000);
+        window.localStorage.setItem("idToken", idToken);
+        window.localStorage.setItem("expiration",expirationDate);
+        checkAuthTimeout(expirationDate);
+        const details = getAdditionalUserInfo(result);
+        const status = details.isNewUser;
+        props.setIsNewPhoneNumberUserState(status);
+        if(!status){
+          window.location.reload()
         } else {
-          window.location.reload();
+          addUserInfo();
         }
-        props.handleDialogClose();
-        setButtonProgressState(false);
+        // ...
+        if (props.isNewGoogleUser) {
+          linkPhoneNumberToGoogleAccount();
+        } 
+
       })
       .catch((error) => {
-        console.log("otp form error");
+        // User couldn't sign in (bad verification code?)
+        // ...
       });
   };
+
+  const onSendOptClick = () => {
+    const mobileNumber = "+91" + mobileNumberForm.mobileNumber;
+    // const auth = getAuth();
+    const mobileNumberPattern = /^(?:(?:\+|0{0,2})91(\s*[-]\s*)?|[0]?)?[789]\d{9}$/im;
+    if (mobileNumberPattern.test(mobileNumber)){
+
+      if(props.isNewGoogleUser){
+        linkPhoneNumberToGoogleAccount()
+      } else {
+        onPhoneNumberSubmit()  
+      }
+      setOtpSent(true);
+    } else {
+      setCorrectNumber(true);
+      setOtpSent(false);
+    }
+    
+  }
+
+  if(props.isNewGoogleUser){
+    props.disableClose()
+  }
+
+
   return (
     <>
       <Box id="sign-in-button" />
       <Box
         component="form"
-        onSubmit={onOtpFormSubmit}
+        onSubmit={onOtpSubmit}
         sx={{
           width: "100%",
           padding: {
@@ -193,17 +195,6 @@ const Phone = (props) => {
           my: "1rem",
         }}
       >
-        {/* <Typography sx={{ my: "1rem" }}>OR</Typography>
-        <Typography
-          variant="h6"
-          sx={{
-            mb: "1rem",
-            textAlign: "center",
-            mx: { sm: "1%", xs: "3%" },
-          }}
-        >
-          Join us with mobile number and OTP
-        </Typography> */}
         {!props.isNew ? (
           <>
             <Typography sx={{ my: "1rem" }}>OR</Typography>
@@ -277,7 +268,7 @@ const Phone = (props) => {
           ) : (
             <>
               <Button
-                onClick={onOtpSubmit}
+                onClick={onSendOptClick}
                 sx={{ my: "1rem", mx: "1rem" }}
                 variant="contained"
               >

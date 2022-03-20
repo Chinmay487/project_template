@@ -8,20 +8,26 @@ import {
   IconButton,
   CircularProgress,
 } from "@mui/material";
-// import GoogleIcon from "@mui/icons-material/Google";
 import CloseIcon from "@mui/icons-material/Close";
-// import { NETWORK_URL } from "../links";
-// import firebase from "firebase/compat/app";
 import "firebase/compat/auth";
 import { getFirebaseKeys } from "../user";
 import Google from "./Google";
 import Phone from "./Phone";
-// import { linkWithPhoneNumber } from "firebase/auth";
 
 const AuthForm = (props) => {
-  const [isNew, setIsNew] = useState(false);
-  const [isNewPhone, setIsNewPhone] = useState(false);
   const [progressStatus, setProgressStatus] = useState(false);
+  const [closeButtonState, setCloseButtonState] = useState(true);
+
+  const [isNewGoogleUser, setIsNewGoogleUser] = useState(false);
+  const [isNewPhoneNumberUser, setIsNewPhoneNumberUser] = useState(false);
+
+  const setIsNewGoogleUserState = (status) => {
+    setIsNewGoogleUser(status);
+  };
+
+  const setIsNewPhoneNumberUserState = (state) => {
+    setIsNewPhoneNumberUser(state);
+  };
 
   const [firebaseKeys, setFirebaseKeys] = useState({
     apiKey: "",
@@ -50,16 +56,13 @@ const AuthForm = (props) => {
     fetchKeys();
   }, [fetchKeys]);
 
-  // console.log(isNew);
-
-  // End of google sign in
+  const disableClose = () => {
+    setCloseButtonState(false);
+  };
 
   return (
     <>
-      <Dialog
-        fullWidth
-        open={props.dialogOpen}
-      >
+      <Dialog fullWidth open={props.dialogOpen}>
         {progressStatus ? (
           <CircularProgress />
         ) : (
@@ -73,9 +76,11 @@ const AuthForm = (props) => {
               }}
             >
               <DialogTitle>Sign in</DialogTitle>
-              <IconButton onClick={props.handleDialogClose}>
-                <CloseIcon />
-              </IconButton>
+              {closeButtonState ? (
+                <IconButton onClick={props.handleDialogClose}>
+                  <CloseIcon />
+                </IconButton>
+              ) : null}
             </Box>
             <Box
               sx={{
@@ -89,7 +94,7 @@ const AuthForm = (props) => {
               <Typography variant="h6">Welcome to ShopHeaven</Typography>
             </Box>
 
-            {!isNew && !isNewPhone ? (
+            {!isNewGoogleUser && !isNewPhoneNumberUser ? (
               <>
                 <DialogActions
                   sx={{
@@ -99,38 +104,38 @@ const AuthForm = (props) => {
                   }}
                 >
                   <Google
-                    setIsNew={setIsNew}
                     firebaseKeys={firebaseKeys}
-                    handleDialogClose={props.handleDialogClose}
-                    isNewPhone={false}
+                    disableClose={disableClose}
+                    setIsNewGoogleUserState={setIsNewGoogleUserState}
+                    isNewPhoneNumberUser={false}
                   />
                 </DialogActions>
 
                 <Phone
                   firebaseKeys={firebaseKeys}
-                  isNew={false}
-                  setIsNewPhone={setIsNewPhone}
+                  disableClose={disableClose}
+                  setIsNewPhoneNumberUserState={setIsNewPhoneNumberUserState}
+                  isNewGoogleUser={false}
                 />
               </>
-            ) : (
-              <>
-                {isNew ? (
-                  <Phone
-                    firebaseKeys={firebaseKeys}
-                    isNew={true}
-                    setIsNewPhone={setIsNewPhone}
-                  />
-                ) : null}
-                {isNewPhone ? (
-                  <Google
-                    setIsNew={setIsNew}
-                    firebaseKeys={firebaseKeys}
-                    handleDialogClose={props.handleDialogClose}
-                    isNewPhone={true}
-                  />
-                ) : null}
-              </>
-            )}
+            ) : null}
+
+            {isNewGoogleUser ? (
+              <Phone
+                firebaseKeys={firebaseKeys}
+                disableClose={disableClose}
+                setIsNewPhoneNumberUserState={setIsNewPhoneNumberUserState}
+                isNewGoogleUser={true}
+              />
+            ) : null}
+            {isNewPhoneNumberUser ? (
+              <Google
+                firebaseKeys={firebaseKeys}
+                disableClose={disableClose}
+                setIsNewGoogleUserState={setIsNewGoogleUserState}
+                isNewPhoneNumberUser={true}
+              />
+            ) : null}
           </>
         )}
       </Dialog>
