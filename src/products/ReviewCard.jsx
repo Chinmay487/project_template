@@ -15,7 +15,7 @@ const ReviewCard = (props) => {
         boxShadow: theme.shadows[5],
       }}
     >
-      <Typography variant="subtitle2">{props.item.user}</Typography>
+      {/* <Typography variant="subtitle2">{props.item.user}</Typography> */}
       <Typography variant="h5">{props.item.title}</Typography>
       <Rating value={props.item.rating} readOnly />
       <Typography>{props.item.description}</Typography>

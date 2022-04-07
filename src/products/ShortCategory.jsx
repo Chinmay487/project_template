@@ -70,7 +70,7 @@ const ShortCategory = (props) => {
         <Button
           sx={buttonSyle1}
           onClick={() => {
-            navigate("/wishlist");
+            navigate(`categories/${props.category}`);
           }}
           variant="outlined"
         >

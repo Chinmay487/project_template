@@ -6,8 +6,8 @@ import {
   TextField,
   CircularProgress,
 } from "@mui/material";
-import axios from "axios";
-import { NETWORK_URL } from "../links";
+// import axios from "axios";
+// import { NETWORK_URL } from "../links";
 import firebase from "firebase/compat/app";
 import "firebase/compat/auth";
 import {
@@ -15,7 +15,7 @@ import {
   RecaptchaVerifier,
   signInWithPhoneNumber,
   linkWithPhoneNumber,
-  getAdditionalUserInfo
+  getAdditionalUserInfo,
 } from "firebase/auth";
 import { checkAuthTimeout } from "../user";
 
@@ -40,20 +40,6 @@ const Phone = (props) => {
       };
     });
   };
-
-
-
-  const addUserInfo = () => {
-    axios.post(`${NETWORK_URL}/auth/new_user`, {
-      idToken: window.localStorage.getItem("idToken")
-    })
-    .then((response)=>{
-      console.log(response.data)
-    })
-    .catch((error)=>{
-      console.log("something went wrong")
-    })
-  }
 
 
   const configureCaptcha = () => {
@@ -81,8 +67,8 @@ const Phone = (props) => {
     const user = auth.currentUser;
     configureCaptcha();
     const appVerifier = window.recaptchaVerifier;
-    const phoneNumber = "+91"+mobileNumberForm.mobileNumber;
-    linkWithPhoneNumber(user,phoneNumber, appVerifier)
+    const phoneNumber = "+91" + mobileNumberForm.mobileNumber;
+    linkWithPhoneNumber(user, phoneNumber, appVerifier)
       .then((confirmationResult) => {
         // SMS sent. Prompt user to type the code from the message, then sign the
         // user in with confirmationResult.confirm(code).
@@ -117,8 +103,21 @@ const Phone = (props) => {
       });
   };
 
+  const loginSuccess = () => {
+    firebase.auth().currentUser.getIdToken(/* forceRefresh */ true)
+    .then((idToken) => {
+      const expirationDate = new Date(new Date().getTime() + 3600 * 1000);
+      window.localStorage.setItem("idToken", idToken);
+      window.localStorage.setItem("expiration", expirationDate);
+      checkAuthTimeout(expirationDate);
+      window.location.reload();
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+  }
+
   const onOtpSubmit = (event) => {
-    console.log("otp submitted")
     event.preventDefault();
     props.disableClose();
     setButtonProgressState(true);
@@ -127,26 +126,23 @@ const Phone = (props) => {
       .confirm(code)
       .then((result) => {
         // User signed in successfully.
-        console.log("login successful")
-        const idToken = result._tokenResponse.idToken;
-        const expirationDate = new Date(new Date().getTime() + 3600 * 1000);
-        window.localStorage.setItem("idToken", idToken);
-        window.localStorage.setItem("expiration",expirationDate);
-        checkAuthTimeout(expirationDate);
         const details = getAdditionalUserInfo(result);
         const status = details.isNewUser;
         props.setIsNewPhoneNumberUserState(status);
-        if(!status){
-          console.log("old user");
+        if (!status) { 
+          loginSuccess();
+          // const idToken = result._tokenResponse.idToken;
+          // const expirationDate = new Date(new Date().getTime() + 3600 * 1000);
+          // window.localStorage.setItem("idToken", idToken);
+          // window.localStorage.setItem("expiration", expirationDate);
+          // window.location.reload()
+          // checkAuthTimeout(expirationDate);
         }
-        if (props.isNewGoogleUser && status) {
-          console.log("new Google User")
-          addUserInfo();
-          linkPhoneNumberToGoogleAccount();
-        } 
 
       })
       .catch((error) => {
+        alert("Wrong OTP")
+        setButtonProgressState(false)
         // User couldn't sign in (bad verification code?)
         // ...
       });
@@ -155,26 +151,24 @@ const Phone = (props) => {
   const onSendOptClick = () => {
     const mobileNumber = "+91" + mobileNumberForm.mobileNumber;
     // const auth = getAuth();
-    const mobileNumberPattern = /^(?:(?:\+|0{0,2})91(\s*[-]\s*)?|[0]?)?[789]\d{9}$/im;
-    if (mobileNumberPattern.test(mobileNumber)){
-
-      if(props.isNewGoogleUser){
-        linkPhoneNumberToGoogleAccount()
+    const mobileNumberPattern =
+      /^(?:(?:\+|0{0,2})91(\s*[-]\s*)?|[0]?)?[789]\d{9}$/im;
+    if (mobileNumberPattern.test(mobileNumber)) {
+      if (props.isNewGoogleUser) {
+        linkPhoneNumberToGoogleAccount();
       } else {
-        onPhoneNumberSubmit()  
+        onPhoneNumberSubmit();
       }
       setOtpSent(true);
     } else {
       setCorrectNumber(true);
       setOtpSent(false);
     }
-    
-  }
+  };
 
-  if(props.isNewGoogleUser){
-    props.disableClose()
+  if (props.isNewGoogleUser) {
+    props.disableClose();
   }
-
 
   return (
     <>

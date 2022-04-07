@@ -6,7 +6,7 @@ export const navbarDivStyle = {
   width: "100%",
   display: "flex",
   justifyContent: "space-between",
-  alignItems: "center",
+  alignItems: "center"
 };
 
 export const navbarStyle2 = {
@@ -31,8 +31,8 @@ export const navbarDiveStyle2 = {
 export const searchFormGroup = {
   display: "flex",
   justifyContent: {
-    lg: "space-evenly",
-    md: "space-between",
+    lg: "flex-end",
+    md: "flex-end",
   },
   alignItems: "center",
   width: {

@@ -18,8 +18,8 @@ const AvatarMenu = (props) => {
   };
 
   const signoutUser = () => {
-    navigate("/");
     logoutUser();
+    navigate("/");
   };
 
   return (

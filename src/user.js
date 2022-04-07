@@ -8,12 +8,14 @@ const getFirebaseKeys = async () => {
 };
 
 const logoutUser = () => {
+  // alert("calling logout")
   getFirebaseKeys()
     .then((keys) => {
       // console.log("logging Out")
       firebase.initializeApp(keys);
       window.localStorage.removeItem("idToken");
       window.localStorage.removeItem("expiration");
+      window.localStorage.removeItem("pic");
       firebase
         .auth()
         .signOut()
@@ -28,7 +30,7 @@ const logoutUser = () => {
 };
 
 const checkAuthTimeout = (expirationDate) => {
-  console.log("check auth time out ")
+  // alert("in check auth timeout");
   setTimeout(
       () => {
         logoutUser()
@@ -38,7 +40,6 @@ const checkAuthTimeout = (expirationDate) => {
 }
 
 const setCurrentAuthState = () => {
-  console.log("set current auth state called")
   const idToken = window.localStorage.getItem("idToken")
   if(idToken === undefined){
     return logoutUser()

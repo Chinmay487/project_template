@@ -21,7 +21,8 @@ const Address = (props) => {
         address: '',
         idToken: window.localStorage.getItem("idToken"),
         add : false,
-        index : props.index
+        index : props.index,
+        isMobile : 0,
       })
       .then((response) => {
         if(response.data){

@@ -29,6 +29,7 @@ import { NavLink } from "react-router-dom";
 import AuthForm from "../authentication/AuthForm";
 import AvatarMenu from "./AvatarMenu";
 import PersonRoundedIcon from '@mui/icons-material/PersonRounded';
+import {loginUserWithGoogle} from "../authentication/LoginWithGoogle";
 
 const Navbar = (props) => {
 
@@ -140,15 +141,16 @@ const Navbar = (props) => {
               </Typography>
             ) : null}
 
-            {medium && !small ? searchFormComponent : null}
+            {/* {medium && !small ? searchFormComponent : null} */}
 
             <Box sx={searchFormGroup}>
-              {medium ? null : searchFormComponent}
+              {/* {medium ? null : searchFormComponent} */}
               {userData !== null ? (
                 <IconButton onClick={avatarClick}>
-                  <Avatar sx={avatarStyle} alt="#" >
-                    <PersonRoundedIcon/>
-                  </Avatar>
+                  {/* <Avatar sx={avatarStyle}  alt="#" >
+                    
+                  </Avatar> */}
+                  <Avatar alt="O" src={window.localStorage.getItem("pic")} />
                 </IconButton>
               ) : (
                 <Button
@@ -164,7 +166,8 @@ const Navbar = (props) => {
                       backgroundColor: "#ECEFF1",
                     },
                   }}
-                  onClick={handleOpenDilog}
+    
+                  onClick={loginUserWithGoogle}
                 >
                   {" "}
                   Login{" "}
@@ -197,18 +200,19 @@ const Navbar = (props) => {
             </Box>
           </Box>
         ) : (
-          <Box
-            sx={{
-              width: "100%",
-              display: "flex",
-              justifyContent: "center",
-              alignItems: "center",
-              borderTop: "1px solid #CFD8DC",
-              py: "2%",
-            }}
-          >
-            {searchFormComponent}
-          </Box>
+          // <Box
+          //   sx={{
+          //     width: "100%",
+          //     display: "flex",
+          //     justifyContent: "center",
+          //     alignItems: "center",
+          //     borderTop: "1px solid #CFD8DC",
+          //     py: "2%",
+          //   }}
+          // >
+          //   {searchFormComponent}
+          // </Box>
+          null
         )}
       </AppBar>
       <AuthForm handleDialogClose={handleDilogClose} dialogOpen={dialogOpen} />

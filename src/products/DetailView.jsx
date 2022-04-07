@@ -170,7 +170,12 @@ const DetailView = (props) => {
       .then((response) => {
         alert(response.data);
         setReviewFormStatus(false);
-        window.location.reload();
+        setReviewData({
+          title: "",
+          description: "",
+          rating: 0,
+        });
+        // window.location.reload();
       })
       .catch((error) => {
         alert("something went wrong");
@@ -183,6 +188,7 @@ const DetailView = (props) => {
   const [selectState, setSelectState] = useState(1);
 
   const addProductToCart = (message, cart) => {
+    // console.log(window.localStorage.getItem("idToken"));
     axios
       .post(`${NETWORK_URL}/client/update_cart`, {
         category: category,
@@ -219,6 +225,7 @@ const DetailView = (props) => {
     addProductToCart("", false);
   };
 
+  
   return (
     <>
       {fetchStatus ? (
@@ -385,7 +392,7 @@ const DetailView = (props) => {
 
                     <TextField
                       id="filled-basic"
-                      label="Filled"
+                      label="title"
                       variant="standard"
                       name="title"
                       value={reviewData.title}
@@ -420,7 +427,14 @@ const DetailView = (props) => {
                       <Rating
                         value={reviewData.rating}
                         name="rating"
-                        onChange={onInputChange}
+                        onChange={(event,newValue)=>{
+                          setReviewData((oldData)=>{
+                            return {
+                              ...oldData,
+                              rating : newValue
+                            }
+                          })
+                        }}
                       />
                     </Box>
                     {reviewFormStatus ? (

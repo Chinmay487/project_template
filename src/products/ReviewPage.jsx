@@ -5,7 +5,6 @@ import { useParams } from "react-router-dom";
 import { NETWORK_URL } from "../links";
 import ReviewCard from "./ReviewCard";
 
-// viewreview
 const ReviewPage = () => {
   const { category,key } = useParams();
   const [fetchStatus, setFetchStatus] = useState(false);
@@ -84,8 +83,8 @@ const ReviewPage = () => {
                   mx: "auto",
                 }}
               >
-                {reviewArray.map((item) => {
-                  return <ReviewCard item={item} />;
+                {reviewArray.map((item,index) => {
+                  return <ReviewCard key={`review${category}${key}${index}`} item={item} />;
                 })}
                 {/*  */}
               </Grid>

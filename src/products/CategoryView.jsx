@@ -18,6 +18,7 @@ const CategoryView = (props) => {
   const [dataList, setDataList] = useState([]);
   const [fetching, setFetching] = useState(false);
 
+
   const fetchData = useCallback(
     (pageNumber) => {
       setDataList([]);
@@ -116,26 +117,26 @@ const CategoryView = (props) => {
         </>
       )}
 
-      <Box
-        sx={{
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-          my: "3rem",
-        }}
-      >
-        <Pagination
-          count={pageCount}
-          defaultPage={1}
-          color="primary"
-          shape="rounded"
-          showFirstButton={true}
-          showLastButton={true}
-          onChange={upDatePageNumber}
-          size="large"
-          disabled = { dataList.length === 0 }
-        />
-      </Box>
+        <Box
+          sx={{
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            my: "3rem",
+          }}
+        >
+          <Pagination
+            count={pageCount}
+            defaultPage={1}
+            color="primary"
+            shape="rounded"
+            showFirstButton={true}
+            showLastButton={true}
+            onChange={upDatePageNumber}
+            size="large"
+            disabled={dataList.length === 0}
+          />
+        </Box>
     </>
   );
 };

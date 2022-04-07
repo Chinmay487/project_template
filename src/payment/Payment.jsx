@@ -22,6 +22,10 @@ const Payment = (props) => {
     longurl:""
   });
 
+  //  ?payment_id=MOJO2331205A64445709&
+  // payment_status=Credit&
+  // payment_request_id=7403454706a0411eaf59c040dab978f8
+
   const [searchParams] = useSearchParams("");
   const payment_id = searchParams.get("payment_id");
   const payment_status = searchParams.get("payment_status");
@@ -44,7 +48,6 @@ const Payment = (props) => {
     })
     .then((response)=>{
       console.log(response.data)
-
       navigate("/viewcart")
       props.loadData(true)
     })
@@ -54,8 +57,14 @@ const Payment = (props) => {
   }
 
   if(payment_id && payment_status && payment_request_id){
-    sendPaymentInfoToServer()
+      sendPaymentInfoToServer()
   }
+  // if(payment_status === "Failed"){
+  //   searchParams.delete("payment_id");
+  //   searchParams.delete("payment_status");
+  //   searchParams.delete("payment_request_id");
+  //   navigate("/viewcart")
+  // }
 
   const initiatePayment = useCallback(() => {
     const idToken = window.localStorage.getItem("idToken");

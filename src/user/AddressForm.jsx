@@ -39,6 +39,7 @@ const AddressForm = (props) => {
         idToken: window.localStorage.getItem("idToken"),
         add: true,
         index: "",
+        isMobile : 0,
       })
       .then((response) => {
         if (response.data) {
@@ -58,7 +59,6 @@ const AddressForm = (props) => {
       alert("u cant add more than 2 addresses");
     } else {
       const pinPattern = /^[1-9]{1}[0-9]{2}\s{0,1}[0-9]{3}$/im;
-      console.log(pinPattern.test(addressFormData.pin));
       if (pinPattern.test(addressFormData.pin)) {
         updateAddress();
       } else {
