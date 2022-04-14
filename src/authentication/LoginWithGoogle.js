@@ -40,6 +40,7 @@ export const loginUserWithGoogle = async() => {
         // console.log(result)
         // console.log("saving idToken");
         const details = getAdditionalUserInfo(result);
+        console.log(details.profile.email)
         console.log(details.profile.picture);
         console.log(details.profile.name);
         const idToken = result._tokenResponse.idToken;
@@ -47,10 +48,12 @@ export const loginUserWithGoogle = async() => {
         const expirationDate = new Date(new Date().getTime() + 3600 * 1000);
         window.localStorage.setItem("idToken", idToken);
         window.localStorage.setItem("expiration", expirationDate);
-        window.localStorage.setItem("pic",details.profile.picture);        
+        window.localStorage.setItem("pic",details.profile.picture);  
+        window.localStorage.setItem("userName",details.profile.name);
+        window.localStorage.setItem("userEmail",details.profile.email);
         // console.log("idtoken saved");
         // saveUserdata();
-        // checkAuthTimeout(expirationDate);
+        // checkAuthTimeout(3600);
         window.location.reload();
         // console.log(details.profile.name);
         // saveInfo();

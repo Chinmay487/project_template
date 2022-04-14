@@ -1,140 +1,141 @@
-import React, { useState, useEffect, useCallback } from "react";
-import axios from "axios";
-import { NETWORK_URL } from "../links";
-import {
-  Dialog,
-  Button,
-  DialogTitle,
-  Typography,
-  Box,
-} from "@mui/material";
-import CloseIcon from "@mui/icons-material/Close";
-import { useSearchParams,useNavigate } from "react-router-dom";
+// import React, { useState, useEffect, useCallback } from "react";
+// import axios from "axios";
+// import { NETWORK_URL } from "../links";
+// import { Dialog, Button, DialogTitle, Typography, Box } from "@mui/material";
+// import CloseIcon from "@mui/icons-material/Close";
+// import { useSearchParams, useNavigate } from "react-router-dom";
+// // import { PROXY_URL } from "../links";
 
+// const Payment = (props) => {
+//   const navigate = useNavigate();
 
+//   const [paymentInfo, setPaymentInfo] = useState({
+//     id: "",
+//     longurl: "",
+//   });
 
-const Payment = (props) => {
+//   const [searchParams] = useSearchParams("");
+//   const payment_id = searchParams.get("payment_id");
+//   const payment_status = searchParams.get("payment_status");
+//   const payment_request_id = searchParams.get("payment_request_id");
 
-  const navigate = useNavigate()
-    
-  const [paymentInfo, setPaymentInfo] = useState({
-    id : "",
-    longurl:""
-  });
+//   const sendPaymentInfoToServer = () => {
+//     const payment_request_id_func = payment_request_id;
+//     searchParams.delete("payment_id");
+//     searchParams.delete("payment_status");
+//     searchParams.delete("payment_request_id");
 
-  //  ?payment_id=MOJO2331205A64445709&
-  // payment_status=Credit&
-  // payment_request_id=7403454706a0411eaf59c040dab978f8
+//     // console.log(payment_request_id)
+//     axios
+//       .post(`${NETWORK_URL}/payment/success`, {
+//         idToken: window.localStorage.getItem("idToken"),
+//         payment_id: payment_request_id_func,
+//         payment_id_local: window.localStorage.getItem("payment_id_local"),
+//         shipping_address: props.addressList,
+//         payment_status: payment_status,
+//       })
+//       .then((response) => {
+//         navigate("/viewcart");
+//         console.log(response.data);
+//         props.loadData(true);
+//         // window.location.reload();
+//       })
+//       .catch((error) => {
+//         console.log("something went wrong");
+//       });
+//   };
 
-  const [searchParams] = useSearchParams("");
-  const payment_id = searchParams.get("payment_id");
-  const payment_status = searchParams.get("payment_status");
-  const payment_request_id = searchParams.get("payment_request_id");
+//   if (payment_id && payment_request_id) {
+//     sendPaymentInfoToServer();
+//   }
 
-  const sendPaymentInfoToServer = () => {
-    const payment_request_id_func  = payment_request_id;
-    // const payment_status_func = payment_status;
-    // const payment_id_func = payment_id;
-    searchParams.delete("payment_id");
-    searchParams.delete("payment_status");
-    searchParams.delete("payment_request_id");
+//   const initiatePayment = useCallback(() => {
+//     const idToken = window.localStorage.getItem("idToken");
+//     axios
+//       .post(`${NETWORK_URL}/payment/initiate`, {
+//         idToken: idToken,
+//       })
+//       .then((response) => {
+//         setPaymentInfo((oldInfo) => {
+//           return {
+//             id: response.data.id,
+//             longurl: response.data.longurl,
+//           };
+//         });
+//         window.localStorage.setItem("payment_id_local", response.data.id);
+//       })
+//       .catch((error) => {
+//         console.log("Error");
+//       });
+//   }, []);
 
-    // console.log(payment_request_id)
-    axios.post(`${NETWORK_URL}/payment/success`,{
-      idToken:window.localStorage.getItem("idToken"),
-      payment_id : payment_request_id_func,
-      payment_id_local : window.localStorage.getItem("payment_id_local"),
-      shipping_address : props.addressList
-    })
-    .then((response)=>{
-      console.log(response.data)
-      navigate("/viewcart")
-      props.loadData(true)
-    })
-    .catch((error)=>{
-      console.log("something went wrong")
-    })
-  }
+//   useEffect(() => {
+//     if (!payment_id && !payment_request_id) {
+//       initiatePayment();
+//       // loadPaymentdata();
+//     }
+//     return () => {
+//       window.localStorage.removeItem("payment_id_local");
+//       setPaymentInfo({
+//         id: "",
+//         longurl: "",
+//       });
+//     };
+//   }, [payment_id, payment_request_id]);
 
-  if(payment_id && payment_status && payment_request_id){
-      sendPaymentInfoToServer()
-  }
-  // if(payment_status === "Failed"){
-  //   searchParams.delete("payment_id");
-  //   searchParams.delete("payment_status");
-  //   searchParams.delete("payment_request_id");
-  //   navigate("/viewcart")
-  // }
+//   // console.log(window.localStorage.getItem("userName"));
+//   return (
+//     <Dialog fullWidth open={props.paymentOpen}>
+//       <Box
+//         sx={{
+//           display: "flex",
+//           justifyContent: "space-between",
+//         }}
+//       >
+//         <DialogTitle>Payment</DialogTitle>
+//         <Button
+//           onClick={() => {
+//             props.setPaymentOpen(false);
+//           }}
+//         >
+//           <CloseIcon />
+//         </Button>
+//       </Box>
+//       <Typography
+//         sx={{
+//           textAlign: "center",
+//           fontSize: "1.5rem",
+//         }}
+//       >
+//         Total charges : {props.amount.total}
+//       </Typography>
+//       <Box
+//         component="a"
+//         href={paymentInfo.longurl}
+//         sx={{
+//           textAlign: "center",
+//           border: "1px solid blue",
+//           width: "45%",
+//           margin: "1rem auto",
+//           textDecoration: "none",
+//         }}
+//       >
+//         Pay Now
+//       </Box>
+//       {/* <Button
+//       onClick={loadPaymentdata}
+//         sx={{
+//           textAlign: "center",
+//           border: "1px solid blue",
+//           width: "45%",
+//           margin: "1rem auto",
+//           textDecoration: "none",
+//         }}
+//       >
+//         Pay Now
+//       </Button> */}
+//     </Dialog>
+//   );
+// };
 
-  const initiatePayment = useCallback(() => {
-    const idToken = window.localStorage.getItem("idToken");
-    axios
-      .post(`${NETWORK_URL}/payment/initiate`, {
-        idToken: idToken,
-      })
-      .then((response) => {
-        setPaymentInfo((oldInfo)=>{
-          return {
-            id : response.data.id,
-            longurl : response.data.longurl
-          }
-        });
-        window.localStorage.setItem("payment_id_local",response.data.id)
-      })
-      .catch((error) => {
-        console.log("Error");
-      });
-  }, []);
-
-  useEffect(() => {
-    if(!payment_id && !payment_status && !payment_request_id){
-      initiatePayment();
-    }
-    return () => {
-      window.localStorage.removeItem("payment_id_local")
-      setPaymentInfo({
-        id : "",
-        longurl:""
-      });
-    };
-  }, []);
-
-  // console.log(paymentInfo);
-  return (
-    <Dialog fullWidth open={props.paymentOpen}>
-      <Box
-        sx={{
-          display: "flex",
-          justifyContent: "space-between",
-        }}
-      >
-        <DialogTitle>Payment</DialogTitle>
-        <Button
-          onClick={() => {
-            props.setPaymentOpen(false);
-          }}
-        >
-          <CloseIcon />
-        </Button>
-      </Box>
-      <Typography 
-        sx={{
-          textAlign:'center',
-          fontSize:'1.5rem'
-          }}>
-            Total charges : {props.amount.total}
-      </Typography>
-      <Box component="a" href={paymentInfo.longurl} 
-      sx={{textAlign:"center",
-          border:'1px solid blue',
-          width:'45%',
-          margin:"1rem auto",
-          textDecoration:'none'
-          }}>
-        Pay Now
-      </Box>
-    </Dialog>
-  );
-};
-
-export default Payment;
+// export default Payment;

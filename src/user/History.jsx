@@ -121,7 +121,6 @@ const History = (props) => {
   };
 
   const onQuantityChange = (event) => {
-    console.log(props.item.discount_price);
     axios
       .post(`${NETWORK_URL}/client/update_cart`, {
         product_id: "",

@@ -10,3 +10,4 @@ export const NETWORK_URL = "http://192.168.0.104:8000"; // Chinmay ka link
 // export const NETWORK_URL = "http://192.168.0.238:8000" // College ka link
 
 
+// export const PROXY_URL = "https://chinmay487proxy.herokuapp.com";

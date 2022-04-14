@@ -4,31 +4,24 @@ import {
   Toolbar,
   Typography,
   Box,
-  TextField,
   IconButton,
   Avatar,
   useTheme,
   useMediaQuery,
   Button,
 } from "@mui/material";
-import SearchOutlinedIcon from "@mui/icons-material/SearchOutlined";
 import Sidenav from "./Sidenav";
 import {
   appBarStyle,
   navbarDivStyle,
   searchFormGroup,
-  searchForm,
-  searchFormInput,
-  avatarStyle,
   navbarStyle2,
   navbarDiveStyle2,
   typographyStyle2,
 } from "../styles";
 import MenuRoundedIcon from "@mui/icons-material/MenuRounded";
 import { NavLink } from "react-router-dom";
-import AuthForm from "../authentication/AuthForm";
 import AvatarMenu from "./AvatarMenu";
-import PersonRoundedIcon from '@mui/icons-material/PersonRounded';
 import {loginUserWithGoogle} from "../authentication/LoginWithGoogle";
 
 const Navbar = (props) => {
@@ -50,7 +43,6 @@ const Navbar = (props) => {
   const [drawerStatus, setDrawerStatus] = useState(false);
 
   const theme = useTheme();
-  const medium = useMediaQuery(theme.breakpoints.down("md"));
   const small = useMediaQuery(theme.breakpoints.down("sm"));
 
   const avatarClick = (event) => {
@@ -87,14 +79,6 @@ const Navbar = (props) => {
     },
   ];
 
-  const searchFormComponent = (
-    <Box sx={searchForm}>
-      <TextField sx={searchFormInput} label="search ..." variant="standard" />
-      <IconButton title="Search">
-        <SearchOutlinedIcon sx={{ fontSize: "2rem" }} />
-      </IconButton>
-    </Box>
-  );
 
   const logoStyle = {
     color: "#9E9E9E",
@@ -102,15 +86,6 @@ const Navbar = (props) => {
     textShadow: "1px 1px 10px #90A4AE",
   };
 
-  const [dialogOpen, setDialogOpen] = useState(false);
-
-  const handleDilogClose = () => {
-    setDialogOpen(false);
-  };
-
-  const handleOpenDilog = () => {
-    setDialogOpen(true);
-  };
 
   return (
     <>
@@ -141,15 +116,9 @@ const Navbar = (props) => {
               </Typography>
             ) : null}
 
-            {/* {medium && !small ? searchFormComponent : null} */}
-
             <Box sx={searchFormGroup}>
-              {/* {medium ? null : searchFormComponent} */}
               {userData !== null ? (
                 <IconButton onClick={avatarClick}>
-                  {/* <Avatar sx={avatarStyle}  alt="#" >
-                    
-                  </Avatar> */}
                   <Avatar alt="O" src={window.localStorage.getItem("pic")} />
                 </IconButton>
               ) : (
@@ -200,28 +169,14 @@ const Navbar = (props) => {
             </Box>
           </Box>
         ) : (
-          // <Box
-          //   sx={{
-          //     width: "100%",
-          //     display: "flex",
-          //     justifyContent: "center",
-          //     alignItems: "center",
-          //     borderTop: "1px solid #CFD8DC",
-          //     py: "2%",
-          //   }}
-          // >
-          //   {searchFormComponent}
-          // </Box>
           null
         )}
       </AppBar>
-      <AuthForm handleDialogClose={handleDilogClose} dialogOpen={dialogOpen} />
       <Sidenav
         isSeller={props.isSeller}
         items={navList2}
         drawerStatus={drawerStatus}
         setDrawerStatus={setDrawerStatus}
-        handleOpenDilog={handleOpenDilog}
       />
     </>
   );

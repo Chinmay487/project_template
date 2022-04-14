@@ -3,13 +3,11 @@ import { Drawer, List, ListItem, ListItemIcon } from "@mui/material";
 import MenuOpenOutlinedIcon from "@mui/icons-material/MenuOpenOutlined";
 import { useNavigate } from "react-router-dom";
 import { drawerStyle } from "../styles";
-// import { Link } from "react-router-dom";
 
 const Sidenav = (props) => {
   const navigate = useNavigate();
 
   const onClickEvent = () => {
-    // navigate(url);
     props.setDrawerStatus(!props.drawerStatus);
   };
 
@@ -31,7 +29,6 @@ const Sidenav = (props) => {
           divider
           button
           onClick={() => {
-            // props.setDrawerStatus(!props.drawerStatus)
             onClickEvent();
           }}
           key="101"
@@ -55,9 +52,6 @@ const Sidenav = (props) => {
         {props.items.map((item, index) => {
           return (
               <ListItem
-                // onClick={() => {
-                //   props.setDrawerStatus(!props.drawerStatus);
-                // }}
                 key={`sidenav0${index}`}
                 divider
                 button

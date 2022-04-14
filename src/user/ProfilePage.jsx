@@ -1,10 +1,9 @@
-import React, { useState,useCallback,useEffect } from "react";
-import { Typography, Box, Button,CircularProgress } from "@mui/material";
+import React, { useState, useCallback, useEffect } from "react";
+import { Typography, Box, Button, CircularProgress } from "@mui/material";
 import AddressInfo from "./AddressInfo";
-import axios from 'axios';
+import axios from "axios";
 import { NETWORK_URL } from "../links";
 import StatusInfo from "./StatusInfo";
-
 
 const ProfilePage = () => {
   const [shippingStatus, setShippingStatus] = useState("pending");
@@ -26,22 +25,19 @@ const ProfilePage = () => {
           setIsData(response.data.length);
           setDataStatus(false);
         })
-        .catch((error) => {
-          console.log(error);
-        });
+        .catch((error) => {});
     }
   }, []);
 
-
-  useEffect(()=>{
+  useEffect(() => {
     let isMounted = true;
-    fetchData(isMounted,shippingStatus);
+    fetchData(isMounted, shippingStatus);
 
-    return ()=>{
-      isMounted = false
-      setShippingData([])
-    }
-  },[])
+    return () => {
+      isMounted = false;
+      setShippingData([]);
+    };
+  }, []);
 
   return (
     <>
@@ -86,8 +82,16 @@ const ProfilePage = () => {
       </Box>
 
       {dataStatus ? (
-        <Box component="center" sx={{display:"flex",justifyContent:"center",alignItems:"center",my:"1rem"}} >
-          <Typography variant="h5"> Loading...</Typography> &nbsp; 
+        <Box
+          component="center"
+          sx={{
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            my: "1rem",
+          }}
+        >
+          <Typography variant="h5"> Loading...</Typography> &nbsp;
           <CircularProgress />
         </Box>
       ) : (
@@ -96,23 +100,22 @@ const ProfilePage = () => {
             <>
               {shippingData.map((item, index) => {
                 return (
-                  <>
-                    <StatusInfo
-                      item={item}
-                      fetchData={fetchData}
-                      key={`shipping_${shippingStatus}${index}0`}
-                      status={shippingStatus}
-                    />
-                  </>
+                  <StatusInfo
+                    item={item}
+                    fetchData={fetchData}
+                    key={`shipping_${shippingStatus}${index}0`}
+                    status={shippingStatus}
+                  />
                 );
               })}
             </>
-          ) : <Box component="center" sx={{my:"1rem"}} >
-            <Typography variant="h4">Nothing Here</Typography>
-          </Box>}
+          ) : (
+            <Box component="center" sx={{ my: "1rem" }}>
+              <Typography variant="h4">Nothing Here</Typography>
+            </Box>
+          )}
         </Box>
       )}
-
     </>
   );
 };

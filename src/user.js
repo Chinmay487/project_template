@@ -8,20 +8,20 @@ const getFirebaseKeys = async () => {
 };
 
 const logoutUser = () => {
-  // alert("calling logout")
+  console.log("Logging Out");
+  window.localStorage.removeItem("idToken");
+  window.localStorage.removeItem("expiration");
+  window.localStorage.removeItem("pic");
+  window.localStorage.removeItem("userName");
+  window.localStorage.removeItem("userEmail");
+  window.location.reload();
   getFirebaseKeys()
     .then((keys) => {
-      // console.log("logging Out")
       firebase.initializeApp(keys);
-      window.localStorage.removeItem("idToken");
-      window.localStorage.removeItem("expiration");
-      window.localStorage.removeItem("pic");
       firebase
         .auth()
         .signOut()
-        .then(() => {
-          window.location.reload();
-        })
+        .then(() => {})
         .catch("firebase error");
     })
     .catch((error) => {
@@ -30,29 +30,25 @@ const logoutUser = () => {
 };
 
 const checkAuthTimeout = (expirationDate) => {
-  // alert("in check auth timeout");
-  setTimeout(
-      () => {
-        logoutUser()
-      },
-      expirationDate * 1000
-  )
-}
+  setTimeout(() => {
+    logoutUser();
+  }, expirationDate * 1000);
+};
 
 const setCurrentAuthState = () => {
-  const idToken = window.localStorage.getItem("idToken")
-  if(idToken === undefined){
-    return logoutUser()
+  const idToken = window.localStorage.getItem("idToken");
+  if (idToken === undefined) {
+    return logoutUser();
   } else {
-    const expirationDate = new Date(localStorage.getItem('expiration'));
-    if(expirationDate <= new Date()){
-      return logoutUser()
-  } else {
-      const remainingTime = (expirationDate.getTime() - new Date().getTime())/1000
+    const expirationDate = new Date(localStorage.getItem("expiration"));
+    if (expirationDate <= new Date()) {
+      return logoutUser();
+    } else {
+      const remainingTime =
+        (expirationDate.getTime() - new Date().getTime()) / 1000;
       return checkAuthTimeout(remainingTime);
+    }
   }
+};
 
-  }
-}
-
-export { getFirebaseKeys, logoutUser,setCurrentAuthState,checkAuthTimeout };
+export { getFirebaseKeys, logoutUser, setCurrentAuthState, checkAuthTimeout };

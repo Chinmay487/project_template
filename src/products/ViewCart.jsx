@@ -11,7 +11,6 @@ import {
 import History from "../user/History";
 import axios from "axios";
 import { NETWORK_URL } from "../links";
-import Payment from "../payment/Payment";
 
 const ViewCart = () => {
   const theme = useTheme();
@@ -37,8 +36,6 @@ const ViewCart = () => {
     purchase_history: [],
     category: "",
   });
-
-  const [paymentOpen, setPaymentOpen] = useState(false);
 
   const fetchData = useCallback(() => {
     setDataStatus(true);
@@ -113,11 +110,11 @@ const ViewCart = () => {
     fetchData(isMounted);
     fetchCart(isMounted);
     getAmount(isMounted);
-  }
+  };
 
   useEffect(() => {
     let isMounted = true;
-    loadData(isMounted)
+    loadData(isMounted);
     return () => {
       isMounted = false;
       setAmount({
@@ -144,16 +141,65 @@ const ViewCart = () => {
     setAddressList(value);
   };
 
+  const onPaymentSubmit = (response) => {
+    const paymentId = response.razorpay_payment_id;
+    axios
+      .post(`${NETWORK_URL}/payment/success`, {
+        idToken: window.localStorage.getItem("idToken"),
+        payment_id: paymentId,
+        shipping_address: addressList,
+      })
+      .then((response) => {
+        // navigate("/viewcart");
+        loadData(true);
+        window.location.reload();
+      })
+      .catch((error) => {
+        console.log("something went wrong");
+      });
+  };
+
+  const getRazorPayKeys = async () => {
+    var response = null;
+    try {
+      const idToken = window.localStorage.getItem("idToken");
+      response = await axios.post(`${NETWORK_URL}/payment/keys`, {
+        idToken: idToken,
+      });
+      return response.data;
+    } catch (error) {
+      console.log("please try after some time");
+      return null;
+    }
+  };
+
+  const confirmPayment = async () => {
+    var keys = await getRazorPayKeys();
+    if (keys !== null) {
+      var options = {
+        key: keys.api_key,
+        key_secrete: keys.api_secrete,
+        amount: amount.total * 100,
+        currency: "INR",
+        name: "ShopHeaven",
+        description: "Shopping With ShopHeaven",
+        handler: (response) => {
+          onPaymentSubmit(response);
+        },
+        prefill: {
+          name: window.localStorage.getItem("userName"),
+          email: window.localStorage.getItem("userEmail"),
+        },
+      };
+      var pay = new window.Razorpay(options);
+      pay.open();
+    } else {
+      alert("Please try after some time");
+    }
+  };
+
   return (
     <>
-      <Payment
-        paymentOpen={paymentOpen}
-        setPaymentOpen={setPaymentOpen}
-        amount={amount}
-        addressList={addressList}
-        loadData={loadData}
-      />
-
       {dataStatus ? (
         <Box
           sx={{
@@ -216,22 +262,25 @@ const ViewCart = () => {
                 )}
 
                 {dataList.addresses.length > 0 && dataList.cart.length > 0 ? (
-                <>
-                  <Button
-                    variant="outlined"
-                    sx={{
-                      display: "block",
-                      mx: "auto",
-                    }}
-                    onClick={() => {
-                      if(dataList.addresses.length > 0 && dataList.cart.length > 0){
-                        setPaymentOpen(true);
-                      }
-                    }}
-                  >
-                    Place Order
-                  </Button>
-                </>
+                  <>
+                    <Button
+                      variant="outlined"
+                      sx={{
+                        display: "block",
+                        mx: "auto",
+                      }}
+                      onClick={() => {
+                        if (
+                          dataList.addresses.length > 0 &&
+                          dataList.cart.length > 0
+                        ) {
+                          confirmPayment();
+                        }
+                      }}
+                    >
+                      Place Order
+                    </Button>
+                  </>
                 ) : (
                   <>
                     <Button
