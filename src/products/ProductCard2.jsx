@@ -34,9 +34,6 @@ const ProductCard2 = (props) => {
             <Typography variant="h6" color="text.secondary">
               Price : {props.item.price}
             </Typography>
-            {/* <Typography variant="h6" color="text.secondary">
-              Discount Price : 89.99
-            </Typography> */}
           </CardContent>
           <CardActions>
             <Box component="center">
@@ -44,8 +41,7 @@ const ProductCard2 = (props) => {
                 <Typography variant="">View</Typography>
               </Link>
             </Box>
-            {/* <Button size="small">Share</Button>
-              <Button size="small">Learn More</Button> */}
+           
           </CardActions>
         </Card>
       </Grid>

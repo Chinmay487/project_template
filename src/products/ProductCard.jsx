@@ -1,6 +1,5 @@
 import React from "react";
 import { Box, Typography,useTheme } from "@mui/material";
-// import jcb from '../images/jcb.jpg';
 import { Link } from "react-router-dom";
 
 const ProductCard = (props) => {

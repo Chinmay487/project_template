@@ -43,7 +43,7 @@ const DetailView = (props) => {
       sm: "2%",
       xs: "2%",
     },
-    // backgroundColor:"red"
+  
   };
 
   const buttonGroupStyle1 = {
@@ -188,7 +188,7 @@ const DetailView = (props) => {
   const [selectState, setSelectState] = useState(1);
 
   const addProductToCart = (message, cart) => {
-    // console.log(window.localStorage.getItem("idToken"));
+    
     axios
       .post(`${NETWORK_URL}/client/update_cart`, {
         category: category,
@@ -286,7 +286,7 @@ const DetailView = (props) => {
                       <Typography>
                         Discount price : &#8377; {productData.discountPrice}
                       </Typography>
-                      {/* <Typography>Quantity : {productData.quantity}</Typography> */}
+                      
                       <Typography>{productData.description}</Typography>
                     </Box>
                     <Box

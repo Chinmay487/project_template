@@ -1,44 +1,19 @@
 import React from "react";
 import {
   Grid,
-  // useTheme,
-  // useMediaQuery,
   Typography,
   CircularProgress,
   Box,
 } from "@mui/material";
 import ProductCard from "./ProductCard";
 
-// const GridItemElement = (props) => {
-//   return (
-//     <Grid item >
-//       <ProductCard item={props.item} />
-//     </Grid>
-//   );
-// };
 
 const ProductGrid = (props) => {
-  // const theme = useTheme();
 
-  // const small = useMediaQuery(theme.breakpoints.down("sm"));
 
   const gridStyle2 = {
     alignItems: "center",
   };
-
-  // const [productList,setProductList] = useState([])
-
-  // useEffect(()=>{
-  //   setProductList([])
-  //   props.prodGrid.forEach((item,index)=>{
-  //     if(!small && index===2){
-  //       return
-  //     }
-  //     setProductList((oldListData)=>{
-  //       return [ ...oldListData,item]
-  //     })
-  //   })
-  // },[small,props.prodGrid])
 
   return (
     <>

@@ -31,13 +31,12 @@ const CategoryView = (props) => {
             setDataList([...data.product_list]);
             setPageCount(data.number_of_pages);
           }
-          // // setIsZero(data.product_list.length > 0);
           setFetching(false);
-          // console.log(data);
+         
         })
         .catch((error) => {
           alert("something went wrong");
-          // setFetching(false);
+        
         });
     },
     [category]
@@ -48,7 +47,7 @@ const CategoryView = (props) => {
     return () => {
       setDataList([]);
     };
-  }, [fetchData]);
+  }, [fetchData,pageNumber]);
 
   const upDatePageNumber = (event, value) => {
     if (value !== pageNumber) {
