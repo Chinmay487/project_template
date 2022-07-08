@@ -1,5 +1,6 @@
 {
   "name": "major_project",
+  "homepage": "https://Chinmay487.github.io/project_template",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
@@ -12,6 +13,7 @@
     "@testing-library/user-event": "^12.8.3",
     "axios": "^0.24.0",
     "firebase": "^9.6.1",
+    "gh-pages": "^4.0.0",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "react-router-dom": "^6.1.1",
@@ -19,6 +21,8 @@
     "web-vitals": "^1.1.2"
   },
   "scripts": {
+    "predepluy":"npm run build",
+    "deploy":"gh-pages -d build",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
